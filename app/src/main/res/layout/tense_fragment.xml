@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:text="Simple"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="#efebe9"
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="Past Simple"
+                        android:gravity="left|center_vertical"
+                        android:background="#00ffffff"
+                        android:id="@+id/pastSimple" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="left|center_vertical"
+                        android:text="Present Simple"
+                        android:id="@+id/presentSimple" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="left|center_vertical"
+                        android:text="Future Simple"
+                        android:id="@+id/futureSimple" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="left|center_vertical"
+                        android:text="Future in the Past Simple"
+                        android:id="@+id/futureinthePastSimple" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:text="Continuous"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="#d7ccc8">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Past Continuous"
+                        android:id="@+id/pastContinuous" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Present Continuous"
+                        android:id="@+id/presentContinuous" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Future Continuous"
+                        android:id="@+id/futureContinuous" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Future in the Past Continuous"
+                        android:id="@+id/futureinthePastContinuous" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:text="Perfect"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="#bcaaa4">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Past Perfect"
+                        android:id="@+id/pastPerfect" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Present Perfect"
+                        android:id="@+id/presentPerfect" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Future Perfect"
+                        android:id="@+id/futurePerfect" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Future in the Past Perfect"
+                        android:id="@+id/futureinthePastPerfect" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:text="Perfect Continuous"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="#a1887f">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pastPerfectContinuous"
+                        android:text="Past Perfect Continuous" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/presentPerfectContinuous"
+                        android:text="Present Perfect Continuous" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/futurePerfectContinuous"
+                        android:text="Future Perfect Continuous" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"></LinearLayout>
+
+                    <TextView
+                        style="@style/MyButtonItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/futureinthePastPerfectContinuous"
+                        android:text="Future in the Past Perfect Continuous" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
