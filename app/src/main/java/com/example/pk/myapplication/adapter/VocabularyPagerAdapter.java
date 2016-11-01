@@ -5,11 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.pk.myapplication.Constants;
 import com.example.pk.myapplication.data.MyDataBaseHelper;
 import com.example.pk.myapplication.model.Word;
 import com.example.pk.myapplication.view.Challange_item_fragment;
-import com.example.pk.myapplication.view.ChallengeViewPagerActivity;
 import com.example.pk.myapplication.view.FinishChallengeFragment;
 
 import java.util.ArrayList;
@@ -34,16 +32,16 @@ public class VocabularyPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if (position==num_of_words){
+        if (position == num_of_words) {
             return new FinishChallengeFragment();
-        }
-        else{
+        } else {
             return new Challange_item_fragment();
         }
     }
 
+    //Last fragments is FinishChallengeFragment,so num_of_items+1
     @Override
     public int getCount() {
-        return num_of_words+1;
+        return num_of_words + 1;
     }
 }

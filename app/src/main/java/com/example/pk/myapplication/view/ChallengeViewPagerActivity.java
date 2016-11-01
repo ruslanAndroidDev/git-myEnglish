@@ -22,10 +22,11 @@ public class ChallengeViewPagerActivity extends AppCompatActivity implements Vie
     Button finishBtn;
     static int current_item;
     ArrayList<Word> arrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Constants.TRUE_ANSWER=0;
+        Constants.TRUE_ANSWER = 0;
         current_item = 0;
         setContentView(R.layout.activity_repeat);
         finishBtn = (Button) findViewById(R.id.finish_button);
@@ -47,6 +48,7 @@ public class ChallengeViewPagerActivity extends AppCompatActivity implements Vie
             return false;
         } else return true;
     }
+
     // show when in vocabulary is less then 10 words
     private void showErorAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -70,7 +72,7 @@ public class ChallengeViewPagerActivity extends AppCompatActivity implements Vie
             case R.id.finish_button:
                 if (viewPager.getCurrentItem() != Constants.NUM_OF_ITEM) {
                     viewPager.setCurrentItem(Constants.NUM_OF_ITEM);
-                    FinishChallengeFragment.updNumOfTrueItem();
+                    FinishChallengeFragment.onfinish();
                 } else {
                     finish();
                 }

@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +22,7 @@ public class TenseFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.tense_fragment, container, false);
-        initTv();
-        Log.d("tag", "OnCreateView Tense");
+        initTextView();
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Часи");
         return v;
     }
@@ -47,7 +44,7 @@ public class TenseFragment extends Fragment implements View.OnClickListener {
     TextView futurePerfectContinuous;
     TextView futureinthePastPerfectContinuous;
 
-    private void initTv() {
+    private void initTextView() {
         pastSimple = (TextView) v.findViewById(R.id.pastSimple);
         presentSimple = (TextView) v.findViewById(R.id.presentSimple);
         futureSimple = (TextView) v.findViewById(R.id.futureSimple);
@@ -85,7 +82,6 @@ public class TenseFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        WebActivity web;
         String url = "";
         switch (v.getId()) {
             case R.id.pastSimple:

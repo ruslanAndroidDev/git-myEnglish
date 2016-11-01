@@ -25,7 +25,7 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<MyListRecyclerAd
 
         TextView original_tv;
         TextView translate_tv;
-        TextView number_tv;
+        TextView position_tv;
         Context context;
 
         public MyViewHolder(View itemView) {
@@ -33,7 +33,7 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<MyListRecyclerAd
             context = itemView.getContext();
             this.translate_tv = (TextView) itemView.findViewById(R.id.tv_vord_utranslate);
             this.original_tv = (TextView) itemView.findViewById(R.id.tv_vord_original);
-            this.number_tv = (TextView) itemView.findViewById(R.id.number_tv);
+            this.position_tv = (TextView) itemView.findViewById(R.id.position_tv);
             itemView.setOnLongClickListener(this);
         }
 
@@ -79,7 +79,8 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<MyListRecyclerAd
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         TextView original_tv = holder.original_tv;
         final TextView translate_tv = holder.translate_tv;
-        final TextView number_tv = holder.number_tv;
+        final TextView number_tv = holder.position_tv;
+
         original_tv.setText(data.get(position).getOriginalWord());
         translate_tv.setText(data.get(position).getTranslateWord());
         number_tv.setText(Integer.toString(position + 1));

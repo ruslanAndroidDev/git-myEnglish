@@ -110,7 +110,6 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
         } else {
             cardView.setCardBackgroundColor(Color.RED);
         }
-        FinishChallengeFragment.updNumOfTrueItem();
         cardView1.setClickable(false);
         cardView2.setClickable(false);
         cardView3.setClickable(false);

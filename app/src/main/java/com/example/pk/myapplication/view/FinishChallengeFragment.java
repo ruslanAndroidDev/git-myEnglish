@@ -1,10 +1,8 @@
 package com.example.pk.myapplication.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +19,6 @@ public class FinishChallengeFragment extends Fragment {
     static TextView int_tv;
     ImageView resultimg;
 
-    private int result;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,16 +26,7 @@ public class FinishChallengeFragment extends Fragment {
         int_tv = (TextView) v.findViewById(R.id.tv_Intresult);
         resultimg = (ImageView) v.findViewById(R.id.result_imageview);
         setResultImage((double) Constants.TRUE_ANSWER / (double) Constants.NUM_OF_ITEM * 100);
-        Log.d("tag", "true answer " + Constants.TRUE_ANSWER + " /" + Constants.NUM_OF_ITEM + "*100" + "=" + (double) Constants.TRUE_ANSWER / (double) Constants.NUM_OF_ITEM * 100);
         return v;
-    }
-
-
-    public static void updNumOfTrueItem() {
-        try {
-            int_tv.setText(Constants.TRUE_ANSWER + "/" + Constants.NUM_OF_ITEM);
-        } catch (NullPointerException e) {
-        }
     }
 
     private void setResultImage(double rating) {
@@ -50,7 +37,12 @@ public class FinishChallengeFragment extends Fragment {
         } else if (rating > 70) {
             resultimg.setImageResource(R.drawable.very_well);
         }
-
     }
 
+    public static void onfinish() {
+        try {
+            int_tv.setText(Constants.TRUE_ANSWER + "/" + Constants.NUM_OF_ITEM);
+        } catch (Exception e) {
+        }
+    }
 }

@@ -21,8 +21,7 @@ import com.example.pk.myapplication.R;
  * Created by pk on 12.09.2016.
  */
 public class StartChallengeFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
-    Button startRepeat;
-    Context context;
+    Button repeatBtn;
     SeekBar seekBar;
     int num_of_challange_item;
     TextView tv_numItem;
@@ -31,13 +30,15 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.start_challenge_fragment, container, false);
-        context = v.getContext();
         tv_numItem = (TextView) v.findViewById(R.id.tv_num_item);
+
         seekBar = (SeekBar) v.findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(this);
-        startRepeat = (Button) v.findViewById(R.id.start_repeat);
-        startRepeat.setOnClickListener(this);
-        ((Toolbar)getActivity().findViewById(R.id.toolbar)).setTitle("English");
+
+        repeatBtn = (Button) v.findViewById(R.id.start_repeat);
+        repeatBtn.setOnClickListener(this);
+
+        ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("English");
 
         return v;
     }
@@ -45,11 +46,13 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(context, ChallengeViewPagerActivity.class);
+        Intent intent = new Intent(v.getContext(), ChallengeViewPagerActivity.class);
         num_of_challange_item = Integer.parseInt(tv_numItem.getText().toString());
+
         Constants.NUM_OF_ITEM = num_of_challange_item;
+
         if (Constants.NUM_OF_ITEM == 0) {
-            Toast.makeText(context, "Помилка", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), "Помилка", Toast.LENGTH_SHORT).show();
         } else {
             startActivity(intent);
         }

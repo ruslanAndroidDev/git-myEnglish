@@ -40,7 +40,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("tag", "onCreate");
         VKRequest request = VKApi.wall().get(VKParameters.from(VKApiConst.OWNER_ID, "-" + 12648877, VKApiConst.COUNT, 10));
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
@@ -57,11 +56,9 @@ public class MainFragment extends Fragment {
         View v = inflater.inflate(R.layout.main_fragment, container, false);
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle("My English");
-        MainActivity.flag = 1;
+
         mainRecyclerView = (RecyclerView) v.findViewById(R.id.mainRecyclerView);
         mainRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        mainRecyclerView.setAdapter(adapter);
-        Log.d("tag","OnCreateViewFragment");
         return v;
     }
 
@@ -86,7 +83,7 @@ public class MainFragment extends Fragment {
             JSONArray itemsArray = null;
             JSONObject photo = null;
             JSONObject responseObj = null;
-            String text_Posts = "";
+            String post_text = "";
             VkPosts vkPosts;
             try {
                 jsonFromString = new JSONObject(json);
@@ -98,12 +95,12 @@ public class MainFragment extends Fragment {
             for (int i = itemsArray.length(); i > 0; i--) {
                 try {
                     JSONObject post = itemsArray.getJSONObject(i);
-                    text_Posts = post.getString("text");
+                    post_text = post.getString("text");
                     JSONArray attachments = post.getJSONArray("attachments");
                     JSONObject allatach = attachments.getJSONObject(0);
                     photo = allatach.getJSONObject("photo");
                     if (photo != null) {
-                        vkPosts = new VkPosts(text_Posts, getLowphotoQualityUrl(photo), getMaxPhotoQualityUrlFromJson(photo));
+                        vkPosts = new VkPosts(post_text, getMaxPhotoQualityUrlFromJson(photo));
                         data.add(0, vkPosts);
                     }
                 } catch (JSONException noPhoto) {
@@ -136,19 +133,6 @@ public class MainFragment extends Fragment {
                 }
             }
             return "";
-        }
-
-        private String getLowphotoQualityUrl(JSONObject photo) {
-            String lowUrl = "";
-            if (photo == null) {
-                lowUrl = "";
-            }
-            try {
-                lowUrl = photo.getString("photo_75");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return lowUrl;
         }
     }
 
