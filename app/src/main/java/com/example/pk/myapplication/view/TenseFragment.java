@@ -1,6 +1,7 @@
 package com.example.pk.myapplication.view;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,76 +9,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.pk.myapplication.R;
+import com.example.pk.myapplication.databinding.TenseFragmentBinding;
 
 /**
  * Created by pk on 15.09.2016.
  */
 public class TenseFragment extends Fragment implements View.OnClickListener {
     View v;
+    TenseFragmentBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.tense_fragment, container, false);
-        initTextView();
-        ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Часи");
+        binding = DataBindingUtil.setContentView(getActivity(), R.layout.tense_fragment);
+        binding.setClicker(this);
+       // ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Часи");
         return v;
-    }
-
-    TextView pastSimple;
-    TextView presentSimple;
-    TextView futureSimple;
-    TextView futureInThePastSimple;
-    TextView pastContinuous;
-    TextView presentContinuous;
-    TextView futureContinuous;
-    TextView futureInThePastContinuous;
-    TextView pastPerfect;
-    TextView presentPerfect;
-    TextView futurePerfect;
-    TextView futureInThePastPerfect;
-    TextView pastPerfectContinuous;
-    TextView presentPerfectContinuous;
-    TextView futurePerfectContinuous;
-    TextView futureinthePastPerfectContinuous;
-
-    private void initTextView() {
-        pastSimple = (TextView) v.findViewById(R.id.pastSimple);
-        presentSimple = (TextView) v.findViewById(R.id.presentSimple);
-        futureSimple = (TextView) v.findViewById(R.id.futureSimple);
-        futureInThePastSimple = (TextView) v.findViewById(R.id.futureinthePastSimple);
-        pastContinuous = (TextView) v.findViewById(R.id.pastContinuous);
-        presentContinuous = (TextView) v.findViewById(R.id.presentContinuous);
-        futureContinuous = (TextView) v.findViewById(R.id.futureContinuous);
-        futureInThePastContinuous = (TextView) v.findViewById(R.id.futureinthePastContinuous);
-        pastPerfect = (TextView) v.findViewById(R.id.pastPerfect);
-        presentPerfect = (TextView) v.findViewById(R.id.presentPerfect);
-        futurePerfect = (TextView) v.findViewById(R.id.futurePerfect);
-        futureInThePastPerfect = (TextView) v.findViewById(R.id.futureinthePastPerfect);
-        pastPerfectContinuous = (TextView) v.findViewById(R.id.pastPerfectContinuous);
-        presentPerfectContinuous = (TextView) v.findViewById(R.id.presentPerfectContinuous);
-        futurePerfectContinuous = (TextView) v.findViewById(R.id.futurePerfectContinuous);
-        futureinthePastPerfectContinuous = (TextView) v.findViewById(R.id.futureinthePastPerfectContinuous);
-
-        pastSimple.setOnClickListener(this);
-        presentSimple.setOnClickListener(this);
-        futureSimple.setOnClickListener(this);
-        futureInThePastSimple.setOnClickListener(this);
-        pastContinuous.setOnClickListener(this);
-        presentContinuous.setOnClickListener(this);
-        futureContinuous.setOnClickListener(this);
-        futureInThePastContinuous.setOnClickListener(this);
-        pastPerfect.setOnClickListener(this);
-        presentPerfect.setOnClickListener(this);
-        futurePerfect.setOnClickListener(this);
-        futureInThePastPerfect.setOnClickListener(this);
-        pastPerfectContinuous.setOnClickListener(this);
-        presentPerfectContinuous.setOnClickListener(this);
-        futurePerfectContinuous.setOnClickListener(this);
-        futureinthePastPerfectContinuous.setOnClickListener(this);
     }
 
     @Override
@@ -133,8 +83,8 @@ public class TenseFragment extends Fragment implements View.OnClickListener {
                 url = "http://easy-english.com.ua/future-perfect-continuous-in-the-past/";
                 break;
         }
-        Intent intent = new Intent(getActivity(),WebActivity.class);
-        intent.putExtra("url",url);
+        Intent intent = new Intent(getActivity(), WebActivity.class);
+        intent.putExtra("url", url);
         startActivity(intent);
     }
 }
