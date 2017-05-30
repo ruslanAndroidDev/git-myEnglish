@@ -12,5 +12,8 @@
     <string name="iregular_verbs">Таблиця дієслів</string>
     <string name="my_progres">Мій прогрес</string>
     <string name="english_tense">Часи англійської мови</string>
+    <string name="repeat">Повторення слів</string>
+    <string name="choseNumOfWords">Виберіть кількість слів для повторення:</string>
+    <string name="myresult">Мій результат:</string>
     <integer name="com_vk_sdk_AppId">5653141</integer>
 </resources>

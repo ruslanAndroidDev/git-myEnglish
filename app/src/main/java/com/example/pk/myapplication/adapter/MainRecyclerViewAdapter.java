@@ -10,25 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pk.myapplication.R;
-import com.example.pk.myapplication.model.VkPosts;
-import com.example.pk.myapplication.view.MyImageViewer;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created by pk on 08.10.2016.
  */
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.MyViewHolder> {
-    ArrayList<VkPosts> postsdata;
+   // ArrayList<VkPosts> postsdata;
     Context context;
 
-    public MainRecyclerViewAdapter(ArrayList<VkPosts> postsdata, Context context) {
-        this.context = context;
-        this.postsdata = postsdata;
-    }
+   // public MainRecyclerViewAdapter(ArrayList<VkPosts> postsdata, Context context) {
+    //    this.context = context;
+     //   this.postsdata = postsdata;
+    //}
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView main_itemItv;
         Context context;
@@ -39,16 +34,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             context = itemView.getContext();
             this.main_itemItv = (TextView) itemView.findViewById(R.id.main_itemItv);
             this.main_frag_imageView = (ImageView) itemView.findViewById(R.id.main_item_imageView);
-            main_frag_imageView.setOnClickListener(this);
 
 
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(context, MyImageViewer.class);
-            intent.putExtra("url", postsdata.get(getAdapterPosition()).getHightphotoUrl());
-            context.startActivity(intent);
         }
     }
 
@@ -64,9 +51,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final TextView main_itemItv = holder.main_itemItv;
         final ImageView main_frag_imageView = holder.main_frag_imageView;
-        main_itemItv.setText(postsdata.get(position).getVktext());
+     //   main_itemItv.setText(postsdata.get(position).getVktext());
         try {
-            Picasso.with(context).load(postsdata.get(position).getHightphotoUrl()).placeholder(R.drawable.bad).into(main_frag_imageView);
+     //       Picasso.with(context).load(postsdata.get(position).getHightphotoUrl()).placeholder(R.drawable.bad).into(main_frag_imageView);
         } catch (IllegalArgumentException ex) {
             main_frag_imageView.setImageResource(R.drawable.bad);
         }
@@ -74,8 +61,13 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     @Override
     public int getItemCount() {
-        return postsdata.size();
+        return 0;
     }
+
+    //   @Override
+    //public int getItemCount() {
+    //    return postsdata.size();
+    //}
 
 }
 

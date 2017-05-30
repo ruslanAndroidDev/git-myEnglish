@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.pk.myapplication.model.Word;
 
@@ -39,7 +38,7 @@ public class MyDataBaseHelper {
         Log.d("tag", "writetodb");
     }
 
-    public static ArrayList<Word> getAllWordwithDb(Context context) {
+    public static ArrayList<Word> loadWordwithDb(Context context) {
         myDb = new MyDataBase(context);
         db = myDb.getReadableDatabase();
         allWordDb = new ArrayList<>();
@@ -60,17 +59,19 @@ public class MyDataBaseHelper {
         translateword = cursor.getString(1);
         allWordDb.add(new Word(translateword, originalword));
     }
-    public static int getSize(Context context){
+
+    public static int getSize(Context context) {
         myDb = new MyDataBase(context);
         db = myDb.getReadableDatabase();
         allWordDb = new ArrayList<>();
         cursor = db.query(MyDataBase.TABLE_NAME, new String[]{MyDataBase.ORIGINAL_COLUMN, MyDataBase.TRANSLATE_COLUMN}, null, null, null, null, null);
         return cursor.getCount();
     }
-    public static void deleteItem(int position,Context context){
-        String word = getAllWordwithDb(context).get(position).getOriginalWord();
+
+    public static void deleteItem(int position, Context context) {
+        String word = loadWordwithDb(context).get(position).getOriginalWord();
         myDb = new MyDataBase(context);
         db = myDb.getReadableDatabase();
-        db.delete(MyDataBase.TABLE_NAME,MyDataBase.ORIGINAL_COLUMN+"=?",new String[]{word});
+        db.delete(MyDataBase.TABLE_NAME, MyDataBase.ORIGINAL_COLUMN + "=?", new String[]{word});
     }
 }

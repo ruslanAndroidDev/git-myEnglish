@@ -1,6 +1,5 @@
 package com.example.pk.myapplication.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,16 +36,13 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
 
         repeatBtn = (Button) v.findViewById(R.id.start_repeat);
         repeatBtn.setOnClickListener(this);
-
-        ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("English");
-
         return v;
     }
 
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(v.getContext(), ChallengeViewPagerActivity.class);
+        Intent intent = new Intent(v.getContext(), ChallengeFragment.class);
         num_of_challange_item = Integer.parseInt(tv_numItem.getText().toString());
 
         Constants.NUM_OF_ITEM = num_of_challange_item;

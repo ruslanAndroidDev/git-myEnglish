@@ -1,7 +1,4 @@
 package com.example.pk.myapplication.view;
-
-import android.support.v4.app.Fragment;
-
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
@@ -14,4 +11,10 @@ public interface MainView extends MvpView {
     void showMainFragment();
 
     void openWebActivity(String url);
+
+    void showVocabluaryFragment();
+
+    void showStartChallangeFragment();
+
+    void showTenseFragment();
 }

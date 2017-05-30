@@ -155,7 +155,7 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
     private String falseVariant4;
 
     public Variant buildDataSet() {
-        data = MyDataBaseHelper.getAllWordwithDb(context);
+        data = MyDataBaseHelper.loadWordwithDb(context);
         dB_size = MyDataBaseHelper.getSize(context);
         keyWord = data.get(myRandom.nextInt(dB_size));
         trueAnswerString = keyWord.getTranslateWord();
@@ -182,6 +182,7 @@ class SleepTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        ChallengeViewPagerActivity.scrollToNextItem();
+       // ChallengeFragment.scrollToNextItem();
+        //TODO FIx me
     }
 }

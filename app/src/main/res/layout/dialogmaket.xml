@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="clicker"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="#bcaaa4">
+            android:background="#bcaaa4"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv"
@@ -25,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="слово"
+                android:onClick="@{clicker}"
                 android:textSize="20sp" />
 
             <TextView
@@ -41,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="переклад"
+                android:onClick="@{clicker}"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -57,6 +68,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="#a1887f"
+                    android:onClick="@{clicker}"
                     android:text="Відміна"
                     android:textColor="#000000" />
 
@@ -69,9 +81,11 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="#5d4037"
+                    android:onClick="@{clicker}"
                     android:text="Додати"
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

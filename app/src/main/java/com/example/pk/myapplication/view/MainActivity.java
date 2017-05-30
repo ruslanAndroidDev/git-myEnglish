@@ -27,6 +27,10 @@ public class MainActivity extends MvpAppCompatActivity
     Toolbar toolbar;
     DrawerLayout drawer;
 
+    VocabularyFragment vocabularyFragment;
+    StartChallengeFragment startChallengeFragment;
+    TenseFragment tenseFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,15 +62,15 @@ public class MainActivity extends MvpAppCompatActivity
         Log.d("tag", "onNavigationItemSelected");
         try {
             if (id == R.id.my_vocabluary_item) {
-                presenter.vocabluaryItemSelected();
+                presenter.onVocabluaryItemSelect();
             } else if (id == R.id.main_item) {
-                presenter.mainFragmentItemSelected();
+                presenter.onMainFragmentSelect();
             } else if (id == R.id.item_repeat_word) {
-                presenter.startChallengeFragmentItemSelected();
+                presenter.onStartChallengeFragmentSelect();
             } else if (id == R.id.item_iregular_verbs) {
-                presenter.irgVerbsItemSelected();
+                presenter.onVerbsItemSelect();
             } else if (id == R.id.english_tense) {
-                presenter.tenseFragmentItemSelected();
+                presenter.onTenseFragmentSelect();
             }
         } catch (Exception e) {
             Log.d("tag", "error" + e.getMessage());
@@ -103,4 +107,27 @@ public class MainActivity extends MvpAppCompatActivity
         intent.putExtra("scale", 130);
         startActivity(intent);
     }
+
+    @Override
+    public void showVocabluaryFragment() {
+        if (vocabularyFragment == null)
+            vocabularyFragment = new VocabularyFragment();
+        showFragment(vocabularyFragment, false);
+        toolbar.setTitle("Мій Словник");
+    }
+
+    @Override
+    public void showStartChallangeFragment() {
+        Intent intent = new Intent(this, ChallengeActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showTenseFragment() {
+        if (tenseFragment == null)
+            tenseFragment = new TenseFragment();
+        showFragment(tenseFragment, false);
+        toolbar.setTitle("Часи");
+    }
+
 }

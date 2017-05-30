@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".Application"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -23,11 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ChallengeViewPagerActivity" />
-        <activity android:name=".view.MyImageViewer" />
-        <activity android:name=".view.WebActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+        <activity android:name=".view.ChallengeActivity" />
+        <activity
+            android:name=".view.WebActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

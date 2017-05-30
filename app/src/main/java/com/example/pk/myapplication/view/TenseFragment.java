@@ -26,7 +26,6 @@ public class TenseFragment extends Fragment implements View.OnClickListener {
         v = inflater.inflate(R.layout.tense_fragment, container, false);
         binding = DataBindingUtil.setContentView(getActivity(), R.layout.tense_fragment);
         binding.setClicker(this);
-       // ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Часи");
         return v;
     }
 
