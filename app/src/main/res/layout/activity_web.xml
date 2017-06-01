@@ -34,11 +34,11 @@
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
-    <com.vk.sdk.WebView
+    <WebView
         android:layout_below="@+id/webActivity_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/webView"
-        android:layout_alignParentBottom="true"></com.vk.sdk.WebView>
+        android:layout_alignParentBottom="true"></WebView>
 
 </RelativeLayout>

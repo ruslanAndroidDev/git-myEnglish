@@ -12,9 +12,9 @@ import com.example.pk.myapplication.R;
 
 public class WebActivity extends AppCompatActivity {
     public static final int WEBVIEW_SCALE = 200;
-    com.vk.sdk.WebView webView;
     String url;
     int scale;
+    WebView webView;
     TextView webActivity_toolbar_tv;
 
     @Override
@@ -25,7 +25,7 @@ public class WebActivity extends AppCompatActivity {
         url = intent.getStringExtra("url");
         scale = intent.getIntExtra("scale", WEBVIEW_SCALE);
 
-        webView = (com.vk.sdk.WebView) findViewById(R.id.webView);
+        webView = (WebView) findViewById(R.id.webView);
         setWebClient();
         webView.loadUrl(url);
         webView.setInitialScale(scale);
@@ -34,7 +34,7 @@ public class WebActivity extends AppCompatActivity {
 
 
         webActivity_toolbar_tv = (TextView) findViewById(R.id.webActivity_toolbar_tv);
-        webView = (com.vk.sdk.WebView) findViewById(R.id.webView);
+        webView = (WebView) findViewById(R.id.webView);
     }
 
     private void setWebClient() {

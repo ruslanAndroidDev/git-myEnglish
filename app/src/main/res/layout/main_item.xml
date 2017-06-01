@@ -11,26 +11,14 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:cardBackgroundColor="#efebe9">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/main_itemItv"
-                android:maxLines="10"
-                style="@style/MyButtonItem"
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_margin="5dp" />
+            android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:id="@+id/main_item_imageView"
-                android:layout_margin="5dp" />
-
-        </LinearLayout>
+                android:id="@+id/main_img"/>
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 

@@ -1,6 +1,8 @@
 package com.example.pk.myapplication.view;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -83,18 +85,26 @@ public class MainActivity extends MvpAppCompatActivity
 
     @Override
     public void showMainFragment() {
-        if (mainFragment == null)
-            mainFragment = new MainFragment();
-        showFragment(mainFragment, false);
+        if (isNetworkAvailable()) {
+            if (mainFragment == null)
+                mainFragment = new MainFragment();
+            showFragment(mainFragment);
+        } else {
+            NoInternetConnectionFragment noInternetConnectionFragment = new NoInternetConnectionFragment();
+            showFragment(noInternetConnectionFragment);
+        }
         toolbar.setTitle("My Englishtst");
     }
 
-    private void showFragment(Fragment fragment, boolean addToBackStack) {
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo activeNttworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNttworkInfo != null && activeNttworkInfo.isConnected();
+    }
+
+    private void showFragment(Fragment fragment) {
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.conteiner, fragment);
-        if (addToBackStack) {
-            ft.addToBackStack("");
-        }
         ft.commit();
         drawer.closeDrawer(GravityCompat.START);
     }
@@ -112,7 +122,7 @@ public class MainActivity extends MvpAppCompatActivity
     public void showVocabluaryFragment() {
         if (vocabularyFragment == null)
             vocabularyFragment = new VocabularyFragment();
-        showFragment(vocabularyFragment, false);
+        showFragment(vocabularyFragment);
         toolbar.setTitle("Мій Словник");
     }
 
@@ -126,7 +136,7 @@ public class MainActivity extends MvpAppCompatActivity
     public void showTenseFragment() {
         if (tenseFragment == null)
             tenseFragment = new TenseFragment();
-        showFragment(tenseFragment, false);
+        showFragment(tenseFragment);
         toolbar.setTitle("Часи");
     }
 

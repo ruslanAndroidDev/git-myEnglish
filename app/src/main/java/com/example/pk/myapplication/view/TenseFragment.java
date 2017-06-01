@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +22,9 @@ public class TenseFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.tense_fragment, container, false);
-        binding = DataBindingUtil.setContentView(getActivity(), R.layout.tense_fragment);
+        binding = DataBindingUtil.inflate(inflater, R.layout.tense_fragment, container, false);
         binding.setClicker(this);
-        return v;
+        return binding.getRoot();
     }
 
     @Override
