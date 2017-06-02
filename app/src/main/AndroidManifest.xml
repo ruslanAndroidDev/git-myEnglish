@@ -14,8 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,8 +23,7 @@
         </activity>
         <activity android:name=".view.ChallengeActivity" />
         <activity
-            android:name=".view.WebActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:name=".view.WebActivity"></activity>
     </application>
 
 </manifest>

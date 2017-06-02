@@ -16,7 +16,6 @@ import com.example.pk.myapplication.databinding.TenseFragmentBinding;
  * Created by pk on 15.09.2016.
  */
 public class TenseFragment extends Fragment implements View.OnClickListener {
-    View v;
     TenseFragmentBinding binding;
 
     @Nullable

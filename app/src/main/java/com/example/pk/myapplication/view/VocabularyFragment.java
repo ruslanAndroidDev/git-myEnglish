@@ -12,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.pk.myapplication.R;
 import com.example.pk.myapplication.adapter.MyListRecyclerAdapter;
@@ -26,20 +28,18 @@ import java.util.ArrayList;
 /**
  * Created by pk on 09.09.2016.
  */
-public class VocabularyFragment extends Fragment implements View.OnClickListener, IVocabulary {
+public class VocabularyFragment extends MvpAppCompatFragment implements View.OnClickListener, IVocabulary {
     @InjectPresenter
     VocabularyPresenter presenter;
     static RecyclerView recyclerView;
     static MyListRecyclerAdapter adapter;
     FloatingActionButton fab;
     Context context;
-    LayoutInflater inflater;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.my_vocabulary_frag, container, false);
         context = v.getContext();
-        this.inflater = inflater;
         presenter.loadData(context);
 
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
@@ -71,18 +71,20 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
     AlertDialog alertDialog;
     EditText dialog_et_native;
     EditText dialog_et_translate;
-    DialogmaketBinding maketBinding;
 
     @Override
     public void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View dialogView = inflater.inflate(R.layout.dialogmaket, null);
+        View dialogView = View.inflate(context,R.layout.dialogmaket, null);
         builder.setView(dialogView);
 
-        maketBinding = DataBindingUtil.setContentView(getActivity(), R.layout.dialogmaket);
-        maketBinding.setClicker(this);
-        dialog_et_native = maketBinding.dialogEtOriginal;
-        dialog_et_translate = maketBinding.dialogEtTranslate;
+        Button dialog_btn_ok = (Button) dialogView.findViewById(R.id.dialog_button_ok);
+        Button dialog_btn_cancel = (Button) dialogView.findViewById(R.id.dialog_button_cancel);
+        dialog_et_native = (EditText) dialogView.findViewById(R.id.dialog_et_original);
+        dialog_et_translate = (EditText) dialogView.findViewById(R.id.dialog_et_translate);
+
+        dialog_btn_cancel.setOnClickListener(this);
+        dialog_btn_ok.setOnClickListener(this);
         alertDialog = builder.create();
 
         alertDialog.show();

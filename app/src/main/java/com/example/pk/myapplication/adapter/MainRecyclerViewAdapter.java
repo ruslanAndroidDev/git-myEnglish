@@ -34,8 +34,6 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             context = itemView.getContext();
 //            this.main_itemItv = (TextView) itemView.findViewById(R.id.main_itemItv);
             this.main_frag_imageView = (ImageView) itemView.findViewById(R.id.main_img);
-
-
         }
     }
 

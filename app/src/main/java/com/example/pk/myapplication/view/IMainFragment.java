@@ -8,5 +8,4 @@ import com.arellomobile.mvp.MvpView;
 
 public interface IMainFragment extends MvpView {
     void fillArray(String icon);
-
 }

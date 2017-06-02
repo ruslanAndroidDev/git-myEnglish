@@ -42,16 +42,17 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(v.getContext(), ChallengeFragment.class);
-        num_of_challange_item = Integer.parseInt(tv_numItem.getText().toString());
-
-        Constants.NUM_OF_ITEM = num_of_challange_item;
-
-        if (Constants.NUM_OF_ITEM == 0) {
-            Toast.makeText(v.getContext(), "Помилка", Toast.LENGTH_SHORT).show();
-        } else {
-            startActivity(intent);
-        }
+        //TODO ПЕРЕПИСАТИ
+//        Intent intent = new Intent(v.getContext(), ChallengeFragment.class);
+//        num_of_challange_item = Integer.parseInt(tv_numItem.getText().toString());
+//
+//        Constants.NUM_OF_ITEM = num_of_challange_item;
+//
+//        if (Constants.NUM_OF_ITEM == 0) {
+//            Toast.makeText(v.getContext(), "Помилка", Toast.LENGTH_SHORT).show();
+//        } else {
+//            startActivity(intent);
+//        }
     }
 
     @Override

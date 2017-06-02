@@ -3,6 +3,7 @@ package com.example.pk.myapplication.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -16,12 +17,17 @@ public class WebActivity extends AppCompatActivity {
     int scale;
     WebView webView;
     TextView webActivity_toolbar_tv;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         Intent intent = getIntent();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         url = intent.getStringExtra("url");
         scale = intent.getIntExtra("scale", WEBVIEW_SCALE);
 
