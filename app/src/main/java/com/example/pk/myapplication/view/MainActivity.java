@@ -5,14 +5,18 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -30,8 +34,10 @@ public class MainActivity extends MvpAppCompatActivity
     DrawerLayout drawer;
 
     VocabularyFragment vocabularyFragment;
-    StartChallengeFragment startChallengeFragment;
     TenseFragment tenseFragment;
+    ImageView toolbar_ic_date;
+
+    boolean SHOW_IC_FLAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,18 @@ public class MainActivity extends MvpAppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.ic_date);
+        if (SHOW_IC_FLAG) {
+            item.setVisible(true);
+        } else {
+            item.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -61,39 +79,35 @@ public class MainActivity extends MvpAppCompatActivity
 
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Log.d("tag", "onNavigationItemSelected");
-        try {
-            if (id == R.id.my_vocabluary_item) {
-                presenter.onVocabluaryItemSelect();
-            } else if (id == R.id.main_item) {
-                presenter.onMainFragmentSelect();
-            } else if (id == R.id.item_repeat_word) {
-                presenter.onStartChallengeFragmentSelect();
-            } else if (id == R.id.item_iregular_verbs) {
-                presenter.onVerbsItemSelect();
-            } else if (id == R.id.english_tense) {
-                presenter.onTenseFragmentSelect();
-            }
-        } catch (Exception e) {
-            Log.d("tag", "error" + e.getMessage());
+        if (id == R.id.my_vocabluary_item) {
+            presenter.onVocabluaryItemSelect();
+        } else if (id == R.id.main_item) {
+            presenter.onMainFragmentSelect();
+        } else if (id == R.id.item_repeat_word) {
+            presenter.onStartChallengeFragmentSelect();
+        } else if (id == R.id.item_iregular_verbs) {
+            presenter.onVerbsItemSelect();
+        } else if (id == R.id.english_tense) {
+            presenter.onTenseFragmentSelect();
         }
         return true;
     }
 
     FragmentTransaction ft;
-    MainFragment mainFragment;
+    InterestingFactFragment interestingFactFragment;
 
     @Override
     public void showMainFragment() {
         if (isNetworkAvailable()) {
-            if (mainFragment == null)
-                mainFragment = new MainFragment();
-            showFragment(mainFragment);
+            if (interestingFactFragment == null)
+                interestingFactFragment = new InterestingFactFragment();
+            showFragment(interestingFactFragment);
         } else {
             NoInternetConnectionFragment noInternetConnectionFragment = new NoInternetConnectionFragment();
             showFragment(noInternetConnectionFragment);
         }
         toolbar.setTitle("My Englishtst");
+        SHOW_IC_FLAG = true;
     }
 
     private boolean isNetworkAvailable() {
@@ -107,12 +121,12 @@ public class MainActivity extends MvpAppCompatActivity
         ft.replace(R.id.conteiner, fragment);
         ft.commit();
         drawer.closeDrawer(GravityCompat.START);
+        invalidateOptionsMenu();
     }
 
     @Override
     public void openWebActivity(String url) {
         Intent intent = new Intent(this, WebActivity.class);
-        //  intent.putExtra("url", "http://easy-english.com.ua/irregular-verbs/");
         intent.putExtra("url", url);
         intent.putExtra("scale", 130);
         startActivity(intent);
@@ -124,6 +138,7 @@ public class MainActivity extends MvpAppCompatActivity
             vocabularyFragment = new VocabularyFragment();
         showFragment(vocabularyFragment);
         toolbar.setTitle("Мій Словник");
+        SHOW_IC_FLAG = false;
     }
 
     @Override
@@ -138,6 +153,20 @@ public class MainActivity extends MvpAppCompatActivity
             tenseFragment = new TenseFragment();
         showFragment(tenseFragment);
         toolbar.setTitle("Часи");
+        SHOW_IC_FLAG = false;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Toast.makeText(this, "yes", Toast.LENGTH_LONG).show();
+        DialogFragment datePickerFragment = new DatePickerFragment(new Listener() {
+            @Override
+            void onDataSet(DatePicker view, int year, int month, int day) {
+                int mont = month + 1;
+                interestingFactFragment.updateData(year + "-" + mont + "-" + day);
+            }
+        });
+        datePickerFragment.show(getSupportFragmentManager(), "datePicker");
+        return true;
+    }
 }

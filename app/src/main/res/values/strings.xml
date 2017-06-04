@@ -8,12 +8,13 @@
     <string name="my_dictionary">Мій словник</string>
     <string name="title_activity_main">My English</string>
     <string name="repeat_word">Повторення слів</string>
-    <string name="main_item">Головна</string>
+    <string name="main_item">Цікавинка</string>
     <string name="iregular_verbs">Таблиця дієслів</string>
     <string name="my_progres">Мій прогрес</string>
     <string name="english_tense">Часи англійської мови</string>
     <string name="repeat">Повторення слів</string>
     <string name="choseNumOfWords">Виберіть кількість слів для повторення:</string>
     <string name="myresult">Мій результат:</string>
+    <string name="nasa_key">8HdZ594J6RVVdmY6jbljLhZGzpuWBGj7zDarxoZq</string>
     <integer name="com_vk_sdk_AppId">5653141</integer>
 </resources>

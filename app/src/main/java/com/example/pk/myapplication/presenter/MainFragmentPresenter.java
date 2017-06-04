@@ -21,36 +21,36 @@ public class MainFragmentPresenter extends MvpPresenter<IMainFragment> {
     DatabaseReference reference;
 
     public MainFragmentPresenter() {
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        reference = mDatabase.getReference("pack/");
+//        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+//        reference = mDatabase.getReference("pack/");
 
-        reference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Model model = dataSnapshot.getValue(Model.class);
-                Log.d("tag", model.getIcon());
-                getViewState().fillArray(model.getIcon());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        reference.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Model model = dataSnapshot.getValue(Model.class);
+//                Log.d("tag", model.getIcon());
+//                getViewState().fillArray(model.getIcon());
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 }
