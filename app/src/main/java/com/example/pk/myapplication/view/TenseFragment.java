@@ -17,6 +17,7 @@ import com.example.pk.myapplication.databinding.TenseFragmentBinding;
  */
 public class TenseFragment extends Fragment implements View.OnClickListener {
     TenseFragmentBinding binding;
+    String url = "";
 
     @Nullable
     @Override
@@ -28,7 +29,6 @@ public class TenseFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String url = "";
         switch (v.getId()) {
             case R.id.pastSimple:
                 url = "http://easy-english.com.ua/past-simple/";

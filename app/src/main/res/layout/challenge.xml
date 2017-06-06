@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/ch_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/ToolbarStyle"
+        app:titleTextColor="@color/white"></android.support.v7.widget.Toolbar>
+
+
     <FrameLayout
+        android:id="@+id/challengeFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/challengeFrame"></FrameLayout>
+        android:layout_below="@+id/ch_toolbar"></FrameLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/challengeRelative"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ch_toolbar">
+
+        <com.example.pk.myapplication.view.MyCustomPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="440dp" />
+
+        <Button
+            android:id="@+id/finish_button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorAccent"
+            android:text="ЗАвершити тест"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -23,4 +23,8 @@ public class ChallangePresenter extends MvpPresenter<IChallange> {
             getViewState().fillData(arrayList);
         }
     }
+
+    public void startChallange(int num_of_challange_item) {
+        getViewState().showChallengeFragment(num_of_challange_item);
+    }
 }

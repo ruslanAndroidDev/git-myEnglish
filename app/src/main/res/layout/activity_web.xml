@@ -3,35 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.pk.myapplication.view.WebActivity">
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/webActivity_toolbar"
-        android:background="@color/colorAccent">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/webActivity_toolbar_tv"
-                android:textColor="#FFF"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:maxLines="1"
-                android:textSize="18sp"/>
-            <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:scaleType="centerCrop"
-                android:id="@+id/webActivity_toolbar_imgBtn"
-                android:background="@null"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_cancel"/>
-        </RelativeLayout>
+        android:background="@color/colorAccent"
+        app:titleTextColor="@color/white"
+        app:theme="@style/ToolbarStyle">
 
     </android.support.v7.widget.Toolbar>
     <WebView

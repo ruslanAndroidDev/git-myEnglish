@@ -6,10 +6,17 @@ package com.example.pk.myapplication.model;
 public class Word {
     private String translateWord;
     private String originalWord;
+    private int status;
 
-    public Word(String translateWord, String originalWord) {
+    public int getStatus() {
+        return status;
+    }
+
+    public Word(String translateWord, String originalWord, int status) {
         this.translateWord = translateWord;
         this.originalWord = originalWord;
+        this.status = status;
+
     }
 
     public String getTranslateWord() {

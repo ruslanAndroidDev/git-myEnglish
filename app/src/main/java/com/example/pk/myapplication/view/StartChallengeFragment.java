@@ -1,20 +1,17 @@
 package com.example.pk.myapplication.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.pk.myapplication.Constants;
 import com.example.pk.myapplication.R;
+import com.example.pk.myapplication.presenter.ChallangePresenter;
 
 /**
  * Created by pk on 12.09.2016.
@@ -24,6 +21,11 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
     SeekBar seekBar;
     int num_of_challange_item;
     TextView tv_numItem;
+    ChallangePresenter challangePresenter;
+
+    public StartChallengeFragment(ChallangePresenter challangePresenter) {
+        this.challangePresenter = challangePresenter;
+    }
 
     @Nullable
     @Override
@@ -42,17 +44,8 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        //TODO ПЕРЕПИСАТИ
-//        Intent intent = new Intent(v.getContext(), ChallengeFragment.class);
-//        num_of_challange_item = Integer.parseInt(tv_numItem.getText().toString());
-//
-//        Constants.NUM_OF_ITEM = num_of_challange_item;
-//
-//        if (Constants.NUM_OF_ITEM == 0) {
-//            Toast.makeText(v.getContext(), "Помилка", Toast.LENGTH_SHORT).show();
-//        } else {
-//            startActivity(intent);
-//        }
+        num_of_challange_item = Integer.parseInt(tv_numItem.getText().toString());
+        challangePresenter.startChallange(num_of_challange_item);
     }
 
     @Override

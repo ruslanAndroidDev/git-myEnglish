@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import com.example.pk.myapplication.R;
 
@@ -16,7 +16,6 @@ public class WebActivity extends AppCompatActivity {
     String url;
     int scale;
     WebView webView;
-    TextView webActivity_toolbar_tv;
     Toolbar toolbar;
 
     @Override
@@ -25,8 +24,10 @@ public class WebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
         Intent intent = getIntent();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.webActivity_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         url = intent.getStringExtra("url");
         scale = intent.getIntExtra("scale", WEBVIEW_SCALE);
@@ -39,8 +40,15 @@ public class WebActivity extends AppCompatActivity {
         webView.getSettings().setDisplayZoomControls(false);
 
 
-        webActivity_toolbar_tv = (TextView) findViewById(R.id.webActivity_toolbar_tv);
         webView = (WebView) findViewById(R.id.webView);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setWebClient() {
@@ -52,9 +60,9 @@ public class WebActivity extends AppCompatActivity {
                 int posit;
                 if ((posit = title.indexOf("-")) != -1) {
                     String newTitle = title.substring(0, posit - 1);
-                    webActivity_toolbar_tv.setText(newTitle);
+                    toolbar.setTitle(newTitle);
                 } else {
-                    webActivity_toolbar_tv.setText(view.getTitle());
+                    toolbar.setTitle(view.getTitle());
                 }
             }
         });

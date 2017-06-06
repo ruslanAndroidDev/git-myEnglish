@@ -14,7 +14,7 @@ public interface IChallange extends MvpView {
 
     void showStartChallengeFragment();
 
-    void showChallengeFragment();
+    void showChallengeFragment(int num_of_challange_item);
 
     void showFinishChallangeFragment();
 

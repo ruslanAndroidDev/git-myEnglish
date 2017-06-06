@@ -1,5 +1,4 @@
 package com.example.pk.myapplication.view;
-
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,8 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -35,7 +32,6 @@ public class MainActivity extends MvpAppCompatActivity
 
     VocabularyFragment vocabularyFragment;
     TenseFragment tenseFragment;
-    ImageView toolbar_ic_date;
 
     boolean SHOW_IC_FLAG;
 
@@ -101,13 +97,14 @@ public class MainActivity extends MvpAppCompatActivity
         if (isNetworkAvailable()) {
             if (interestingFactFragment == null)
                 interestingFactFragment = new InterestingFactFragment();
+            SHOW_IC_FLAG = true;
             showFragment(interestingFactFragment);
         } else {
             NoInternetConnectionFragment noInternetConnectionFragment = new NoInternetConnectionFragment();
+            SHOW_IC_FLAG = false;
             showFragment(noInternetConnectionFragment);
         }
-        toolbar.setTitle("My Englishtst");
-        SHOW_IC_FLAG = true;
+        toolbar.setTitle("My English");
     }
 
     private boolean isNetworkAvailable() {
@@ -158,7 +155,6 @@ public class MainActivity extends MvpAppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "yes", Toast.LENGTH_LONG).show();
         DialogFragment datePickerFragment = new DatePickerFragment(new Listener() {
             @Override
             void onDataSet(DatePicker view, int year, int month, int day) {

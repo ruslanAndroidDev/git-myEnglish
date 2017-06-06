@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.example.pk.myapplication.data.MyDataBase;
 import com.example.pk.myapplication.data.MyDataBaseHelper;
 import com.example.pk.myapplication.model.Word;
 import com.example.pk.myapplication.view.IVocabulary;
@@ -29,6 +30,6 @@ public class VocabularyPresenter extends MvpPresenter<IVocabulary> {
 
     public void writeWord(String translate, String nativeWord) {
         MyDataBaseHelper.writetodb(context, translate, nativeWord);
-        getViewState().insertWord(translate, nativeWord);
+        getViewState().insertWord(translate, nativeWord, MyDataBase.STATUS_UNKNOWN);
     }
 }

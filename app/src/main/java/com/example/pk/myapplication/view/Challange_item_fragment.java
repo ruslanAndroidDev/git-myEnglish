@@ -51,7 +51,7 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
         context = v.getContext();
         initializeItem(v);
         wordsVariant = buildDataSet();
-        tv_question_word = (TextView)v.findViewById(R.id.tv_question_word);
+        tv_question_word = (TextView) v.findViewById(R.id.tv_question_word);
         tv_question_word.setText(questionString);
         Log.d("tag", "questionString " + questionString);
         setFalse_item(wordsVariant);
@@ -156,7 +156,7 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
 
     public Variant buildDataSet() {
         data = MyDataBaseHelper.loadWordwithDb(context);
-        dB_size = MyDataBaseHelper.getSize(context);
+        dB_size = data.size();
         keyWord = data.get(myRandom.nextInt(dB_size));
         trueAnswerString = keyWord.getTranslateWord();
         questionString = keyWord.getOriginalWord();
@@ -182,7 +182,7 @@ class SleepTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-       // ChallengeFragment.scrollToNextItem();
-        //TODO FIx me
+        ChallengeActivity.scrollToNext();
+
     }
 }

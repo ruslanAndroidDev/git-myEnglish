@@ -12,5 +12,5 @@ import java.util.ArrayList;
 public interface IVocabulary extends MvpView {
     void  showDialog();
     void showData(ArrayList<Word> data);
-    void insertWord(String translate,String original);
+    void insertWord(String translate,String original,int status);
 }

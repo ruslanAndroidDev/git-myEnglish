@@ -20,6 +20,7 @@ public class MyDataBaseHelper {
 
     static String originalword;
     static String translateword;
+    static int status;
     static Cursor cursor;
 
     public static void writetodb(Context context, String translateWord, String originalWord) {
@@ -32,6 +33,7 @@ public class MyDataBaseHelper {
         ContentValues values = new ContentValues();
         values.put(MyDataBase.ORIGINAL_COLUMN, originalWord);
         values.put(MyDataBase.TRANSLATE_COLUMN, translateWord);
+        values.put(MyDataBase.STATUS_COLUMN, MyDataBase.STATUS_UNKNOWN);
 
         db.insert(MyDataBase.TABLE_NAME, null, values);
         db.close();
@@ -42,7 +44,7 @@ public class MyDataBaseHelper {
         myDb = new MyDataBase(context);
         db = myDb.getReadableDatabase();
         allWordDb = new ArrayList<>();
-        cursor = db.query(MyDataBase.TABLE_NAME, new String[]{MyDataBase.ORIGINAL_COLUMN, MyDataBase.TRANSLATE_COLUMN}, null, null, null, null, null);
+        cursor = db.query(MyDataBase.TABLE_NAME, new String[]{MyDataBase.ORIGINAL_COLUMN, MyDataBase.TRANSLATE_COLUMN, MyDataBase.STATUS_COLUMN}, null, null, null, null, null);
         if (cursor.moveToLast()) {
             getOneWord();
             while (cursor.moveToPrevious()) {
@@ -57,14 +59,15 @@ public class MyDataBaseHelper {
     private static void getOneWord() {
         originalword = cursor.getString(0);
         translateword = cursor.getString(1);
-        allWordDb.add(new Word(translateword, originalword));
+        status = cursor.getInt(2);
+        allWordDb.add(new Word(translateword, originalword, status));
     }
 
     public static int getSize(Context context) {
         myDb = new MyDataBase(context);
         db = myDb.getReadableDatabase();
         allWordDb = new ArrayList<>();
-        cursor = db.query(MyDataBase.TABLE_NAME, new String[]{MyDataBase.ORIGINAL_COLUMN, MyDataBase.TRANSLATE_COLUMN}, null, null, null, null, null);
+        cursor = db.query(MyDataBase.TABLE_NAME, new String[]{MyDataBase.ORIGINAL_COLUMN, MyDataBase.TRANSLATE_COLUMN, MyDataBase.STATUS_COLUMN}, null, null, null, null, null);
         return cursor.getCount();
     }
 

@@ -8,14 +8,12 @@ import java.util.ArrayList;
 
 public class WordPack {
     String name;
-    String photoUrl;
+    String icon;
     ArrayList<String> wordsOriginal;
     ArrayList<String> wordsTranslate;
-    int view;
-
-    public WordPack(String name, String photoUrl, ArrayList<String> wordsOriginal, ArrayList<String> wordsTranslate) {
+    public WordPack(String name, String icon, ArrayList<String> wordsOriginal, ArrayList<String> wordsTranslate) {
         this.name = name;
-        this.photoUrl = photoUrl;
+        this.icon = icon;
         this.wordsOriginal = wordsOriginal;
         this.wordsTranslate = wordsTranslate;
     }
@@ -25,7 +23,7 @@ public class WordPack {
     }
 
     public String getPhotoUrl() {
-        return photoUrl;
+        return icon;
     }
 
     public ArrayList<String> getWordsOriginal() {
@@ -36,18 +34,11 @@ public class WordPack {
         return wordsTranslate;
     }
 
-    public WordPack(String name, String photoUrl) {
+    public WordPack(String name, String icon) {
         this.name = name;
-        this.photoUrl = photoUrl;
-    }
-
-    public WordPack(String name, int photo) {
-        this.name = name;
-        this.view = photo;
+        this.icon = icon;
     }
 
     public WordPack() {
-
-
     }
 }

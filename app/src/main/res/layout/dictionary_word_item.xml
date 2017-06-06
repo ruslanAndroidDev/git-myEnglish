@@ -12,32 +12,15 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/card_number"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/card_status"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             app:cardBackgroundColor="@color/colorPrimary"
             app:cardCornerRadius="2dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/position_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="1"
-                    android:textColor="@color/white"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -47,11 +30,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/card_number"
+            android:layout_toRightOf="@id/card_status"
             android:text="car"
             android:textColor="#000000"
             android:textSize="26sp"
-            android:textStyle="bold" />
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/tv_vord_utranslate"
@@ -62,7 +45,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="-5dp"
-            android:layout_toRightOf="@id/card_number"
+            android:layout_toRightOf="@id/card_status"
             android:gravity="center_horizontal"
             android:text="автомобіль"
             android:textColor="#594c4c"

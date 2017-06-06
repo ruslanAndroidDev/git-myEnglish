@@ -33,6 +33,7 @@ public class DatePickerFragment extends DialogFragment
         int day = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
         dialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+        dialog.setTitle("");
         return dialog;
     }
 
