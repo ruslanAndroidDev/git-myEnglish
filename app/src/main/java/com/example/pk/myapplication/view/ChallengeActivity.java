@@ -4,8 +4,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -15,7 +17,6 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.pk.myapplication.R;
 import com.example.pk.myapplication.adapter.VocabularyPagerAdapter;
-import com.example.pk.myapplication.data.MyDataBaseHelper;
 import com.example.pk.myapplication.model.Word;
 import com.example.pk.myapplication.presenter.ChallangePresenter;
 
@@ -37,7 +38,6 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
     static MyCustomPager viewPager;
     VocabularyPagerAdapter vocabularyPagerAdapter;
     Button finishBtn;
-    static int current_item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +53,6 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
         viewPager = (MyCustomPager) findViewById(R.id.viewpager);
 
         challangeFrame = (FrameLayout) findViewById(R.id.challengeFrame);
-
-        showStartChallengeFragment();
     }
 
     public void showErorAlert() {
@@ -72,8 +70,39 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
         builder.show();
     }
 
+    @Override
     public void showStartChallengeFragment() {
         showFragment(new StartChallengeFragment(challangePresenter));
+    }
+
+    @Override
+    public void showChallengeLayout(int num_of_challange_item, ArrayList<Word> arrayList) {
+        challangeRelative.setVisibility(View.VISIBLE);
+        challangeFrame.setVisibility(View.GONE);
+        vocabularyPagerAdapter = new VocabularyPagerAdapter(getSupportFragmentManager(), num_of_challange_item, arrayList, challangePresenter);
+        viewPager.setAdapter(vocabularyPagerAdapter);
+
+        final int pageCount = vocabularyPagerAdapter.getCount();
+        Log.d("tag", "pageCount" + pageCount);
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d("tag", "position" + position);
+                if (position == (pageCount - 1)) {
+                    challangePresenter.updateResult();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void showFragment(Fragment fragment) {
@@ -84,37 +113,17 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
         challangeFrame.setVisibility(View.VISIBLE);
     }
 
-    public void showChallengeFragment(int num_of_challange_item) {
-        vocabularyPagerAdapter = new VocabularyPagerAdapter(getSupportFragmentManager(), num_of_challange_item, this, MyDataBaseHelper.loadWordwithDb(this));
-        viewPager.setAdapter(vocabularyPagerAdapter);
-        challangeRelative.setVisibility(View.VISIBLE);
-        challangeFrame.setVisibility(View.GONE);
-    }
-
-    public void showFinishChallangeFragment() {
-        showFragment(new FinishChallengeFragment());
-    }
-
-    @Override
-    public void scrollToNextItem() {
-
-    }
-
-    public static void scrollToNext() {
-        viewPager.setCurrentItem(++current_item);
-    }
-
-    @Override
-    public void fillData(ArrayList<Word> arrayList) {
-
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.finish_button:
+                challangePresenter.clearData();
                 finish();
                 break;
         }
+    }
+
+    public static void scrollToNext() {
+        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
     }
 }

@@ -1,6 +1,4 @@
 package com.example.pk.myapplication.view;
-
-import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.pk.myapplication.Constants;
 import com.example.pk.myapplication.R;
 import com.example.pk.myapplication.data.MyDataBaseHelper;
 import com.example.pk.myapplication.model.Variant;
 import com.example.pk.myapplication.model.Word;
+import com.example.pk.myapplication.presenter.ChallangePresenter;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,9 +24,6 @@ import java.util.Random;
  * Created by pk on 17.09.2016.
  */
 public class Challange_item_fragment extends Fragment implements View.OnClickListener {
-    Context context;
-    TextView tv_question_word;
-    TextView trueItem;
     Random myRandom;
 
     SleepTask mySleepTask;
@@ -36,6 +31,14 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
 
     String trueAnswerString;
     String questionString;
+
+    ChallangePresenter challangePresenter;
+
+    TextView trueItem;
+
+    public Challange_item_fragment(ChallangePresenter challangePresenter) {
+        this.challangePresenter = challangePresenter;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,75 +51,15 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.challange_item, container, false);
-        context = v.getContext();
         initializeItem(v);
         wordsVariant = buildDataSet();
-        tv_question_word = (TextView) v.findViewById(R.id.tv_question_word);
+        TextView tv_question_word = (TextView) v.findViewById(R.id.tv_question_word);
         tv_question_word.setText(questionString);
         Log.d("tag", "questionString " + questionString);
         setFalse_item(wordsVariant);
         setTrue_item();
         return v;
     }
-
-    private void setTrue_item() {
-        int random = myRandom.nextInt(4);
-        if (random == 0) {
-            trueItem = tv_variant1;
-        } else if (random == 1) {
-            trueItem = tv_variant2;
-        } else if (random == 2) {
-            trueItem = tv_variant3;
-        } else if (random == 3) {
-            trueItem = tv_variant4;
-        } else {
-            trueItem = null;
-        }
-        trueItem.setText(trueAnswerString);
-    }
-
-    private void setFalse_item(Variant variant) {
-        tv_variant1.setText(variant.getFalseVariant1());
-        tv_variant2.setText(variant.getFalseVariant2());
-        tv_variant3.setText(variant.getFalseVariant3());
-        tv_variant4.setText(variant.getFalseVariant4());
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.item_cardView1:
-                testAnswer(tv_variant1, cardView1);
-                break;
-            case R.id.item_cardView2:
-                testAnswer(tv_variant2, cardView2);
-                break;
-            case R.id.item_cardView3:
-                testAnswer(tv_variant3, cardView3);
-                break;
-            case R.id.item_cardView4:
-                testAnswer(tv_variant4, cardView4);
-                break;
-        }
-
-
-    }
-
-    private void testAnswer(TextView tv, CardView cardView) {
-        if (tv.getText().toString().equals(trueAnswerString)) {
-            cardView.setCardBackgroundColor(Color.GREEN);
-            Constants.TRUE_ANSWER++;
-        } else {
-            cardView.setCardBackgroundColor(Color.RED);
-        }
-        cardView1.setClickable(false);
-        cardView2.setClickable(false);
-        cardView3.setClickable(false);
-        cardView4.setClickable(false);
-        mySleepTask.execute();
-    }
-
     TextView tv_variant1;
     TextView tv_variant2;
     TextView tv_variant3;
@@ -144,6 +87,64 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
         cardView4.setOnClickListener(this);
     }
 
+    private void setFalse_item(Variant variant) {
+        tv_variant1.setText(variant.getFalseVariant1());
+        tv_variant2.setText(variant.getFalseVariant2());
+        tv_variant3.setText(variant.getFalseVariant3());
+        tv_variant4.setText(variant.getFalseVariant4());
+
+    }
+
+    private void setTrue_item() {
+        int random = myRandom.nextInt(4);
+        if (random == 0) {
+            tv_variant1.setText(trueAnswerString);
+        } else if (random == 1) {
+            tv_variant2.setText(trueAnswerString);
+        } else if (random == 2) {
+            tv_variant3.setText(trueAnswerString);
+        } else if (random == 3) {
+            tv_variant4.setText(trueAnswerString);
+        } else {
+            trueItem = null;
+        }
+        Log.d("tag", "true item " + trueAnswerString + ", random =" + random);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.item_cardView1:
+                testAnswer(tv_variant1, cardView1);
+                break;
+            case R.id.item_cardView2:
+                testAnswer(tv_variant2, cardView2);
+                break;
+            case R.id.item_cardView3:
+                testAnswer(tv_variant3, cardView3);
+                break;
+            case R.id.item_cardView4:
+                testAnswer(tv_variant4, cardView4);
+                break;
+        }
+
+
+    }
+
+    private void testAnswer(TextView tv, CardView cardView) {
+        if (tv.getText().toString().equals(trueAnswerString)) {
+            cardView.setCardBackgroundColor(Color.GREEN);
+            challangePresenter.addTrueItemCount();
+        } else {
+            cardView.setCardBackgroundColor(Color.RED);
+        }
+        cardView1.setClickable(false);
+        cardView2.setClickable(false);
+        cardView3.setClickable(false);
+        cardView4.setClickable(false);
+        mySleepTask.execute();
+    }
+
     private int dB_size;
     ArrayList<Word> data;
     Word keyWord;
@@ -155,7 +156,7 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
     private String falseVariant4;
 
     public Variant buildDataSet() {
-        data = MyDataBaseHelper.loadWordwithDb(context);
+        data = MyDataBaseHelper.loadWordwithDb(getContext());
         dB_size = data.size();
         keyWord = data.get(myRandom.nextInt(dB_size));
         trueAnswerString = keyWord.getTranslateWord();
@@ -183,6 +184,5 @@ class SleepTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         ChallengeActivity.scrollToNext();
-
     }
 }

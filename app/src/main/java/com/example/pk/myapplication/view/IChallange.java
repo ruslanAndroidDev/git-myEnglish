@@ -14,11 +14,5 @@ public interface IChallange extends MvpView {
 
     void showStartChallengeFragment();
 
-    void showChallengeFragment(int num_of_challange_item);
-
-    void showFinishChallangeFragment();
-
-    void scrollToNextItem();
-
-    void fillData(ArrayList<Word> arrayList);
+    void showChallengeLayout(int num_of_challange_item,ArrayList<Word> arrayList);
 }

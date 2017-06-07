@@ -15,16 +15,57 @@ import java.util.ArrayList;
  */
 @InjectViewState
 public class ChallangePresenter extends MvpPresenter<IChallange> {
+    private int num_of_challange_item;
+    private int num_of_true_item;
+    PagerResultListener listener;
+
+    public void setListener(PagerResultListener listener) {
+        this.listener = listener;
+    }
+
+    public ChallangePresenter() {
+        getViewState().showStartChallengeFragment();
+        clearData();
+    }
+
+    public int getNum_of_challange_item() {
+        return num_of_challange_item;
+    }
+
+    public void addTrueItemCount() {
+        ++num_of_true_item;
+    }
+
+    public int getNum_of_true_item() {
+        return num_of_true_item;
+    }
+
     public void loadData(Context context) {
         ArrayList<Word> arrayList = MyDataBaseHelper.loadWordwithDb(context);
         if (arrayList.size() < 10) {
             getViewState().showErorAlert();
         } else {
-            getViewState().fillData(arrayList);
+            getViewState().showChallengeLayout(num_of_challange_item, arrayList);
         }
     }
 
-    public void startChallange(int num_of_challange_item) {
-        getViewState().showChallengeFragment(num_of_challange_item);
+    public void startChallange(Context context, int num_of_challange_item) {
+        this.num_of_challange_item = num_of_challange_item;
+        loadData(context);
     }
+
+    public double getResult() {
+        return (double) num_of_true_item / (double) num_of_challange_item * 100;
+    }
+
+    public void clearData() {
+        num_of_challange_item = 0;
+        num_of_true_item = 0;
+    }
+
+    public void updateResult() {
+        listener.onUpdate(num_of_true_item);
+    }
+
 }
+
