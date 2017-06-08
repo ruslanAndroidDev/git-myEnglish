@@ -10,11 +10,26 @@
     <string name="repeat_word">Повторення слів</string>
     <string name="main_item">Цікавинка</string>
     <string name="iregular_verbs">Таблиця дієслів</string>
-    <string name="my_progres">Мій прогрес</string>
     <string name="english_tense">Часи англійської мови</string>
     <string name="repeat">Повторення слів</string>
     <string name="choseNumOfWords">Виберіть кількість слів для повторення:</string>
     <string name="myresult">Мій результат:</string>
     <string name="nasa_key">8HdZ594J6RVVdmY6jbljLhZGzpuWBGj7zDarxoZq</string>
+    <string name="past_simple_url">http://easy-english.com.ua/past-simple/</string>
+    <string name="present_simple_url">http://easy-english.com.ua/present-simple/</string>
+    <string name="future_simple_url">http://easy-english.com.ua/future-simple/</string>
+    <string name="future_simple_in_the_past_url">http://easy-english.com.ua/future-simple-in-the-past/</string>
+    <string name="past_continuous_url">http://easy-english.com.ua/past-continuous/</string>
+    <string name="present_continuous_url">http://easy-english.com.ua/present-continuous/</string>
+    <string name="future_continuous_url">http://easy-english.com.ua/future-continuous/</string>
+    <string name="future_continuous_in_the_past_url">http://easy-english.com.ua/future-continuous-in-the-past/</string>
+    <string name="past_perfect_url">http://easy-english.com.ua/past-perfect/</string>
+    <string name="present_perfect_url">http://easy-english.com.ua/present-perfect/</string>
+    <string name="future_perfect_url">http://easy-english.com.ua/future-perfect/</string>
+    <string name="future_perfect_in_the_past_url">http://easy-english.com.ua/future-perfect-in-the-past/</string>
+    <string name="past_perfect_continuous_url">http://easy-english.com.ua/past-perfect-continuous/</string>
+    <string name="present_perfect_continuous_url">http://easy-english.com.ua/present-perfect-continuous/</string>
+    <string name="future_perfect_continuous_url">http://easy-english.com.ua/future-perfect-continuous/</string>
+    <string name="future_perfect_continuous_in_the_past_url">http://easy-english.com.ua/future-perfect-continuous-in-the-past/</string>
     <integer name="com_vk_sdk_AppId">5653141</integer>
 </resources>

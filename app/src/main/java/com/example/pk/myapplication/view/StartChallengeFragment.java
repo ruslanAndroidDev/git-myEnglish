@@ -11,6 +11,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.example.pk.myapplication.R;
+import com.example.pk.myapplication.Utill;
 import com.example.pk.myapplication.databinding.StartChallengeBinding;
 import com.example.pk.myapplication.presenter.ChallangePresenter;
 
@@ -32,6 +33,8 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
         challengeBinding = DataBindingUtil.inflate(inflater, R.layout.start_challenge, container, false);
         challengeBinding.seekBar.setOnSeekBarChangeListener(this);
         challengeBinding.setClicker(this);
+        challengeBinding.challangeIv.setImageBitmap(
+                Utill.loadBitmapFromResource(getResources(), R.drawable.book_5, 220, 300));
         return challengeBinding.getRoot();
     }
 
@@ -59,5 +62,10 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

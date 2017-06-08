@@ -31,52 +31,52 @@ public class TenseFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pastSimple:
-                url = "http://easy-english.com.ua/past-simple/";
+                url = getResources().getString(R.string.past_simple_url);
                 break;
             case R.id.presentSimple:
-                url = "http://easy-english.com.ua/present-simple/";
+                url = getResources().getString(R.string.present_simple_url);
                 break;
             case R.id.futureSimple:
-                url = "http://easy-english.com.ua/future-simple/";
+                url = getResources().getString(R.string.future_simple_url);
                 break;
             case R.id.futureinthePastSimple:
-                url = "http://easy-english.com.ua/future-simple-in-the-past/";
+                url = getResources().getString(R.string.future_simple_in_the_past_url);
                 break;
             case R.id.pastContinuous:
-                url = "http://easy-english.com.ua/past-continuous/";
+                url = getResources().getString(R.string.past_continuous_url);
                 break;
             case R.id.presentContinuous:
-                url = "http://easy-english.com.ua/present-continuous/";
+                url = getResources().getString(R.string.present_continuous_url);
                 break;
             case R.id.futureContinuous:
-                url = "http://easy-english.com.ua/future-continuous/";
+                url = getResources().getString(R.string.future_continuous_url);
                 break;
             case R.id.futureinthePastContinuous:
-                url = "http://easy-english.com.ua/future-continuous-in-the-past/";
+                url = getResources().getString(R.string.future_continuous_in_the_past_url);
                 break;
             case R.id.pastPerfect:
-                url = "http://easy-english.com.ua/past-perfect/";
+                url = getResources().getString(R.string.past_perfect_url);
                 break;
             case R.id.presentPerfect:
-                url = "http://easy-english.com.ua/present-perfect/";
+                url = getResources().getString(R.string.present_perfect_url);
                 break;
             case R.id.futurePerfect:
-                url = "http://easy-english.com.ua/future-perfect/";
+                url = getResources().getString(R.string.future_perfect_url);
                 break;
             case R.id.futureinthePastPerfect:
-                url = "http://easy-english.com.ua/future-perfect-in-the-past/";
+                url = getResources().getString(R.string.future_perfect_in_the_past_url);
                 break;
             case R.id.pastPerfectContinuous:
-                url = "http://easy-english.com.ua/past-perfect-continuous/";
+                url = getResources().getString(R.string.past_perfect_continuous_url);
                 break;
             case R.id.presentPerfectContinuous:
-                url = "http://easy-english.com.ua/present-perfect-continuous/";
+                url = getResources().getString(R.string.present_perfect_continuous_url);
                 break;
             case R.id.futurePerfectContinuous:
-                url = "http://easy-english.com.ua/future-perfect-continuous/";
+                url = getResources().getString(R.string.future_perfect_continuous_url);
                 break;
             case R.id.futureinthePastPerfectContinuous:
-                url = "http://easy-english.com.ua/future-perfect-continuous-in-the-past/";
+                url = getResources().getString(R.string.future_perfect_continuous_in_the_past_url);
                 break;
         }
         Intent intent = new Intent(getActivity(), WebActivity.class);

@@ -18,6 +18,7 @@ public class ChallangePresenter extends MvpPresenter<IChallange> {
     private int num_of_challange_item;
     private int num_of_true_item;
     PagerResultListener listener;
+    Context context;
 
     public void setListener(PagerResultListener listener) {
         this.listener = listener;
@@ -50,6 +51,7 @@ public class ChallangePresenter extends MvpPresenter<IChallange> {
     }
 
     public void startChallange(Context context, int num_of_challange_item) {
+        this.context = context;
         this.num_of_challange_item = num_of_challange_item;
         loadData(context);
     }
@@ -67,5 +69,8 @@ public class ChallangePresenter extends MvpPresenter<IChallange> {
         listener.onUpdate(num_of_true_item);
     }
 
+    public void setStatus(int status, String word) {
+        MyDataBaseHelper.setStatus(context, status, word);
+    }
 }
 

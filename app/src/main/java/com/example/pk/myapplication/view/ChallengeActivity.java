@@ -46,6 +46,7 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
         ch_toolbar = (Toolbar) findViewById(R.id.ch_toolbar);
         setSupportActionBar(ch_toolbar);
         ch_toolbar.setTitle("Challange");
+
         challangeRelative = (RelativeLayout) findViewById(R.id.challengeRelative);
 
         finishBtn = (Button) findViewById(R.id.finish_button);

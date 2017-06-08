@@ -1,4 +1,5 @@
 package com.example.pk.myapplication.view;
+
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,10 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.pk.myapplication.R;
+import com.example.pk.myapplication.Utill;
 import com.example.pk.myapplication.presenter.MainPresenter;
 
 public class MainActivity extends MvpAppCompatActivity
@@ -50,6 +53,8 @@ public class MainActivity extends MvpAppCompatActivity
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ImageView imageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView_nav);
+        imageView.setImageBitmap(Utill.loadBitmapFromResource(getResources(), R.drawable.header_photo, 220, 160));
     }
 
     @Override
@@ -114,10 +119,10 @@ public class MainActivity extends MvpAppCompatActivity
     }
 
     private void showFragment(Fragment fragment) {
+        drawer.closeDrawer(GravityCompat.START);
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.conteiner, fragment);
         ft.commit();
-        drawer.closeDrawer(GravityCompat.START);
         invalidateOptionsMenu();
     }
 

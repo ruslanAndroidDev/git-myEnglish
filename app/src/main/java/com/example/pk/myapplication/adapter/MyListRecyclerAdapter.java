@@ -55,13 +55,13 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             View customTitle = View.inflate(context, R.layout.customtitle, null);
             builder.setCustomTitle(customTitle);
             TextView tv = (TextView) customTitle.findViewById(R.id.customTitleTv);
-            tv.setText(data.get(getAdapterPosition()-1).getOriginalWord());
+            tv.setText(data.get(getAdapterPosition() - 1).getOriginalWord());
             builder.setItems(item_array, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int item) {
                     if (item_array[item].equals("Видалити")) {
-                        data.remove(getAdapterPosition()-1);
-                        MyDataBaseHelper.deleteItem(getAdapterPosition()-1, context);
+                        data.remove(getAdapterPosition() - 1);
+                        MyDataBaseHelper.deleteItem(getAdapterPosition() - 1, context);
                         notifyItemRemoved(getAdapterPosition());
                     }
                 }
@@ -152,8 +152,10 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     int getColorStatus(int status) {
         if (status == 0) {
             return Color.GRAY;
+        } else if (status == 1) {
+            return Color.GREEN;
         } else {
-            return Color.BLACK;
+            return Color.RED;
         }
 
     }

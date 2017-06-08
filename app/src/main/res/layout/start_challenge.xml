@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:background="#FFF"
-            android:src="@drawable/repaet_after_me" />
+            android:id="@+id/challange_iv"/>
 
         <TextView
             android:id="@+id/textView"

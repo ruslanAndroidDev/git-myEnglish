@@ -1,13 +1,11 @@
 package com.example.pk.myapplication.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,6 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.my_vocabulary_frag, container, false);
-        presenter.loadData(getContext());
 
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +84,12 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        presenter.loadData(getContext());
+    }
+
+    @Override
     public void showData(ArrayList<Word> data) {
         adapter = new MyListRecyclerAdapter(data);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -94,8 +97,8 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
     }
 
     @Override
-    public void insertWord(String translate, String original,int status) {
-        MyListRecyclerAdapter.data.add(0, new Word(translate, original,status));
+    public void insertWord(String translate, String original, int status) {
+        MyListRecyclerAdapter.data.add(0, new Word(translate, original, status));
         adapter.notifyItemInserted(0);
     }
 }

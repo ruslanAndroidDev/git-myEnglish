@@ -1,4 +1,5 @@
 package com.example.pk.myapplication.view;
+
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.pk.myapplication.R;
+import com.example.pk.myapplication.data.MyDataBase;
 import com.example.pk.myapplication.data.MyDataBaseHelper;
 import com.example.pk.myapplication.model.Variant;
 import com.example.pk.myapplication.model.Word;
@@ -60,6 +62,7 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
         setTrue_item();
         return v;
     }
+
     TextView tv_variant1;
     TextView tv_variant2;
     TextView tv_variant3;
@@ -135,7 +138,9 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
         if (tv.getText().toString().equals(trueAnswerString)) {
             cardView.setCardBackgroundColor(Color.GREEN);
             challangePresenter.addTrueItemCount();
+            challangePresenter.setStatus(MyDataBase.STATUS_STUDIED,questionString);
         } else {
+            challangePresenter.setStatus(MyDataBase.STATUS_NEED_TO_REPEAT,questionString);
             cardView.setCardBackgroundColor(Color.RED);
         }
         cardView1.setClickable(false);

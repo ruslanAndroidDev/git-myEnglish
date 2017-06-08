@@ -19,9 +19,9 @@
         android:layout_gravity="start"
         android:layout_marginTop="56dp"
         android:background="@color/itemBackground"
-        app:headerLayout="@layout/nav_header_main"
         app:itemBackground="@color/itemBackground"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer"
+    app:headerLayout="@layout/nav_header_main"></android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
