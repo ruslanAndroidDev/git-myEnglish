@@ -61,6 +61,7 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
             }
         });
         panel_rv = (RecyclerView) v.findViewById(R.id.panelRecyclerView);
+        panel_rv.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerv);
 
         vocab_iv = (ImageView) v.findViewById(R.id.vocab_iv);
@@ -138,9 +139,18 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
 
     @Override
     public void showPanel(WordPack wordPack) {
-        panel_rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        panel_rv.setAdapter(new PanelAdapter(wordPack, getContext()));
+        panel_rv.setAdapter(new PanelAdapter(wordPack, getContext(), presenter));
         slideUp.show();
+        fab.hide();
     }
 
+    @Override
+    public void hidePanel() {
+        slideUp.hide();
+        fab.show();
+    }
+
+    public boolean isPanelShow() {
+        return slideUp.isVisible();
+    }
 }

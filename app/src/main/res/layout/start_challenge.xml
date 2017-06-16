@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <variable
             name="clicker"
             type="android.view.View.OnClickListener" />
@@ -12,10 +14,10 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/challange_iv"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:background="#FFF"
-            android:id="@+id/challange_iv"/>
+            android:background="#FFF" />
 
         <TextView
             android:id="@+id/textView"
@@ -33,7 +35,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
             android:text="@string/choseNumOfWords"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/colorPrimary"

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_dictionary">Мой словарь</string>
+    <string name="title_activity_main">My English</string>
+    <string name="repeat_word">Повторение слов</string>
+    <string name="main_item">Интересный факт</string>
+    <string name="iregular_verbs">Таблица глаголов</string>
+    <string name="english_tense">Времена английского языка</string>
+    <string name="repeat">Повторение слов</string>
+    <string name="choseNumOfWords">Выберите количество слов для повторения:</string>
+    <string name="myresult">Мой результат:</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="welcome_subtitle">Добро пожаловать в приложение My English</string>
+    <string name="study_words_together">Изучай английские слова вместе с нами</string>
+    <string name="study_words_together_subtitle">Каждый день мы публикуем новую подборку слов для изучения</string>
+    <string name="hint">Необходима подсказка?</string>
+    <string name="hint_subtitle">Правила использования времен и таблица неправильных глаголов на расстоянии одного клика</string>
+</resources>

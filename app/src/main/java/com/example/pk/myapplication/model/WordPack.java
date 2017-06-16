@@ -11,6 +11,13 @@ public class WordPack {
     String icon;
     ArrayList<String> words;
     ArrayList<String> wordsTranslate;
+
+    public int getSize() {
+        return words.size();
+    }
+
+    ArrayList<ClicableWord> clicableWords;
+
     public WordPack(String name, String icon, ArrayList<String> wordsOriginal, ArrayList<String> wordsTranslate) {
         this.name = name;
         this.icon = icon;
@@ -26,19 +33,25 @@ public class WordPack {
         return icon;
     }
 
-    public ArrayList<String> getWordsOriginal() {
-        return words;
+    public ClicableWord getWordsOriginal(int position) {
+        if (clicableWords == null) {
+            buildClicableWords();
+        }
+        return clicableWords.get(position);
     }
 
-    public ArrayList<String> getWordsTranslate() {
-        return wordsTranslate;
+    private void buildClicableWords() {
+        clicableWords = new ArrayList<>();
+        for (int i = 0; i < words.size(); i++) {
+            clicableWords.add(new ClicableWord(words.get(i)));
+        }
     }
 
-    public WordPack(String name, String icon) {
-        this.name = name;
-        this.icon = icon;
+    public String getWordsTranslate(int position) {
+        return wordsTranslate.get(position);
     }
 
     public WordPack() {
     }
+
 }

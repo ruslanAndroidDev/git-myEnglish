@@ -15,4 +15,6 @@ public interface IVocabulary extends MvpView {
     void showData(ArrayList<Word> data);
     void insertWord(String translate,String original,int status);
     void showPanel(WordPack wordPack);
+
+    void hidePanel();
 }

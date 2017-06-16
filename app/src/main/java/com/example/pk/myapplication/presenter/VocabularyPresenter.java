@@ -39,4 +39,17 @@ public class VocabularyPresenter extends MvpPresenter<IVocabulary> {
     public void onWordPackClick(WordPack wordPack) {
         getViewState().showPanel(wordPack);
     }
+
+    public void hidePanel() {
+        getViewState().hidePanel();
+    }
+
+    public void addWordToBd(WordPack wordPack) {
+        for (int i = wordPack.getSize()-1; i >=0; i--) {
+            if (wordPack.getWordsOriginal(i).isCheck()) {
+                MyDataBaseHelper.writetodb(context, wordPack.getWordsOriginal(i).getWord(), wordPack.getWordsTranslate(i));
+                getViewState().insertWord(wordPack.getWordsOriginal(i).getWord(), wordPack.getWordsTranslate(i), MyDataBase.STATUS_UNKNOWN);
+            }
+        }
+    }
 }

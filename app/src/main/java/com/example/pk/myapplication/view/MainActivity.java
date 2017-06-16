@@ -44,6 +44,8 @@ public class MainActivity extends MvpAppCompatActivity
     VocabularyFragment vocabularyFragment;
     TenseFragment tenseFragment;
 
+    Fragment openFragment;
+
     boolean SHOW_IC_FLAG;
     SharedPreferences sPref;
     public final String FIRST_LAUNCH_KEY = "firstLaunch";
@@ -121,11 +123,13 @@ public class MainActivity extends MvpAppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (openFragment instanceof VocabularyFragment) {
+            if (vocabularyFragment.isPanelShow()) {
+                vocabularyFragment.hidePanel();
+            } else {
+                super.onBackPressed();
+            }
         }
-        super.onBackPressed();
     }
 
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -174,6 +178,7 @@ public class MainActivity extends MvpAppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.conteiner, fragment);
+        openFragment = fragment;
         ft.commit();
         invalidateOptionsMenu();
     }

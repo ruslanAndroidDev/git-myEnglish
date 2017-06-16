@@ -1,6 +1,7 @@
 package com.example.pk.myapplication.adapter;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,8 @@ public class WordPackAdapter extends RecyclerView.Adapter<com.example.pk.myappli
 
         Picasso.with(context).load(wordPacks.get(position).getPhotoUrl()).into(pack_photo);
         pack_name.setText(wordPacks.get(position).getName());
+
+        ViewCompat.setTransitionName(holder.pack_photo, pack_name.getText().toString());
     }
 
     @Override
