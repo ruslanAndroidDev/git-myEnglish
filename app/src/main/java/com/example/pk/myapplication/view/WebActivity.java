@@ -56,14 +56,7 @@ public class WebActivity extends AppCompatActivity {
             @Override
             public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
-                String title = view.getTitle();
-                int posit;
-                if ((posit = title.indexOf("-")) != -1) {
-                    String newTitle = title.substring(0, posit - 1);
-                    toolbar.setTitle(newTitle);
-                } else {
                     toolbar.setTitle(view.getTitle());
-                }
             }
         });
         webView.setWebChromeClient(new WebChromeClient() {

@@ -29,7 +29,6 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
     Random myRandom;
 
     SleepTask mySleepTask;
-    Variant wordsVariant;
 
     String trueAnswerString;
     String questionString;
@@ -37,6 +36,7 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
     ChallangePresenter challangePresenter;
 
     TextView trueItem;
+    TextView tv_question_word;
 
     public Challange_item_fragment(ChallangePresenter challangePresenter) {
         this.challangePresenter = challangePresenter;
@@ -54,12 +54,9 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.challange_item, container, false);
         initializeItem(v);
-        wordsVariant = buildDataSet();
-        TextView tv_question_word = (TextView) v.findViewById(R.id.tv_question_word);
-        tv_question_word.setText(questionString);
+        tv_question_word = (TextView) v.findViewById(R.id.tv_question_word);
+        buildDataSet();
         Log.d("tag", "questionString " + questionString);
-        setFalse_item(wordsVariant);
-        setTrue_item();
         return v;
     }
 
@@ -95,6 +92,8 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
         tv_variant2.setText(variant.getFalseVariant2());
         tv_variant3.setText(variant.getFalseVariant3());
         tv_variant4.setText(variant.getFalseVariant4());
+
+        setTrue_item();
 
     }
 
@@ -138,9 +137,9 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
         if (tv.getText().toString().equals(trueAnswerString)) {
             cardView.setCardBackgroundColor(Color.GREEN);
             challangePresenter.addTrueItemCount();
-            challangePresenter.setStatus(MyDataBase.STATUS_STUDIED,questionString);
+            challangePresenter.setStatus(MyDataBase.STATUS_STUDIED, questionString);
         } else {
-            challangePresenter.setStatus(MyDataBase.STATUS_NEED_TO_REPEAT,questionString);
+            challangePresenter.setStatus(MyDataBase.STATUS_NEED_TO_REPEAT, questionString);
             cardView.setCardBackgroundColor(Color.RED);
         }
         cardView1.setClickable(false);
@@ -160,18 +159,27 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
     private String falseVariant3;
     private String falseVariant4;
 
-    public Variant buildDataSet() {
-        data = MyDataBaseHelper.loadWordwithDb(getContext());
-        dB_size = data.size();
-        keyWord = data.get(myRandom.nextInt(dB_size));
-        trueAnswerString = keyWord.getTranslateWord();
-        questionString = keyWord.getOriginalWord();
-        falseVariant1 = data.get(myRandom.nextInt(dB_size)).getTranslateWord();
-        falseVariant2 = data.get(myRandom.nextInt(dB_size)).getTranslateWord();
-        falseVariant3 = data.get(myRandom.nextInt(dB_size)).getTranslateWord();
-        falseVariant4 = data.get(myRandom.nextInt(dB_size)).getTranslateWord();
-        variant = new Variant(falseVariant1, falseVariant2, falseVariant3, falseVariant4);
-        return variant;
+    public void buildDataSet() {
+        MyDataBaseHelper.loadWordwithDb(getContext(), new MyDataBaseHelper.DataLoadListener() {
+            @Override
+            public void onLoad(ArrayList<Word> words) {
+                data = words;
+                dB_size = data.size();
+                keyWord = data.get(myRandom.nextInt(dB_size));
+                trueAnswerString = keyWord.getTranslateWord();
+                questionString = keyWord.getOriginalWord();
+                falseVariant1 = data.get(myRandom.nextInt(dB_size)).getTranslateWord();
+                falseVariant2 = data.get(myRandom.nextInt(dB_size)).getTranslateWord();
+                falseVariant3 = data.get(myRandom.nextInt(dB_size)).getTranslateWord();
+                falseVariant4 = data.get(myRandom.nextInt(dB_size)).getTranslateWord();
+                variant = new Variant(falseVariant1, falseVariant2, falseVariant3, falseVariant4);
+
+                tv_question_word.setText(questionString);
+                Log.d("tag", "questionString" + questionString);
+
+                setFalse_item(variant);
+            }
+        });
     }
 }
 

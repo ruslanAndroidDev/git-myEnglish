@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -45,7 +46,11 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
         setContentView(R.layout.challenge);
         ch_toolbar = (Toolbar) findViewById(R.id.ch_toolbar);
         setSupportActionBar(ch_toolbar);
-        ch_toolbar.setTitle("Challange");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        getSupportActionBar().setTitle("Challange");
 
         challangeRelative = (RelativeLayout) findViewById(R.id.challengeRelative);
 
@@ -122,6 +127,14 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static void scrollToNext() {

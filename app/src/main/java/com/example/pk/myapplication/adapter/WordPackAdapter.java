@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.pk.myapplication.R;
 import com.example.pk.myapplication.model.WordPack;
+import com.example.pk.myapplication.presenter.VocabularyPresenter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,8 +22,9 @@ import java.util.ArrayList;
 public class WordPackAdapter extends RecyclerView.Adapter<com.example.pk.myapplication.adapter.WordPackAdapter.WordViewHolder> {
     ArrayList<WordPack> wordPacks;
     Context context;
+    VocabularyPresenter presenter;
 
-    public class WordViewHolder extends RecyclerView.ViewHolder {
+    public class WordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView pack_photo;
         TextView pack_name;
@@ -32,12 +34,19 @@ public class WordPackAdapter extends RecyclerView.Adapter<com.example.pk.myappli
             context = itemView.getContext();
             this.pack_photo = (ImageView) itemView.findViewById(R.id.pack_photo);
             this.pack_name = (TextView) itemView.findViewById(R.id.pack_name);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            presenter.onWordPackClick(wordPacks.get(getAdapterPosition()));
         }
     }
 
 
-    public WordPackAdapter(ArrayList<WordPack> wordPacks) {
+    public WordPackAdapter(ArrayList<WordPack> wordPacks, VocabularyPresenter presenter) {
         this.wordPacks = wordPacks;
+        this.presenter = presenter;
 
     }
 

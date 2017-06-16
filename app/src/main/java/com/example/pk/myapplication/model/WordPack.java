@@ -9,12 +9,12 @@ import java.util.ArrayList;
 public class WordPack {
     String name;
     String icon;
-    ArrayList<String> wordsOriginal;
+    ArrayList<String> words;
     ArrayList<String> wordsTranslate;
     public WordPack(String name, String icon, ArrayList<String> wordsOriginal, ArrayList<String> wordsTranslate) {
         this.name = name;
         this.icon = icon;
-        this.wordsOriginal = wordsOriginal;
+        this.words = wordsOriginal;
         this.wordsTranslate = wordsTranslate;
     }
 
@@ -27,7 +27,7 @@ public class WordPack {
     }
 
     public ArrayList<String> getWordsOriginal() {
-        return wordsOriginal;
+        return words;
     }
 
     public ArrayList<String> getWordsTranslate() {

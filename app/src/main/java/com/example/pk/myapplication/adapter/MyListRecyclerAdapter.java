@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.pk.myapplication.R;
 import com.example.pk.myapplication.data.MyDataBaseHelper;
 import com.example.pk.myapplication.model.Word;
 import com.example.pk.myapplication.model.WordPack;
+import com.example.pk.myapplication.presenter.VocabularyPresenter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +33,10 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static ArrayList<Word> data;
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+
+    ArrayList<WordPack> arrayList;
+
+    VocabularyPresenter presenter;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
@@ -82,8 +88,9 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
-    public MyListRecyclerAdapter(ArrayList<Word> data) {
+    public MyListRecyclerAdapter(ArrayList<Word> data, VocabularyPresenter presenter) {
         this.data = data;
+        this.presenter = presenter;
     }
 
     @Override
@@ -113,8 +120,8 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             LinearLayoutManager layoutManager
                     = new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
             packRv.setLayoutManager(layoutManager);
-            final ArrayList<WordPack> arrayList = new ArrayList<>();
-            final WordPackAdapter wordPackAdapter = new WordPackAdapter(arrayList);
+            arrayList = new ArrayList<>();
+            final WordPackAdapter wordPackAdapter = new WordPackAdapter(arrayList, presenter);
             FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
             DatabaseReference reference = mDatabase.getReference("pack/");
             packRv.setAdapter(wordPackAdapter);
@@ -122,6 +129,7 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     WordPack model = dataSnapshot.getValue(WordPack.class);
+                    Log.d("tag", "MyListAddapter " + model.getName() + model.getPhotoUrl());
                     arrayList.add(model);
                     wordPackAdapter.notifyItemInserted(0);
                 }

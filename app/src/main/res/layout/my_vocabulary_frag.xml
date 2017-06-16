@@ -2,13 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/vocab_iv"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_below="@+id/recyclerv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vocab_iv"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/vocab_tv"
+        android:layout_marginRight="5dp"
+        android:gravity="center_horizontal"
+        android:text="У вашому словнику немає жодного слова. Добавте нові слова самі , або завантажте словниковий пакет."
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/slideView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#81c784"
+        android:visibility="gone">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerv"
+            android:id="@+id/panelRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

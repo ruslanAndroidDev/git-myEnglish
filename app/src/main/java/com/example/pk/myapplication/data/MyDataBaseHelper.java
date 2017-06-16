@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.pk.myapplication.model.Word;
@@ -42,19 +43,9 @@ public class MyDataBaseHelper {
         Log.d("tag", "writetodb");
     }
 
-    public static ArrayList<Word> loadWordwithDb(Context context) {
-        db = getDatabase(context);
-        allWordDb = new ArrayList<>();
-        cursor = db.query(MyDataBase.TABLE_NAME, new String[]{MyDataBase.ORIGINAL_COLUMN, MyDataBase.TRANSLATE_COLUMN, MyDataBase.STATUS_COLUMN}, null, null, null, null, null);
-        if (cursor.moveToLast()) {
-            getOneWord();
-            while (cursor.moveToPrevious()) {
-                getOneWord();
-            }
-        }
-        cursor.close();
-        db.close();
-        return allWordDb;
+    public static void loadWordwithDb(Context context, DataLoadListener listener) {
+        DBLoader dbLoader = new DBLoader(context, listener);
+        dbLoader.execute();
     }
 
     private static void getOneWord() {
@@ -71,9 +62,49 @@ public class MyDataBaseHelper {
         db.update(MyDataBase.TABLE_NAME, cv, MyDataBase.ORIGINAL_COLUMN + "=?", new String[]{originalword});
     }
 
-    public static void deleteItem(int position, Context context) {
-        String word = loadWordwithDb(context).get(position).getOriginalWord();
-        db = getDatabase(context);
-        db.delete(MyDataBase.TABLE_NAME, MyDataBase.ORIGINAL_COLUMN + "=?", new String[]{word});
+    public static void deleteItem(final int position, final Context context) {
+        loadWordwithDb(context, new DataLoadListener() {
+            @Override
+            public void onLoad(ArrayList<Word> words) {
+                String word = words.get(position).getOriginalWord();
+                db = getDatabase(context);
+                db.delete(MyDataBase.TABLE_NAME, MyDataBase.ORIGINAL_COLUMN + "=?", new String[]{word});
+            }
+        });
+    }
+
+    static class DBLoader extends AsyncTask<Void, Void, ArrayList<Word>> {
+        Context context;
+        DataLoadListener listener;
+
+        public DBLoader(Context context, DataLoadListener listener) {
+            this.context = context;
+            this.listener = listener;
+        }
+
+        @Override
+        protected ArrayList<Word> doInBackground(Void... voids) {
+            db = getDatabase(context);
+            allWordDb = new ArrayList<>();
+            cursor = db.query(MyDataBase.TABLE_NAME, new String[]{MyDataBase.ORIGINAL_COLUMN, MyDataBase.TRANSLATE_COLUMN, MyDataBase.STATUS_COLUMN}, null, null, null, null, null);
+            if (cursor.moveToLast()) {
+                getOneWord();
+                while (cursor.moveToPrevious()) {
+                    getOneWord();
+                }
+            }
+            cursor.close();
+            db.close();
+            return allWordDb;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Word> words) {
+            listener.onLoad(words);
+        }
+    }
+
+    public abstract static class DataLoadListener {
+        public abstract void onLoad(ArrayList<Word> words);
     }
 }

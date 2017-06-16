@@ -1,6 +1,8 @@
 package com.example.pk.myapplication.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -23,8 +25,14 @@ import com.example.pk.myapplication.R;
 import com.example.pk.myapplication.Utill;
 import com.example.pk.myapplication.presenter.MainPresenter;
 
+import java.util.ArrayList;
+
+import za.co.riggaroo.materialhelptutorial.TutorialItem;
+import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
+
 public class MainActivity extends MvpAppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView {
+    private static final int REQUEST_CODE = 509;
     @InjectPresenter
     MainPresenter presenter;
 
@@ -37,6 +45,8 @@ public class MainActivity extends MvpAppCompatActivity
     TenseFragment tenseFragment;
 
     boolean SHOW_IC_FLAG;
+    SharedPreferences sPref;
+    public final String FIRST_LAUNCH_KEY = "firstLaunch";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,46 @@ public class MainActivity extends MvpAppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         ImageView imageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView_nav);
         imageView.setImageBitmap(Utill.loadBitmapFromResource(getResources(), R.drawable.header_photo, 220, 160));
+
+        sPref = getPreferences(MODE_PRIVATE);
+        boolean firstLaunch = sPref.getBoolean(FIRST_LAUNCH_KEY, true);
+        if (firstLaunch == true) {
+            loadTutorial();
+        }
+    }
+
+    public void loadTutorial() {
+        Intent mainAct = new Intent(this, MaterialTutorialActivity.class);
+        mainAct.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, getTutorialItems(this));
+        startActivityForResult(mainAct, REQUEST_CODE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putBoolean(FIRST_LAUNCH_KEY, false);
+        ed.commit();
+
+    }
+
+    private ArrayList<TutorialItem> getTutorialItems(Context context) {
+        TutorialItem tutorialItem1 = new TutorialItem(context.getString(R.string.welcome), context.getString(R.string.welcome_subtitle),
+                R.color.colorAccent, R.drawable.welcome);
+
+        TutorialItem tutorialItem2 = new TutorialItem(context.getString(R.string.study_words_together), context.getString(R.string.study_words_together_subtitle),
+                R.color.splash_2, R.drawable.words);
+
+        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.hint), context.getString(R.string.hint_subtitle),
+                R.color.splash_3, R.drawable.hint);
+
+        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
+        tutorialItems.add(tutorialItem1);
+        tutorialItems.add(tutorialItem2);
+        tutorialItems.add(tutorialItem3);
+
+        return tutorialItems;
     }
 
     @Override
@@ -110,6 +160,8 @@ public class MainActivity extends MvpAppCompatActivity
             showFragment(noInternetConnectionFragment);
         }
         toolbar.setTitle("My English");
+
+        vocabularyFragment = new VocabularyFragment();
     }
 
     private boolean isNetworkAvailable() {
@@ -158,15 +210,19 @@ public class MainActivity extends MvpAppCompatActivity
         SHOW_IC_FLAG = false;
     }
 
+    DialogFragment datePickerFragment;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        DialogFragment datePickerFragment = new DatePickerFragment(new Listener() {
-            @Override
-            void onDataSet(DatePicker view, int year, int month, int day) {
-                int mont = month + 1;
-                interestingFactFragment.updateData(year + "-" + mont + "-" + day);
-            }
-        });
+        if (datePickerFragment == null) {
+            datePickerFragment = new DatePickerFragment(new Listener() {
+                @Override
+                void onDataSet(DatePicker view, int year, int month, int day) {
+                    int mont = month + 1;
+                    interestingFactFragment.updateData(year + "-" + mont + "-" + day);
+                }
+            });
+        }
         datePickerFragment.show(getSupportFragmentManager(), "datePicker");
         return true;
     }

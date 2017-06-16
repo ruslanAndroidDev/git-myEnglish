@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pk.myapplication.R;
+import com.example.pk.myapplication.Utill;
 import com.example.pk.myapplication.presenter.ChallangePresenter;
 import com.example.pk.myapplication.presenter.PagerResultListener;
 
@@ -47,11 +48,11 @@ public class FinishChallengeFragment extends Fragment {
 
     private void setResultImage(double rating) {
         if (rating < 30) {
-            resultimg.setImageResource(R.drawable.bad);
+            resultimg.setImageBitmap(Utill.loadBitmapFromResource(getResources(),R.drawable.bad,300,300));
         } else if (rating > 30 && rating < 70) {
-            resultimg.setImageResource(R.drawable.good);
+            resultimg.setImageBitmap(Utill.loadBitmapFromResource(getResources(),R.drawable.good,300,300));
         } else if (rating > 70) {
-            resultimg.setImageResource(R.drawable.very_well);
+            resultimg.setImageBitmap(Utill.loadBitmapFromResource(getResources(),R.drawable.very_well,300,300));
         }
     }
 }

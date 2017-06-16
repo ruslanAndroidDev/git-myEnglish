@@ -9,6 +9,11 @@ public class NasaArticle {
     String hdurl;
     String title;
     String url;
+    String copyright;
+
+    public String getCopyright() {
+        return copyright;
+    }
 
     public NasaArticle() {
     }

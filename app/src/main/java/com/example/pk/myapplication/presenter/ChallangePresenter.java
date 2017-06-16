@@ -42,12 +42,16 @@ public class ChallangePresenter extends MvpPresenter<IChallange> {
     }
 
     public void loadData(Context context) {
-        ArrayList<Word> arrayList = MyDataBaseHelper.loadWordwithDb(context);
-        if (arrayList.size() < 10) {
-            getViewState().showErorAlert();
-        } else {
-            getViewState().showChallengeLayout(num_of_challange_item, arrayList);
-        }
+        MyDataBaseHelper.loadWordwithDb(context, new MyDataBaseHelper.DataLoadListener() {
+            @Override
+            public void onLoad(ArrayList<Word> words) {
+                if (words.size() < 10) {
+                    getViewState().showErorAlert();
+                } else {
+                    getViewState().showChallengeLayout(num_of_challange_item, words);
+                }
+            }
+        });
     }
 
     public void startChallange(Context context, int num_of_challange_item) {
