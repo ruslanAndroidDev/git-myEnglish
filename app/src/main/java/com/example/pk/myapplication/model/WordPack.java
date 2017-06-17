@@ -40,6 +40,10 @@ public class WordPack {
         return clicableWords.get(position);
     }
 
+    public void deleteWords(int position) {
+        clicableWords.remove(position);
+    }
+
     private void buildClicableWords() {
         clicableWords = new ArrayList<>();
         for (int i = 0; i < words.size(); i++) {

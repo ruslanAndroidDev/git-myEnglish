@@ -7,16 +7,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -45,8 +42,6 @@ public class MainActivity extends MvpAppCompatActivity
     TenseFragment tenseFragment;
 
     Fragment openFragment;
-
-    boolean SHOW_IC_FLAG;
     SharedPreferences sPref;
     public final String FIRST_LAUNCH_KEY = "firstLaunch";
 
@@ -110,18 +105,6 @@ public class MainActivity extends MvpAppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem item = menu.findItem(R.id.ic_date);
-        if (SHOW_IC_FLAG) {
-            item.setVisible(true);
-        } else {
-            item.setVisible(false);
-        }
-        return true;
-    }
-
-    @Override
     public void onBackPressed() {
         if (openFragment instanceof VocabularyFragment) {
             if (vocabularyFragment.isPanelShow()) {
@@ -156,11 +139,9 @@ public class MainActivity extends MvpAppCompatActivity
         if (isNetworkAvailable()) {
             if (interestingFactFragment == null)
                 interestingFactFragment = new InterestingFactFragment();
-            SHOW_IC_FLAG = true;
             showFragment(interestingFactFragment);
         } else {
             NoInternetConnectionFragment noInternetConnectionFragment = new NoInternetConnectionFragment();
-            SHOW_IC_FLAG = false;
             showFragment(noInternetConnectionFragment);
         }
         toolbar.setTitle("My English");
@@ -180,7 +161,6 @@ public class MainActivity extends MvpAppCompatActivity
         ft.replace(R.id.conteiner, fragment);
         openFragment = fragment;
         ft.commit();
-        invalidateOptionsMenu();
     }
 
     @Override
@@ -196,8 +176,7 @@ public class MainActivity extends MvpAppCompatActivity
         if (vocabularyFragment == null)
             vocabularyFragment = new VocabularyFragment();
         showFragment(vocabularyFragment);
-        toolbar.setTitle("Мій Словник");
-        SHOW_IC_FLAG = false;
+        toolbar.setTitle(getResources().getString(R.string.my_dictionary));
     }
 
     @Override
@@ -211,24 +190,6 @@ public class MainActivity extends MvpAppCompatActivity
         if (tenseFragment == null)
             tenseFragment = new TenseFragment();
         showFragment(tenseFragment);
-        toolbar.setTitle("Часи");
-        SHOW_IC_FLAG = false;
-    }
-
-    DialogFragment datePickerFragment;
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (datePickerFragment == null) {
-            datePickerFragment = new DatePickerFragment(new Listener() {
-                @Override
-                void onDataSet(DatePicker view, int year, int month, int day) {
-                    int mont = month + 1;
-                    interestingFactFragment.updateData(year + "-" + mont + "-" + day);
-                }
-            });
-        }
-        datePickerFragment.show(getSupportFragmentManager(), "datePicker");
-        return true;
+        toolbar.setTitle(getResources().getString(R.string.tenses));
     }
 }

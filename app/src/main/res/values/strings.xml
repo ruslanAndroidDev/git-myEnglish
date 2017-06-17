@@ -6,6 +6,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="my_dictionary">Мій словник</string>
+    <string name="tenses">Часи</string>
     <string name="title_activity_main">My English</string>
     <string name="repeat_word">Повторення слів</string>
     <string name="main_item">Цікавинка</string>

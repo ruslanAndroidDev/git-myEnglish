@@ -34,11 +34,9 @@ public class FinishChallengeFragment extends Fragment {
         View v = inflater.inflate(R.layout.finish_challenge_fragment, container, false);
         int_tv = (TextView) v.findViewById(R.id.tv_Intresult);
         resultimg = (ImageView) v.findViewById(R.id.result_imageview);
-        Log.d("tag", "onCreateView");
         challangePresenter.setListener(new PagerResultListener() {
             @Override
             public void onUpdate(int true_item_count) {
-                Log.d("tag", "onUpdate");
                 setResultImage(challangePresenter.getResult());
                 int_tv.setText(true_item_count + "/" + challangePresenter.getNum_of_challange_item());
             }
@@ -47,9 +45,9 @@ public class FinishChallengeFragment extends Fragment {
     }
 
     private void setResultImage(double rating) {
-        if (rating < 30) {
+        if (rating < 40) {
             resultimg.setImageBitmap(Utill.loadBitmapFromResource(getResources(),R.drawable.bad,300,300));
-        } else if (rating > 30 && rating < 70) {
+        } else if (rating > 40 && rating < 70) {
             resultimg.setImageBitmap(Utill.loadBitmapFromResource(getResources(),R.drawable.good,300,300));
         } else if (rating > 70) {
             resultimg.setImageBitmap(Utill.loadBitmapFromResource(getResources(),R.drawable.very_well,300,300));
