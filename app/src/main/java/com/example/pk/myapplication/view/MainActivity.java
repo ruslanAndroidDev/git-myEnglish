@@ -124,7 +124,7 @@ public class MainActivity extends MvpAppCompatActivity
         } else if (id == R.id.item_repeat_word) {
             presenter.onStartChallengeFragmentSelect();
         } else if (id == R.id.item_iregular_verbs) {
-            presenter.onVerbsItemSelect();
+            presenter.onVerbsItemSelect(getResources().getString(R.string.verbs_url));
         } else if (id == R.id.english_tense) {
             presenter.onTenseFragmentSelect();
         }

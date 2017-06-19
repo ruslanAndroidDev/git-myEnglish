@@ -38,5 +38,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:+'
     compile 'com.github.mancj:SlideUp-Android:2.2.5'
     compile 'za.co.riggaroo:materialhelptutorial:1.+'
+    compile 'at.blogc:expandabletextview:1.0.3'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -34,7 +34,7 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
         challengeBinding.seekBar.setOnSeekBarChangeListener(this);
         challengeBinding.setClicker(this);
         challengeBinding.challangeIv.setImageBitmap(
-                Utill.loadBitmapFromResource(getResources(), R.drawable.book_5, 220, 300));
+                Utill.loadBitmapFromResource(getResources(), R.drawable.book_5, 200, 200));
         return challengeBinding.getRoot();
     }
 

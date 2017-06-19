@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
 
         <variable
@@ -36,13 +37,15 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:elevation="4dp"
-                    app:cardBackgroundColor="#efebe9">
+                    app:cardBackgroundColor="#efebe9"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/pastSimple"
@@ -113,12 +116,15 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp"
                     app:cardBackgroundColor="#d7ccc8">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/pastContinuous"
@@ -184,12 +190,15 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp"
                     app:cardBackgroundColor="#bcaaa4">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/pastPerfect"
@@ -255,12 +264,15 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp"
                     app:cardBackgroundColor="#a1887f">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/pastPerfectContinuous"

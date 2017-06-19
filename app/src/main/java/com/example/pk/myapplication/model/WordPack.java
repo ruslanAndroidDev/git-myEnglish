@@ -7,10 +7,30 @@ import java.util.ArrayList;
  */
 
 public class WordPack {
-    String name;
-    String icon;
-    ArrayList<String> words;
-    ArrayList<String> wordsTranslate;
+    public String name;
+    public String icon;
+    public ArrayList<String> words;
+    public ArrayList<String> wordsTranslate;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public void setWords(ArrayList<String> words) {
+        this.words = words;
+    }
+
+    public void setWordsTranslate(ArrayList<String> wordsTranslate) {
+        this.wordsTranslate = wordsTranslate;
+    }
+
+    public void setClicableWords(ArrayList<ClicableWord> clicableWords) {
+        this.clicableWords = clicableWords;
+    }
 
     public int getSize() {
         return words.size();

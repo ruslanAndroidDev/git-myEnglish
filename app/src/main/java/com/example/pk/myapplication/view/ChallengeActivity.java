@@ -64,7 +64,7 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
     public void showErorAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.create();
-        builder.setTitle("Помилка");
+        builder.setTitle(getResources().getString(R.string.error));
         builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -72,7 +72,7 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
             }
         });
         builder.setCancelable(false);
-        builder.setMessage("Для повторення слів Ваш словник має містити не менше 10 слів");
+        builder.setMessage(getResources().getString(R.string.dialog_msg));
         builder.show();
     }
 

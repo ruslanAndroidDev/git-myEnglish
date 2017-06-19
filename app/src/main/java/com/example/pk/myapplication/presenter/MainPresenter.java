@@ -23,8 +23,8 @@ public class MainPresenter extends MvpPresenter<MainView> {
         getViewState().showMainFragment();
     }
 
-    public void onVerbsItemSelect() {
-        getViewState().openWebActivity("http://easy-english.com.ua/irregular-verbs/");
+    public void onVerbsItemSelect(String url) {
+        getViewState().openWebActivity(url);
     }
 
     public void onVocabluaryItemSelect() {

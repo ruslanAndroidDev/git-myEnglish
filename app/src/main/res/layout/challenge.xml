@@ -42,7 +42,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@color/colorAccent"
-            android:text="ЗАвершити тест"
+            android:text="@string/cancel_chalange"
             android:textColor="@color/white"
             android:textSize="22sp" />
     </RelativeLayout>

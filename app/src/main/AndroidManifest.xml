@@ -22,13 +22,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ChallengeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.ChallengeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.CountryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CountryStyle"/>
+        <activity
+            android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.WebActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

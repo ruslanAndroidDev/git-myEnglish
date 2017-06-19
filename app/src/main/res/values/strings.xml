@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">My English</string>
-    <string name="title_activity_top">TopActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -15,7 +14,6 @@
     <string name="repeat">Повторення слів</string>
     <string name="choseNumOfWords">Виберіть кількість слів для повторення:</string>
     <string name="myresult">Мій результат:</string>
-    <string name="nasa_key">8HdZ594J6RVVdmY6jbljLhZGzpuWBGj7zDarxoZq</string>
     <string name="past_simple_url">http://easy-english.com.ua/past-simple/</string>
     <string name="present_simple_url">http://easy-english.com.ua/present-simple/</string>
     <string name="future_simple_url">http://easy-english.com.ua/future-simple/</string>
@@ -32,11 +30,16 @@
     <string name="present_perfect_continuous_url">http://easy-english.com.ua/present-perfect-continuous/</string>
     <string name="future_perfect_continuous_url">http://easy-english.com.ua/future-perfect-continuous/</string>
     <string name="future_perfect_continuous_in_the_past_url">http://easy-english.com.ua/future-perfect-continuous-in-the-past/</string>
-    <string name="yandex_translate_key">trnsl.1.1.20170613T100924Z.c15bf4f7b830f86f.1ea8f4c2ce42e4fbaa1351e76d4f41e823e2e4c2</string>
     <string name="welcome">Ласкаво просимо!</string>
     <string name="welcome_subtitle">Вітаємо в додатку My English</string>
     <string name="study_words_together">Вивчай англійські слова разом з нами</string>
     <string name="study_words_together_subtitle">Кожного дня ми публікуємо нову підбірку слів для вивчення</string>
     <string name="hint">Необхідна підказка?</string>
     <string name="hint_subtitle">Правила використання часів і таблиця неправильних дієслів на відстані одного кліку</string>
+    <string name="verbs_url">http://easy-english.com.ua/irregular-verbs/</string>
+    <string name="error">Помилка</string>
+    <string name="dialog_msg">Для повторення слів Ваш словник має містити не менше 10 слів</string>
+    <string name="cancel_chalange">Завершити тест</string>
+    <string name="no_name">Такого слова не знайдено</string>
+    <string name="added_word">додано в словник</string>
 </resources>

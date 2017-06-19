@@ -62,7 +62,6 @@ public class VocabularyPresenter extends MvpPresenter<IVocabulary> {
     private boolean isUnique(String word, WordPack wordPack) {
         for (int i = 0; i < words.size(); i++) {
             if (word.equals(words.get(i).getOriginalWord())) {
-                wordPack.deleteWords(i);
                 return false;
             }
         }
