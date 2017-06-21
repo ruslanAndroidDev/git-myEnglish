@@ -35,8 +35,7 @@ public class InterestingFactFragment extends MvpAppCompatFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.main_fragment, container, false);
         pd = new ProgressDialog(getContext());
-        pd.setMessage("loading");
-        pd.setCancelable(false);
+        pd.setMessage("Loading...");
         pd.show();
         data = new ArrayList<>();
         recyclerView = (RecyclerView) v.findViewById(R.id.country_recycler);

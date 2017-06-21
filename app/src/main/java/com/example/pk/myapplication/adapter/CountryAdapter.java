@@ -2,7 +2,9 @@ package com.example.pk.myapplication.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.example.pk.myapplication.view.CountryActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by pk on 17.06.2017.
@@ -65,7 +68,11 @@ public class CountryAdapter extends RecyclerView.Adapter {
         title.setText(arrayList.get(position).getName());
 
         TextView article = ((ViewHolder) holder).article;
-        article.setText(arrayList.get(position).getArticle());
+        try {
+            article.setText(Html.fromHtml(arrayList.get(position).getIntroHtml()));
+        } catch (NullPointerException e) {
+
+        }
     }
 
     @Override

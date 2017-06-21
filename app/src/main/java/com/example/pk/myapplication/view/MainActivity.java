@@ -12,8 +12,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -44,6 +47,8 @@ public class MainActivity extends MvpAppCompatActivity
     Fragment openFragment;
     SharedPreferences sPref;
     public final String FIRST_LAUNCH_KEY = "firstLaunch";
+    boolean SHOW_IC_FLAG = false;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +117,8 @@ public class MainActivity extends MvpAppCompatActivity
             } else {
                 super.onBackPressed();
             }
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -147,6 +154,7 @@ public class MainActivity extends MvpAppCompatActivity
         toolbar.setTitle("My English");
 
         vocabularyFragment = new VocabularyFragment();
+        SHOW_IC_FLAG = false;
     }
 
     private boolean isNetworkAvailable() {
@@ -161,6 +169,26 @@ public class MainActivity extends MvpAppCompatActivity
         ft.replace(R.id.conteiner, fragment);
         openFragment = fragment;
         ft.commit();
+
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.ic_date);
+        if (SHOW_IC_FLAG) {
+            item.setVisible(true);
+        } else {
+            item.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        showVocabDialog();
+        return true;
     }
 
     @Override
@@ -177,12 +205,25 @@ public class MainActivity extends MvpAppCompatActivity
             vocabularyFragment = new VocabularyFragment();
         showFragment(vocabularyFragment);
         toolbar.setTitle(getResources().getString(R.string.my_dictionary));
+        SHOW_IC_FLAG = true;
+    }
+
+    public void showVocabDialog() {
+        if (alertDialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
+            View dialogView = View.inflate(this, R.layout.word_status_dialog, null);
+            builder.setView(dialogView);
+            alertDialog = builder.create();
+        }
+        alertDialog.setCancelable(true);
+        alertDialog.show();
     }
 
     @Override
     public void showStartChallangeFragment() {
         Intent intent = new Intent(this, ChallengeActivity.class);
         startActivity(intent);
+        SHOW_IC_FLAG = false;
     }
 
     @Override
@@ -191,5 +232,6 @@ public class MainActivity extends MvpAppCompatActivity
             tenseFragment = new TenseFragment();
         showFragment(tenseFragment);
         toolbar.setTitle(getResources().getString(R.string.tenses));
+        SHOW_IC_FLAG = false;
     }
 }

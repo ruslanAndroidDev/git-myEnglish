@@ -1,9 +1,8 @@
 package com.example.pk.myapplication.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
+import android.media.MediaPlayer;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pk.myapplication.R;
-import com.example.pk.myapplication.data.MyDataBaseHelper;
+import com.example.pk.myapplication.data.SkyEngService;
+import com.example.pk.myapplication.data.SkyEngWord;
 import com.example.pk.myapplication.model.Word;
 import com.example.pk.myapplication.model.WordPack;
 import com.example.pk.myapplication.presenter.VocabularyPresenter;
@@ -24,7 +25,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by pk on 09.09.2016.
@@ -37,8 +45,10 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     ArrayList<WordPack> arrayList;
 
     VocabularyPresenter presenter;
+    Retrofit retrofit;
+    SkyEngService service;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView original_tv;
         TextView translate_tv;
@@ -51,30 +61,36 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             this.card_status = (CardView) itemView.findViewById(R.id.card_status);
             this.translate_tv = (TextView) itemView.findViewById(R.id.tv_vord_utranslate);
             this.original_tv = (TextView) itemView.findViewById(R.id.tv_vord_original);
-            itemView.setOnLongClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
-        public boolean onLongClick(View v) {
-            final String[] item_array = {"Видалити", "Редагувати"};
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            View customTitle = View.inflate(context, R.layout.customtitle, null);
-            builder.setCustomTitle(customTitle);
-            TextView tv = (TextView) customTitle.findViewById(R.id.customTitleTv);
-            tv.setText(data.get(getAdapterPosition() - 1).getOriginalWord());
-            builder.setItems(item_array, new DialogInterface.OnClickListener() {
+        public void onClick(View view) {
+            Call<ArrayList<SkyEngWord>> call = service.translateWord(data.get(getAdapterPosition() - 1).getOriginalWord());
+            call.enqueue(new Callback<ArrayList<SkyEngWord>>() {
                 @Override
-                public void onClick(DialogInterface dialog, int item) {
-                    if (item_array[item].equals("Видалити")) {
-                        data.remove(getAdapterPosition() - 1);
-                        MyDataBaseHelper.deleteItem(getAdapterPosition() - 1, context);
-                        notifyItemRemoved(getAdapterPosition());
+                public void onResponse(Call<ArrayList<SkyEngWord>> call, Response<ArrayList<SkyEngWord>> response) {
+                    MediaPlayer mp = new MediaPlayer();
+                    try {
+                        mp.setDataSource("https:" + response.body().get(0).getMeanings().get(0).getSoundUrl());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (IndexOutOfBoundsException e) {
+                        Toast.makeText(context, context.getResources().getString(R.string.no_word), Toast.LENGTH_SHORT).show();
+                    }
+                    try {
+                        mp.prepare();
+                        mp.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
+
+                @Override
+                public void onFailure(Call<ArrayList<SkyEngWord>> call, Throwable t) {
+
+                }
             });
-            builder.create();
-            builder.show();
-            return false;
         }
     }
 
@@ -91,6 +107,12 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public MyListRecyclerAdapter(ArrayList<Word> data, VocabularyPresenter presenter) {
         this.data = data;
         this.presenter = presenter;
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://dictionary.skyeng.ru/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        service = retrofit.create(SkyEngService.class);
     }
 
     @Override

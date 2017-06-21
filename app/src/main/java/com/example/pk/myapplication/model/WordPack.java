@@ -1,6 +1,9 @@
 package com.example.pk.myapplication.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by pk on 02.06.2017.
@@ -10,7 +13,10 @@ public class WordPack {
     public String name;
     public String icon;
     public ArrayList<String> words;
+    //ua
     public ArrayList<String> wordsTranslate;
+    //ru
+    public ArrayList<String> wordsTranslateRu;
 
     public void setName(String name) {
         this.name = name;
@@ -72,7 +78,12 @@ public class WordPack {
     }
 
     public String getWordsTranslate(int position) {
-        return wordsTranslate.get(position);
+        Log.d("tag", Locale.getDefault().getISO3Language());
+        if (Locale.getDefault().getISO3Language().equals("ukr")) {
+            return wordsTranslate.get(position);
+        } else {
+            return wordsTranslateRu.get(position);
+        }
     }
 
     public WordPack() {

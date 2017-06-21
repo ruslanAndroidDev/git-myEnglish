@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.pk.myapplication.R;
 import com.example.pk.myapplication.Utill;
 import com.example.pk.myapplication.adapter.MyListRecyclerAdapter;
 import com.example.pk.myapplication.adapter.PanelAdapter;
+import com.example.pk.myapplication.data.MyDataBaseHelper;
 import com.example.pk.myapplication.model.Word;
 import com.example.pk.myapplication.model.WordPack;
 import com.example.pk.myapplication.presenter.VocabularyPresenter;
@@ -66,6 +68,23 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
 
         vocab_iv = (ImageView) v.findViewById(R.id.vocab_iv);
         vocab_tv = (TextView) v.findViewById(R.id.vocab_tv);
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                int position = viewHolder.getAdapterPosition();
+                adapter.data.remove(position - 1);
+                MyDataBaseHelper.deleteItem(position - 1, getContext());
+                adapter.notifyItemRemoved(position);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         return v;
     }
 

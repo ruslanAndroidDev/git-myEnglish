@@ -26,7 +26,7 @@
         android:id="@+id/vocab_tv"
         android:layout_marginRight="5dp"
         android:gravity="center_horizontal"
-        android:text="У вашому словнику немає жодного слова. Добавте нові слова самі , або завантажте словниковий пакет."
+        android:text="@string/no_word"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
         android:visibility="gone" />

@@ -10,6 +10,11 @@ import android.os.Parcelable;
 public class Country implements Parcelable {
     String name;
     String sights;
+    String introHtml;
+
+    public String getIntroHtml() {
+        return introHtml;
+    }
 
     protected Country(Parcel in) {
         name = in.readString();
@@ -19,6 +24,7 @@ public class Country implements Parcelable {
         photoUrl = in.readString();
         article = in.readString();
         intro = in.readString();
+
     }
 
     public static final Creator<Country> CREATOR = new Creator<Country>() {

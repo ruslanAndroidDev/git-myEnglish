@@ -9,7 +9,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:gravity="center_horizontal"
-        android:text="Немає доступу до інтернету."
+        android:text="@string/connection_error"
         android:textColor="#4b2c08"
         android:id="@+id/tv"
         android:textSize="40sp" />
@@ -20,15 +20,13 @@
         android:layout_marginTop="300dp"
         android:layout_above="@+id/imageViewRefresh"
         android:gravity="center_horizontal"
-        android:text="Підключіть пристрій до інтернету і спробуйте знову."
+        android:text="@string/connection_subtitle"
         android:textSize="20sp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:background="#0b080808"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/imageViewRefresh"
-        android:src="@drawable/ic_cached_black_24dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
