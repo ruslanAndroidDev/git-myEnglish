@@ -39,6 +39,10 @@
     <string name="added_word">додано в словник</string>
     <string name="no_word">У вашому словнику немає жодного слова. Запишіть нові слова самі , або додайте їх з словникового пакету.</string>
     <string name="status_grey">Статус невідомий</string>
+    <string name="status_green">Ви вивчили слово</string>
     <string name="status_red">Вам варто повторити слово</string>
     <string name="connection_error">Немає доступу до інтернету.</string>
+    <string name="country_msg">Для завантаження перекладу натисніть на слово.(Працює у тестовому режимі,тому поки що переклад доступний лише російською мовою)</string>
+    <string name="cancel">Відміна</string>
+    <string name="add">Додати</string>
 </resources>

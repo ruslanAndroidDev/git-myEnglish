@@ -4,15 +4,25 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
 
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+
     defaultConfig {
-        applicationId "com.example.pk.myapplication"
+        applicationId "ua.rDev.myEng"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     dataBinding {
         enabled = true
+    }
+    dexOptions {
+        javaMaxHeapSize = "4g"
     }
     buildTypes {
         release {
@@ -39,5 +49,9 @@ dependencies {
     compile 'com.github.mancj:SlideUp-Android:2.2.5'
     compile 'za.co.riggaroo:materialhelptutorial:1.+'
     compile 'at.blogc:expandabletextview:1.0.3'
+    compile 'com.google.firebase:firebase-ads:9.6.1'
+    compile 'com.google.android.gms:play-services:9.6.1'
+    compile 'com.google.android.gms:play-services-plus:9.6.1'
+    compile 'com.android.support:multidex:1.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

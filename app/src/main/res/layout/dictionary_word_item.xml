@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#d7ccc8"
+        android:id="@+id/word_item_relative"
         android:orientation="horizontal">
 
         <android.support.v7.widget.CardView

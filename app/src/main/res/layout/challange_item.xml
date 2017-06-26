@@ -34,7 +34,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/n4"
+                    android:id="@+id/n1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="5dp"
-                    android:layout_toRightOf="@+id/n4"
+                    android:layout_toRightOf="@+id/n1"
                     android:textColor="#000000"
                     android:textSize="32sp" />
             </RelativeLayout>
@@ -68,7 +68,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/n4"
+                    android:id="@+id/n2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="5dp"
-                    android:layout_toRightOf="@+id/n4"
+                    android:layout_toRightOf="@+id/n2"
                     android:textColor="#000000"
                     android:textSize="32sp" />
             </RelativeLayout>
@@ -102,7 +102,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/n4"
+                    android:id="@+id/n3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="5dp"
-                    android:layout_toRightOf="@+id/n4"
+                    android:layout_toRightOf="@+id/n3"
                     android:textColor="#000000"
                     android:textSize="32sp" />
             </RelativeLayout>
