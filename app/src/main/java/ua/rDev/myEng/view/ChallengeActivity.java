@@ -1,6 +1,8 @@
 package ua.rDev.myEng.view;
 
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,18 +18,20 @@ import android.widget.RelativeLayout;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+
+import java.util.ArrayList;
+
 import ua.rDev.myEng.R;
+import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.adapter.VocabularyPagerAdapter;
 import ua.rDev.myEng.model.Word;
 import ua.rDev.myEng.presenter.ChallangePresenter;
-
-import java.util.ArrayList;
 
 /**
  * Created by pk on 30.05.2017.
  */
 
-public class ChallengeActivity extends MvpAppCompatActivity implements View.OnClickListener, IChallange {
+public class ChallengeActivity extends MvpAppCompatActivity implements  IChallange {
     @InjectPresenter
     ChallangePresenter challangePresenter;
 
@@ -38,11 +42,11 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
 
     static MyCustomPager viewPager;
     VocabularyPagerAdapter vocabularyPagerAdapter;
-    Button finishBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.anim_enter, R.anim.anim_leave);
         setContentView(R.layout.challenge);
         ch_toolbar = (Toolbar) findViewById(R.id.ch_toolbar);
         setSupportActionBar(ch_toolbar);
@@ -53,9 +57,6 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
         getSupportActionBar().setTitle("Challange");
 
         challangeRelative = (RelativeLayout) findViewById(R.id.challengeRelative);
-
-        finishBtn = (Button) findViewById(R.id.finish_button);
-        finishBtn.setOnClickListener(this);
         viewPager = (MyCustomPager) findViewById(R.id.viewpager);
 
         challangeFrame = (FrameLayout) findViewById(R.id.challengeFrame);
@@ -68,7 +69,7 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
         builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                close();
             }
         });
         builder.setCancelable(false);
@@ -119,22 +120,25 @@ public class ChallengeActivity extends MvpAppCompatActivity implements View.OnCl
         challangeFrame.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.finish_button:
-                challangePresenter.clearData();
-                finish();
-                break;
-        }
+    private void close() {
+        Intent intent = new Intent(this, MainActivity.class);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim_enter_to_main, R.anim.anim_leave_to_main);
+        startActivity(intent, options.toBundle());
+        finish();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            close();
         }
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        close();
     }
 
     public static void scrollToNext() {

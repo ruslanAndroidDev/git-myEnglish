@@ -1,5 +1,6 @@
 package ua.rDev.myEng.view;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -65,7 +66,7 @@ public class WebActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            close();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -82,12 +83,20 @@ public class WebActivity extends AppCompatActivity {
         });
     }
 
+    private void close() {
+        Intent intent = new Intent(this, MainActivity.class);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim_enter_to_main, R.anim.anim_leave_to_main);
+        startActivity(intent, options.toBundle());
+        finish();
+    }
+
     @Override
     public void onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack();
         } else {
-            finish();
+            close();
         }
     }
 }

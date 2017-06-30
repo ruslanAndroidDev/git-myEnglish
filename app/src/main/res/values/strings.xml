@@ -60,4 +60,22 @@
     <string name="country_msg">Для загрузки перевода нажмите на слово.</string>
     <string name="cancel">Отмена</string>
     <string name="add">Добавить</string>
+    <string name="theme_color">Колір теми</string>
+    <string name="blue">Синій</string>
+    <string name="color">Колір</string>
+    <string name="language">Мова</string>
+    <string name="ukr">УкраЇнська</string>
+
+    <string-array name="laungage">
+        <item>Руский</item>
+        <item>Українська</item>
+    </string-array>
+    <string-array name="entry_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="color">
+        <item>Коричневий</item>
+        <item>Синій</item>
+    </string-array>
 </resources>

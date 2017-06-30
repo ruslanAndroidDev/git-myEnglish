@@ -1,8 +1,12 @@
 package ua.rDev.myEng;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.TypedValue;
 
 /**
  * Created by pk on 08.06.2017.
@@ -51,5 +55,17 @@ public class Utill {
         bitmap = BitmapFactory.decodeResource(res, resId, options);
 
         return bitmap;
+    }
+
+    public static int getThemeAccentColor(final Context context) {
+        final TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+        return value.data;
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNttworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNttworkInfo != null && activeNttworkInfo.isConnected();
     }
 }

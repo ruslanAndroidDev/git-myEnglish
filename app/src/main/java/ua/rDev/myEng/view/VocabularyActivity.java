@@ -1,22 +1,23 @@
 package ua.rDev.myEng.view;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.mancj.slideup.SlideUp;
 
@@ -35,7 +36,7 @@ import ua.rDev.myEng.presenter.VocabularyPresenter;
 /**
  * Created by pk on 09.09.2016.
  */
-public class VocabularyFragment extends MvpAppCompatFragment implements View.OnClickListener, IVocabulary {
+public class VocabularyActivity extends MvpAppCompatActivity implements View.OnClickListener, IVocabulary {
     @InjectPresenter
     VocabularyPresenter presenter;
     static RecyclerView recyclerView;
@@ -47,29 +48,38 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
 
     ImageView vocab_iv;
     TextView vocab_tv;
+    Toolbar vocab_toolbar;
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.my_vocabulary_frag, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.my_vocabulary_frag);
+        vocab_toolbar = (Toolbar) findViewById(R.id.vocab_toolbar);
+        setSupportActionBar(vocab_toolbar);
 
-        slideView = v.findViewById(R.id.slideView);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        getSupportActionBar().setTitle(getString(R.string.my_dictionary));
+
+        slideView = findViewById(R.id.slideView);
         slideUp = new SlideUp.Builder(slideView)
                 .withStartState(SlideUp.State.HIDDEN)
                 .withStartGravity(Gravity.TOP)
                 .build();
-        fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
             }
         });
-        panel_rv = (RecyclerView) v.findViewById(R.id.panelRecyclerView);
-        panel_rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerv);
+        panel_rv = (RecyclerView) findViewById(R.id.panelRecyclerView);
+        panel_rv.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerv);
 
-        vocab_iv = (ImageView) v.findViewById(R.id.vocab_iv);
-        vocab_tv = (TextView) v.findViewById(R.id.vocab_tv);
+        vocab_iv = (ImageView) findViewById(R.id.vocab_iv);
+        vocab_tv = (TextView) findViewById(R.id.vocab_tv);
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -83,7 +93,7 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
 
                 } else {
                     adapter.data.remove(position - 2);
-                    MyDataBaseHelper.deleteItem(position - 2, getContext());
+                    MyDataBaseHelper.deleteItem(position - 2, getApplicationContext());
                     adapter.notifyItemRemoved(position);
                 }
                 if (MyListRecyclerAdapter.data.size() == 0) {
@@ -96,7 +106,26 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        return v;
+    }
+
+    @Override
+    public void onBackPressed() {
+        close();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            close();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private void close() {
+        Intent intent = new Intent(this, MainActivity.class);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim_enter_to_main, R.anim.anim_leave_to_main);
+        startActivity(intent, options.toBundle());
+        finish();
     }
 
     @Override
@@ -121,8 +150,8 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
     @Override
     public void showDialog() {
         if (alertDialog == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            View dialogView = View.inflate(getContext(), R.layout.dialogmaket, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View dialogView = View.inflate(this, R.layout.dialogmaket, null);
             builder.setView(dialogView);
 
             Button dialog_btn_ok = (Button) dialogView.findViewById(R.id.dialog_button_ok);
@@ -143,13 +172,13 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
     @Override
     public void onStart() {
         super.onStart();
-        presenter.loadData(getContext());
+        presenter.loadData(this);
     }
 
     @Override
     public void showData(ArrayList<Word> data) {
         adapter = new MyListRecyclerAdapter(data, presenter);
-        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         if (data.size() == 0) {
             vocab_iv.setImageBitmap(Utill.loadBitmapFromResource(getResources(), R.drawable.clear_book, 250, 250));
@@ -163,14 +192,14 @@ public class VocabularyFragment extends MvpAppCompatFragment implements View.OnC
     public void insertWord(String translate, String original, int status) {
         MyListRecyclerAdapter.data.add(0, new Word(translate, original, status));
         adapter.notifyItemInserted(0);
-        vocab_iv.setImageBitmap(Utill.loadBitmapFromResource(getContext().getResources(), R.drawable.clear_book, 250, 250));
+        vocab_iv.setImageBitmap(Utill.loadBitmapFromResource(getResources(), R.drawable.clear_book, 250, 250));
         vocab_iv.setVisibility(View.GONE);
         vocab_tv.setVisibility(View.GONE);
     }
 
     @Override
     public void showPanel(WordPack wordPack) {
-        panel_rv.setAdapter(new PanelAdapter(wordPack, getContext(), presenter));
+        panel_rv.setAdapter(new PanelAdapter(wordPack, this, presenter));
         slideUp.show();
         fab.hide();
     }

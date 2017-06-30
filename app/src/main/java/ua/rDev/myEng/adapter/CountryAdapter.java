@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import ua.rDev.myEng.R;
 import ua.rDev.myEng.model.Country;
-import ua.rDev.myEng.view.CountryActivity;
+import ua.rDev.myEng.view.CountryDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class CountryAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(context, CountryActivity.class);
+            Intent intent = new Intent(context, CountryDetailActivity.class);
             intent.putExtra("country", arrayList.get(getAdapterPosition()));
             context.startActivity(intent);
         }

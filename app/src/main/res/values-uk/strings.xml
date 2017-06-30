@@ -45,4 +45,8 @@
     <string name="country_msg">Для завантаження перекладу натисніть на слово.(Працює у тестовому режимі,тому поки що переклад доступний лише російською мовою)</string>
     <string name="cancel">Відміна</string>
     <string name="add">Додати</string>
+    <string name="theme_color">Колір теми</string>
+    <string name="blue">Синій</string>
+    <string name="color">Колір</string>
+    <string name="language">Мова</string>
 </resources>
