@@ -129,6 +129,7 @@ public class TenseActivity extends AppCompatActivity implements View.OnClickList
         Intent intent = new Intent(this, WebActivity.class);
         intent.putExtra("url", url);
         startActivity(intent);
+        finish();
     }
 
     @Override

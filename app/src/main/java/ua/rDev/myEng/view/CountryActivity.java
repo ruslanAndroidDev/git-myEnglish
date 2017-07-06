@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -74,7 +73,16 @@ public class CountryActivity extends MvpAppCompatActivity implements ChildEventL
             FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
             DatabaseReference reference = mDatabase.getReference("article/");
             reference.addChildEventListener(this);
+
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        recyclerView.removeAllViews();
+        adapter.arrayList.clear();
+        Runtime.getRuntime().gc();
     }
 
     private boolean isNetworkAvailable() {
@@ -87,6 +95,7 @@ public class CountryActivity extends MvpAppCompatActivity implements ChildEventL
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         pd.hide();
         Country country = dataSnapshot.getValue(Country.class);
+        country.setKey(dataSnapshot.getKey());
         adapter.arrayList.add(country);
         adapter.notifyItemInserted(0);
     }
@@ -129,6 +138,5 @@ public class CountryActivity extends MvpAppCompatActivity implements ChildEventL
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
-        Log.d("tag", "onCanceled" + databaseError.getMessage());
     }
 }

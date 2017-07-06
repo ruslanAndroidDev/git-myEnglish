@@ -53,6 +53,7 @@
                 <ImageView
                     android:id="@+id/btn_intro"
                     style="@style/ExpandBtnStyle"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
                     android:onClick="@{clicker}" />
 
                 <TextView
@@ -74,7 +75,8 @@
                 <ImageView
                     android:id="@+id/btn_history"
                     style="@style/ExpandBtnStyle"
-                    android:onClick="@{clicker}" />
+                    android:onClick="@{clicker}"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"/>
 
                 <TextView
                     android:id="@+id/geo_name"
@@ -95,7 +97,8 @@
                 <ImageView
                     android:id="@+id/btn_geo"
                     style="@style/ExpandBtnStyle"
-                    android:onClick="@{clicker}" />
+                    android:onClick="@{clicker}"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"/>
 
                 <TextView
                     android:id="@+id/sights_name"
@@ -116,7 +119,8 @@
                 <ImageView
                     android:id="@+id/btn_sights"
                     style="@style/ExpandBtnStyle"
-                    android:onClick="@{clicker}" />
+                    android:onClick="@{clicker}"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp"/>
 
             </LinearLayout>
         </ScrollView>

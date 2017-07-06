@@ -124,6 +124,7 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     public void showVocabDialog() {
         if (alertDialog == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
@@ -148,7 +149,7 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             close();
-        }else{
+        } else {
             showVocabDialog();
         }
         return super.onOptionsItemSelected(item);
@@ -184,23 +185,34 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
     @Override
     public void showDialog() {
         if (alertDialog == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View dialogView = View.inflate(this, R.layout.dialogmaket, null);
-            builder.setView(dialogView);
-
-            Button dialog_btn_ok = (Button) dialogView.findViewById(R.id.dialog_button_ok);
-            Button dialog_btn_cancel = (Button) dialogView.findViewById(R.id.dialog_button_cancel);
-            dialog_et_native = (EditText) dialogView.findViewById(R.id.dialog_et_original);
-            dialog_et_translate = (EditText) dialogView.findViewById(R.id.dialog_et_translate);
-
-            dialog_btn_cancel.setOnClickListener(this);
-            dialog_btn_ok.setOnClickListener(this);
-            alertDialog = builder.create();
+            createDialog();
         }
-        dialog_et_native.setText("");
-        dialog_et_translate.setText("");
+        try {
+            dialog_et_native.setText("");
+            dialog_et_translate.setText("");
+        } catch (NullPointerException e) {
+            createDialog();
+
+            dialog_et_native.setText("");
+            dialog_et_translate.setText("");
+        }
 
         alertDialog.show();
+    }
+
+    private void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = View.inflate(this, R.layout.dialogmaket, null);
+        builder.setView(dialogView);
+
+        Button dialog_btn_ok = (Button) dialogView.findViewById(R.id.dialog_button_ok);
+        Button dialog_btn_cancel = (Button) dialogView.findViewById(R.id.dialog_button_cancel);
+        dialog_et_native = (EditText) dialogView.findViewById(R.id.dialog_et_original);
+        dialog_et_translate = (EditText) dialogView.findViewById(R.id.dialog_et_translate);
+
+        dialog_btn_cancel.setOnClickListener(this);
+        dialog_btn_ok.setOnClickListener(this);
+        alertDialog = builder.create();
     }
 
     @Override
@@ -244,7 +256,6 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
         fab.show();
         panel_rv.removeAllViews();
     }
-
     public boolean isPanelShow() {
         return slideUp.isVisible();
     }

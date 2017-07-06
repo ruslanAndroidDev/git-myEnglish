@@ -61,17 +61,12 @@ public class SettingsFragment extends PreferenceFragment {
         dialogPreference = (Preference) getPreferenceScreen().findPreference("dialog_preference");
         dialogPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                // dialog code here
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                // Get the layout inflater
+
                 LayoutInflater inflater = getActivity().getLayoutInflater();
 
-                // Inflate and set the layout for the dialog
-                // Pass null as the parent view because its going in the dialog layout
                 builder.setView(inflater.inflate(R.layout.about_layout, null));
                 builder.create().show();
-
-                Log.d("tag", "onPreferenceClick");
                 return true;
             }
         });
@@ -79,7 +74,7 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void updateLangState(String lang) {
-        if (lang.equals("ukr")) {
+        if (lang.equals("uk")) {
             Utill.changelang("uk", getActivity());
             languagePref.setSummary(getString(R.string.ukr_lang));
         } else {

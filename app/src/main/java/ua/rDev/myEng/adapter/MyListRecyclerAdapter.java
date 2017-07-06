@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -109,7 +108,7 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (IndexOutOfBoundsException e) {
-                        Toast.makeText(context, context.getResources().getString(R.string.no_word), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getResources().getString(R.string.no_name), Toast.LENGTH_SHORT).show();
                     }
                     try {
                         mediaPlayer.prepare();
@@ -195,7 +194,6 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 relativeLayout.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.card_blue1));
                 translate_tv.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.secondTextcolor));
             }
-            Log.d("tag", Utill.getThemeAccentColor(holder.itemView.getContext()) + "utill" + ContextCompat.getColor(holder.itemView.getContext(), R.color.secondTextcolor));
             card_status.setCardBackgroundColor(getColorStatus(data.get(position - 2).getStatus()));
             original_tv.setText(data.get(position - 2).getOriginalWord());
             translate_tv.setText(data.get(position - 2).getTranslateWord());

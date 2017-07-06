@@ -43,9 +43,9 @@ public class WordPackAdapter extends RecyclerView.Adapter<WordPackAdapter.WordVi
             this.pack_name = (TextView) itemView.findViewById(R.id.pack_name);
             this.cardView = (CardView) itemView.findViewById(R.id.card);
             itemView.setOnClickListener(this);
-            if (Utill.getThemeAccentColor(itemView.getContext()) == ContextCompat.getColor(itemView.getContext(), R.color.colorAccent)){
+            if (Utill.getThemeAccentColor(itemView.getContext()) == ContextCompat.getColor(itemView.getContext(), R.color.colorAccent)) {
                 color = R.color.card_brown3;
-            } else{
+            } else {
                 color = R.color.card_blue2;
             }
         }
@@ -76,10 +76,8 @@ public class WordPackAdapter extends RecyclerView.Adapter<WordPackAdapter.WordVi
         final TextView pack_name = holder.pack_name;
         CardView cardView = holder.cardView;
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, color));
-        Picasso.with(context).load(wordPacks.get(position).getPhotoUrl()).into(pack_photo);
+        Picasso.with(context).load(wordPacks.get(position).getPhotoUrl()).fit().into(pack_photo);
         pack_name.setText(wordPacks.get(position).getName());
-
-        ViewCompat.setTransitionName(holder.pack_photo, pack_name.getText().toString());
     }
 
     @Override

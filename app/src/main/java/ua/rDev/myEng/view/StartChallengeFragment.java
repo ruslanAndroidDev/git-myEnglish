@@ -1,6 +1,5 @@
 package ua.rDev.myEng.view;
 
-import android.annotation.SuppressLint;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,7 +24,6 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
     ChallangePresenter challangePresenter;
     StartChallengeBinding challengeBinding;
 
-    @SuppressLint("ValidFragment")
     public StartChallengeFragment() {
     }
 
@@ -39,12 +37,12 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
         challengeBinding = DataBindingUtil.inflate(inflater, R.layout.start_challenge, container, false);
         challengeBinding.seekBar.setOnSeekBarChangeListener(this);
         if (Utill.getThemeAccentColor(getContext()) == ContextCompat.getColor(getContext(), R.color.colorAccent2)) {
+            challengeBinding.setColor(ContextCompat.getColor(getContext(), R.color.secondTextcolor));
             challengeBinding.textView.setTextColor(ContextCompat.getColor(getContext(), R.color.countryTextcolor));
-            challengeBinding.textView2.setTextColor(ContextCompat.getColor(getContext(), R.color.secondTextcolor));
-            challengeBinding.textView4.setTextColor(ContextCompat.getColor(getContext(), R.color.secondTextcolor));
-            challengeBinding.textView5.setTextColor(ContextCompat.getColor(getContext(), R.color.secondTextcolor));
-            challengeBinding.textView6.setTextColor(ContextCompat.getColor(getContext(), R.color.secondTextcolor));
             challengeBinding.tvNumItem.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.card_blue1));
+        } else {
+            challengeBinding.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+
         }
         challengeBinding.setClicker(this);
         challengeBinding.challangeIv.setImageBitmap(
@@ -57,7 +55,7 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         num_of_challange_item = Integer.parseInt(challengeBinding.tvNumItem.getText().toString());
         if (num_of_challange_item == 0) {
-            Toast.makeText(getContext(), "Виберіть кількість слів!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.pick_number), Toast.LENGTH_SHORT).show();
         } else {
             challangePresenter.startChallange(getContext(), num_of_challange_item);
         }
@@ -76,10 +74,5 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 }

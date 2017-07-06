@@ -55,7 +55,7 @@ public class CountryAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, CountryDetailActivity.class);
-            intent.putExtra("country", arrayList.get(getAdapterPosition()));
+            intent.putExtra("name", arrayList.get(getAdapterPosition()).getKey());
             context.startActivity(intent);
         }
     }
@@ -70,7 +70,7 @@ public class CountryAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ImageView img = ((ViewHolder) holder).img;
-        Picasso.with(context).load(arrayList.get(position).getPhotoUrl()).into(img);
+        Picasso.with(context).load(arrayList.get(position).getPhotoUrl()).fit().into(img);
         TextView title = ((ViewHolder) holder).title;
         TextView article = ((ViewHolder) holder).article;
         if (colorAccent == R.color.colorAccent) {

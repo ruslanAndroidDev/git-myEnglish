@@ -57,7 +57,7 @@
     <string name="about_license">This work is licensed under a Creative Commons Attribution 4.0 International License.</string>
     <string name="about_article">Матеріал статей взятий з сайту</string>
     <string name="about_skyeng">Переклад слів здійснюється за допомогою Skyeng API</string>
-
+    <string name="pick_number">Виберіть кількість слів!</string>
     <string-array name="color">
         <item>Коричневий</item>
         <item>Синій</item>

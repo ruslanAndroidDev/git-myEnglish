@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -97,7 +96,6 @@ public class ChallengeActivity extends MvpAppCompatActivity implements IChallang
         viewPager.setAdapter(vocabularyPagerAdapter);
 
         final int pageCount = vocabularyPagerAdapter.getCount();
-        Log.d("tag", "pageCount" + pageCount);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -106,7 +104,6 @@ public class ChallengeActivity extends MvpAppCompatActivity implements IChallang
 
             @Override
             public void onPageSelected(int position) {
-                Log.d("tag", "position" + position);
                 if (position == (pageCount - 1)) {
                     challangePresenter.updateResult();
                 }
@@ -128,6 +125,7 @@ public class ChallengeActivity extends MvpAppCompatActivity implements IChallang
     }
 
     private void close() {
+        Runtime.getRuntime().gc();
         Intent intent = new Intent(this, MainActivity.class);
         ActivityOptions options =
                 ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim_enter_to_main, R.anim.anim_leave_to_main);

@@ -22,6 +22,7 @@ import android.text.method.MovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,6 +36,14 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -51,7 +60,7 @@ import ua.rDev.myEng.data.MyDataBaseHelper;
 import ua.rDev.myEng.data.SkyEngService;
 import ua.rDev.myEng.data.SkyEngWord;
 import ua.rDev.myEng.databinding.CountryDetailLayoutBinding;
-import ua.rDev.myEng.model.Country;
+import ua.rDev.myEng.model.CountryDetail;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -59,13 +68,13 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
  * Created by pk on 17.06.2017.
  */
 
-public class CountryDetailActivity extends AppCompatActivity implements View.OnClickListener, Animation.AnimationListener {
+public class CountryDetailActivity extends AppCompatActivity implements View.OnClickListener, Animation.AnimationListener, ChildEventListener {
     private static final String FIRST_LAUNCH_KEY = "country_first";
     CountryDetailLayoutBinding countryLayoutBinding;
     SkyEngService service;
     ImageView popIv;
     boolean PLAY_MUSIC = false;
-    Country country;
+    CountryDetail country;
     MyCardView popCard;
     Animation animation;
 
@@ -80,15 +89,19 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        country = intent.getParcelableExtra("country");
         SharedPreferences preferences = getDefaultSharedPreferences(this);
         String color = preferences.getString("color", "1");
+        Intent intent = getIntent();
         if (color.equals("1")) {
             setTheme(R.style.CountryStyleBrown);
         } else {
             setTheme(R.style.CountryStyleBlue);
         }
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        Log.d("tag", intent.getStringExtra("name"));
+        DatabaseReference reference = mDatabase.getReference("article/");
+        Query mQuery = reference.orderByKey().equalTo(intent.getStringExtra("name"));
+        mQuery.addChildEventListener(this);
         countryLayoutBinding = DataBindingUtil.setContentView(this, R.layout.country_detail_layout);
         popIv = (ImageView) findViewById(R.id.pop_iv);
         popCard = (MyCardView) findViewById(R.id.pop_card);
@@ -123,21 +136,12 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
             countryLayoutBinding.introName.setTextColor(ContextCompat.getColor(this, R.color.countryTextcolor));
             countryLayoutBinding.sightsName.setTextColor(ContextCompat.getColor(this, R.color.countryTextcolor));
         }
-        countryLayoutBinding.countryName.setText(country.getName());
-
         countryLayoutBinding.setClicker(this);
         OvershootInterpolator interpolator = new OvershootInterpolator();
         countryLayoutBinding.introTv.setInterpolator(interpolator);
         countryLayoutBinding.geoTv.setInterpolator(interpolator);
         countryLayoutBinding.historyTv.setInterpolator(interpolator);
         countryLayoutBinding.sightsTv.setInterpolator(interpolator);
-
-        splitString(country.getIntro(), countryLayoutBinding.introTv);
-        splitString(country.getGeo(), countryLayoutBinding.geoTv);
-        splitString(country.getHistory(), countryLayoutBinding.historyTv);
-        splitString(country.getSights(), countryLayoutBinding.sightsTv);
-
-        Picasso.with(this).load(country.getPhotoUrl()).into(countryLayoutBinding.countryImageView);
 
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.card_pop_show);
         animation.setAnimationListener(this);
@@ -220,13 +224,23 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
                         e.printStackTrace();
                     }
                     if (PLAY_MUSIC) {
+                        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                mediaPlayer.release();
+                            }
+                        });
                         mp.start();
                     }
                     Picasso.with(getBaseContext())
                             .load("https:" + response.body().get(0).getMeanings().get(0).getPreviewUrl())
+                            .networkPolicy(NetworkPolicy.NO_CACHE)
+                            .memoryPolicy(MemoryPolicy.NO_CACHE)
                             .into(popIv);
                     countryLayoutBinding.popOriginalTv.setText(word);
                     countryLayoutBinding.popTranslateTv.setText(response.body().get(0).getMeanings().get(0).getTranslation().getText());
+                } catch (NullPointerException n) {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_name), Toast.LENGTH_SHORT).show();
                 } catch (IndexOutOfBoundsException e) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_name), Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
@@ -353,6 +367,38 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onAnimationRepeat(Animation animation) {
+
+    }
+
+    @Override
+    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        country = dataSnapshot.getValue(CountryDetail.class);
+        Picasso.with(this).load(country.getPhotoUrl()).into(countryLayoutBinding.countryImageView);
+        countryLayoutBinding.countryName.setText(country.getName());
+        splitString(country.getIntro(), countryLayoutBinding.introTv);
+        splitString(country.getGeo(), countryLayoutBinding.geoTv);
+        splitString(country.getHistory(), countryLayoutBinding.historyTv);
+        splitString(country.getSights(), countryLayoutBinding.sightsTv);
+
+    }
+
+    @Override
+    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+    }
+
+    @Override
+    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
 
     }
 
