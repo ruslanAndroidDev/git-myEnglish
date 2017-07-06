@@ -4,7 +4,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
 
     <string name="my_dictionary">Мой словарь</string>
     <string name="title_activity_main">My English</string>
@@ -12,12 +12,12 @@
     <string name="tenses">Времена</string>
     <string name="main_item">Интересный факт</string>
     <string name="iregular_verbs">Таблица глаголов</string>
-    <string name="english_tense">Времена английского языка</string>
+    <string name="english_tense">Времена </string>
     <string name="repeat">Повторение слов</string>
     <string name="choseNumOfWords">Выберите количество слов для повторения:</string>
     <string name="myresult">Мой результат:</string>
     <string name="welcome">Добро пожаловать!</string>
-    <string name="welcome_subtitle">Добро пожаловать в приложение My English</string>
+    <string name="welcome_subtitle">Добро пожаловать в приложение English Helper</string>
     <string name="study_words_together">Изучай английские слова вместе с нами</string>
     <string name="study_words_together_subtitle">Каждый день мы публикуем новую подборку слов для изучения</string>
     <string name="hint">Необходима подсказка?</string>
@@ -60,22 +60,35 @@
     <string name="country_msg">Для загрузки перевода нажмите на слово.</string>
     <string name="cancel">Отмена</string>
     <string name="add">Добавить</string>
-    <string name="theme_color">Колір теми</string>
-    <string name="blue">Синій</string>
-    <string name="color">Колір</string>
-    <string name="language">Мова</string>
-    <string name="ukr">УкраЇнська</string>
+    <string name="theme_color">Цвет темы</string>
+    <string name="language">Язык</string>
+    <string name="ukr_lang">Українська</string>
+    <string name="rus_lang">Русский</string>
+
+    <string name="brown">Коричневый</string>
+    <string name="blue">Синий</string>
 
     <string-array name="laungage">
-        <item>Руский</item>
+        <item>Русский</item>
         <item>Українська</item>
+    </string-array>
+    <string-array name="laungage_values">
+        <item>ru</item>
+        <item>uk</item>
     </string-array>
     <string-array name="entry_values">
         <item>1</item>
         <item>2</item>
     </string-array>
     <string-array name="color">
-        <item>Коричневий</item>
-        <item>Синій</item>
+        <item>Коричневый</item>
+        <item>Синий</item>
     </string-array>
+    <string name="no_connect">Нет подключения к интернету. Проверьте ваше соединение и попробуйте еще раз</string>
+    <string name="about">O программе</string>
+    <string name="add_word">Введите слово</string>
+    <string name="add_translate">Введите перевод</string>
+    <string name="about_license">This work is licensed under a Creative Commons Attribution 4.0 International License.</string>
+    <string name="about_article">Материал статей взят с сайта</string>
+    <string name="about_skyeng">Перевод слов осуществляется с помощью Skyeng API</string>
 </resources>

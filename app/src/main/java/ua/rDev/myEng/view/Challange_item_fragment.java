@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import ua.rDev.myEng.R;
+import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.data.MyDataBase;
 import ua.rDev.myEng.data.MyDataBaseHelper;
 import ua.rDev.myEng.model.Variant;
@@ -62,8 +63,8 @@ public class Challange_item_fragment extends Fragment implements View.OnClickLis
         View v = inflater.inflate(R.layout.challange_item, container, false);
         initializeItem(v);
         tv_question_word = (TextView) v.findViewById(R.id.tv_question_word);
+        tv_question_word.setTextColor(Utill.getThemeAccentColor(getContext()));
         buildDataSet();
-        Log.d("tag", "questionString " + questionString);
         return v;
     }
 

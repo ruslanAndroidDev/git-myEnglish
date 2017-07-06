@@ -2,16 +2,21 @@ package ua.rDev.myEng.view;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import ua.rDev.myEng.R;
+import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.databinding.TenseFragmentBinding;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
  * Created by pk on 15.09.2016.
@@ -24,7 +29,25 @@ public class TenseActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = getDefaultSharedPreferences(this);
+        String color = preferences.getString("color", "1");
+        if (color.equals("1")) {
+            setTheme(R.style.AppTheme);
+        } else {
+            setTheme(R.style.AppTheme2);
+        }
         binding = DataBindingUtil.setContentView(this, R.layout.tense_fragment);
+        if (Utill.getThemeAccentColor(this) == ContextCompat.getColor(this, R.color.colorAccent2)) {
+            binding.card1.setCardBackgroundColor(ContextCompat.getColor(this, R.color.card_blue1));
+            binding.card2.setCardBackgroundColor(ContextCompat.getColor(this, R.color.card_blue2));
+            binding.card3.setCardBackgroundColor(ContextCompat.getColor(this, R.color.card_blue3));
+            binding.card4.setCardBackgroundColor(ContextCompat.getColor(this, R.color.card_blue4));
+        } else {
+            binding.card1.setCardBackgroundColor(ContextCompat.getColor(this, R.color.card_brown1));
+            binding.card2.setCardBackgroundColor(ContextCompat.getColor(this, R.color.card_brown2));
+            binding.card3.setCardBackgroundColor(ContextCompat.getColor(this, R.color.card_brown3));
+            binding.card4.setCardBackgroundColor(ContextCompat.getColor(this, R.color.card_brown4));
+        }
         binding.setClicker(this);
         tense_toolbar = (Toolbar) findViewById(R.id.tense_toolbar);
         setSupportActionBar(tense_toolbar);
@@ -42,6 +65,7 @@ public class TenseActivity extends AppCompatActivity implements View.OnClickList
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void close() {
         Intent intent = new Intent(this, MainActivity.class);
         ActivityOptions options =

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -115,7 +116,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_play_circle_filled_black_24dp"
+                app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
                 android:onClick="@{clicker}"
                 android:id="@+id/start_repeat"/>
         </RelativeLayout>

@@ -3,11 +3,16 @@ package ua.rDev.myEng.view;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.google.firebase.database.ChildEventListener;
@@ -22,6 +27,8 @@ import ua.rDev.myEng.R;
 import ua.rDev.myEng.adapter.CountryAdapter;
 import ua.rDev.myEng.model.Country;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 /**
  * Created by pk on 08.10.2016.
  */
@@ -35,6 +42,13 @@ public class CountryActivity extends MvpAppCompatActivity implements ChildEventL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = getDefaultSharedPreferences(this);
+        String color = preferences.getString("color", "1");
+        if (color.equals("1")) {
+            setTheme(R.style.AppTheme);
+        } else {
+            setTheme(R.style.AppTheme2);
+        }
         setContentView(R.layout.country_layout);
         toolbar = (Toolbar) findViewById(R.id.country_toolbar);
         setSupportActionBar(toolbar);
@@ -53,10 +67,20 @@ public class CountryActivity extends MvpAppCompatActivity implements ChildEventL
         adapter = new CountryAdapter(data, this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        if (!isNetworkAvailable()) {
+            pd.hide();
+            Toast.makeText(this, getResources().getString(R.string.no_connect), Toast.LENGTH_SHORT).show();
+        } else {
+            FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference reference = mDatabase.getReference("article/");
+            reference.addChildEventListener(this);
+        }
+    }
 
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference reference = mDatabase.getReference("article/");
-        reference.addChildEventListener(this);
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo activeNttworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNttworkInfo != null && activeNttworkInfo.isConnected();
     }
 
     @Override
@@ -105,6 +129,6 @@ public class CountryActivity extends MvpAppCompatActivity implements ChildEventL
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
-
+        Log.d("tag", "onCanceled" + databaseError.getMessage());
     }
 }

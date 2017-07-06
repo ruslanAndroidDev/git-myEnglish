@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/tense_toolbar"
             android:layout_width="match_parent"
@@ -44,9 +45,10 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:cardBackgroundColor="#efebe9"
+                    app:cardBackgroundColor="@color/card_brown1"
                     app:cardCornerRadius="10dp"
-                    app:cardElevation="10dp">
+                    app:cardElevation="10dp"
+                    android:id="@+id/card1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -123,9 +125,10 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    app:cardBackgroundColor="@color/card_brown2"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp"
-                    app:cardBackgroundColor="#d7ccc8">
+                    android:id="@+id/card2">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -197,9 +200,10 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    app:cardBackgroundColor="@color/card_brown3"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp"
-                    app:cardBackgroundColor="#bcaaa4">
+                    android:id="@+id/card3">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -271,9 +275,10 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    app:cardBackgroundColor="@color/card_brown4"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp"
-                    app:cardBackgroundColor="#a1887f">
+                    android:id="@+id/card4">
 
                     <LinearLayout
                         android:layout_width="match_parent"

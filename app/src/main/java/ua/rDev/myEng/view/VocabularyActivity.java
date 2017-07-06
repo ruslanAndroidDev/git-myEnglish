@@ -2,6 +2,7 @@ package ua.rDev.myEng.view;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +35,8 @@ import ua.rDev.myEng.model.Word;
 import ua.rDev.myEng.model.WordPack;
 import ua.rDev.myEng.presenter.VocabularyPresenter;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 /**
  * Created by pk on 09.09.2016.
  */
@@ -53,6 +57,13 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = getDefaultSharedPreferences(this);
+        String color = preferences.getString("color", "1");
+        if (color.equals("1")) {
+            setTheme(R.style.AppTheme);
+        } else {
+            setTheme(R.style.AppTheme2);
+        }
         setContentView(R.layout.my_vocabulary_frag);
         vocab_toolbar = (Toolbar) findViewById(R.id.vocab_toolbar);
         setSupportActionBar(vocab_toolbar);
@@ -109,17 +120,40 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    public void showVocabDialog() {
+        if (alertDialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialog);
+            View dialogView = View.inflate(this, R.layout.word_status_dialog, null);
+            builder.setView(dialogView);
+            alertDialog = builder.create();
+        }
+        alertDialog.setCancelable(true);
+        alertDialog.show();
+    }
+
+    @Override
     public void onBackPressed() {
-        close();
+        if (isPanelShow()) {
+            hidePanel();
+        } else {
+            close();
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             close();
+        }else{
+            showVocabDialog();
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void close() {
         Intent intent = new Intent(this, MainActivity.class);
         ActivityOptions options =

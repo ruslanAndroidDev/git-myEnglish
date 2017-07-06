@@ -3,6 +3,7 @@ package ua.rDev.myEng.view;
 import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -22,16 +22,17 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import java.util.ArrayList;
 
 import ua.rDev.myEng.R;
-import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.adapter.VocabularyPagerAdapter;
 import ua.rDev.myEng.model.Word;
 import ua.rDev.myEng.presenter.ChallangePresenter;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
  * Created by pk on 30.05.2017.
  */
 
-public class ChallengeActivity extends MvpAppCompatActivity implements  IChallange {
+public class ChallengeActivity extends MvpAppCompatActivity implements IChallange {
     @InjectPresenter
     ChallangePresenter challangePresenter;
 
@@ -46,7 +47,13 @@ public class ChallengeActivity extends MvpAppCompatActivity implements  IChallan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.anim_enter, R.anim.anim_leave);
+        SharedPreferences preferences = getDefaultSharedPreferences(this);
+        String color = preferences.getString("color", "1");
+        if (color.equals("1")) {
+            setTheme(R.style.AppTheme);
+        } else {
+            setTheme(R.style.AppTheme2);
+        }
         setContentView(R.layout.challenge);
         ch_toolbar = (Toolbar) findViewById(R.id.ch_toolbar);
         setSupportActionBar(ch_toolbar);
@@ -54,7 +61,7 @@ public class ChallengeActivity extends MvpAppCompatActivity implements  IChallan
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        getSupportActionBar().setTitle("Challange");
+        getSupportActionBar().setTitle("Challenge");
 
         challangeRelative = (RelativeLayout) findViewById(R.id.challengeRelative);
         viewPager = (MyCustomPager) findViewById(R.id.viewpager);

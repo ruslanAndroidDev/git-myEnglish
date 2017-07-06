@@ -2,6 +2,7 @@ package ua.rDev.myEng.view;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.webkit.WebViewClient;
 
 import ua.rDev.myEng.R;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 public class WebActivity extends AppCompatActivity {
     public static final int WEBVIEW_SCALE = 200;
     String url;
@@ -25,6 +28,13 @@ public class WebActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = getDefaultSharedPreferences(this);
+        String color = preferences.getString("color", "1");
+        if (color.equals("1")) {
+            setTheme(R.style.AppTheme);
+        } else {
+            setTheme(R.style.AppTheme2);
+        }
         setContentView(R.layout.activity_web);
         Intent intent = getIntent();
 
@@ -84,7 +94,12 @@ public class WebActivity extends AppCompatActivity {
     }
 
     private void close() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent;
+        if (url.equals(getString(R.string.verbs_url))) {
+            intent = new Intent(this, MainActivity.class);
+        } else {
+            intent = new Intent(this, TenseActivity.class);
+        }
         ActivityOptions options =
                 ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim_enter_to_main, R.anim.anim_leave_to_main);
         startActivity(intent, options.toBundle());

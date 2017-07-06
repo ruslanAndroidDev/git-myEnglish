@@ -5,6 +5,8 @@
     <color name="colorAccent">#795548</color>
     <color name="colorItembackground">#a1887f</color>
     <color name="editTextcolor">#000000</color>
+    <color name="countryTextcolor">#212121</color>
+    <color name="secondTextcolor">#757575</color>
     <color name="itemBackground">#8d6e63</color>
     <color name="white">#FFFFFF</color>
     <color name="splash_2">#61a4c4</color>
@@ -13,4 +15,15 @@
     <color name="colorPrimary2">#1976d2</color>
     <color name="colorPrimaryDark2">#0d47a1</color>
     <color name="colorAccent2">#1976d2</color>
+
+    <color name="card_brown1">#efebe9</color>
+    <color name="card_brown2">#d7ccc8</color>
+    <color name="card_brown3">#bcaaa4</color>
+    <color name="card_brown4">#a1887f</color>
+
+    <color name="card_blue1">#e3f2fd</color>
+    <color name="card_blue2">#bbdefb</color>
+    <color name="card_blue3">#90caf9</color>
+    <color name="card_blue4">#64b5f6</color>
+    <color name="black">#212121</color>
 </resources>

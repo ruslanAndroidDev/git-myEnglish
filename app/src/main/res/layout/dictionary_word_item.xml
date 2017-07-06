@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/card_status"
-            android:text="car"
+            tools:text="car"
             android:textColor="#000000"
             android:textSize="26sp"
             android:textStyle="normal" />
@@ -42,13 +43,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_vord_original"
-            android:layout_gravity="center_vertical"
+            android:gravity="left"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="-5dp"
             android:layout_toRightOf="@id/card_status"
-            android:gravity="center_horizontal"
-            android:text="автомобіль"
+            tools:text="автомобіль"
             android:textColor="#594c4c"
             android:textSize="16sp"
             android:textStyle="italic" />

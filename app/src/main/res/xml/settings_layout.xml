@@ -2,14 +2,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
         android:entries="@array/laungage"
-        android:entryValues="@array/entry_values"
-        android:key="@string/language"
-        android:summary="@string/ukr"
+        android:entryValues="@array/laungage_values"
+        android:key="language"
+        android:summary=""
         android:title="@string/language" />
     <ListPreference
         android:entries="@array/color"
         android:entryValues="@array/entry_values"
-        android:key="@string/color"
+        android:key="color"
         android:summary="@string/blue"
         android:title="@string/theme_color"></ListPreference>
+        <Preference android:key="dialog_preference"
+            android:title="@string/about"/>
 </PreferenceScreen>

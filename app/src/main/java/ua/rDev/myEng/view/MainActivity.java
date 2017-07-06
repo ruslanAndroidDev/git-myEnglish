@@ -11,16 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import ua.rDev.myEng.R;
+import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.adapter.MainAdapter;
 import za.co.riggaroo.materialhelptutorial.TutorialItem;
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 509;
@@ -35,6 +38,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = getDefaultSharedPreferences(this);
+        String color = preferences.getString("color", "1");
+        if (color.equals("1")) {
+            setTheme(R.style.AppTheme);
+        } else {
+            setTheme(R.style.AppTheme2);
+        }
+        String lang = preferences.getString("language", Locale.getDefault().getLanguage());
+        if (lang.equals("uk")) {
+            Utill.changelang("uk", this);
+        } else {
+            Utill.changelang("ru", this);
+        }
+
         setContentView(R.layout.activity_main);
         mainRecyclerView = (RecyclerView) findViewById(R.id.main_recycler);
         mainRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -42,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(int position) {
-                Log.d("tag", "rvClick + pos:" + position);
                 Intent intent = null;
                 if (position == 0) {
                     intent = new Intent(getApplicationContext(), CountryActivity.class);
@@ -66,27 +82,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
-        toolbar = (Toolbar)
-
-                findViewById(R.id.toolbar);
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sPref =
-
-                getPreferences(MODE_PRIVATE);
+        sPref = getPreferences(MODE_PRIVATE);
 
         boolean firstLaunch = sPref.getBoolean(FIRST_LAUNCH_KEY, true);
-        if (firstLaunch == true)
-
-        {
+        if (firstLaunch == true) {
             loadTutorial();
         }
-        MobileAds.initialize(this,
+        MobileAds.initialize(this, getResources().
 
-                getResources().
-
-                        getString(R.string.app_id));
+                getString(R.string.app_id));
     }
 
     public void loadTutorial() {
@@ -105,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<TutorialItem> getTutorialItems(Context context) {
-        TutorialItem tutorialItem1 = new TutorialItem(context.getString(R.string.welcome), context.getString(R.string.welcome_subtitle),
+        TutorialItem tutorialItem1 = new TutorialItem(context.getString(R.string.welcome_subtitle), "",
                 R.color.colorAccent, R.drawable.welcome);
 
         TutorialItem tutorialItem2 = new TutorialItem(context.getString(R.string.study_words_together), context.getString(R.string.study_words_together_subtitle),
@@ -122,4 +129,8 @@ public class MainActivity extends AppCompatActivity {
         return tutorialItems;
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

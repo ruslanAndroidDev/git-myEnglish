@@ -1,6 +1,7 @@
 package ua.rDev.myEng.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import ua.rDev.myEng.R;
+import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.model.WordPack;
 import ua.rDev.myEng.presenter.VocabularyPresenter;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by pk on 15.06.2017.
@@ -71,11 +74,11 @@ public class PanelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     class ButtonHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Button ok;
-        Button cancel;
+        TextView cancel;
 
         public ButtonHolder(View itemView) {
             super(itemView);
-            this.cancel = (Button) itemView.findViewById(R.id.btn_cancel);
+            this.cancel = (TextView) itemView.findViewById(R.id.btn_cancel);
             this.ok = (Button) itemView.findViewById(R.id.btn_ok);
 
             ok.setOnClickListener(this);
@@ -116,6 +119,10 @@ public class PanelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             TextView word = ((WordHolder) holder).word_tv;
             TextView translate_word = ((WordHolder) holder).translate_word_tv;
             RadioButton rb = ((WordHolder) holder).rb;
+            if (Utill.getThemeAccentColor(context) == ContextCompat.getColor(context, R.color.colorPrimary2)) {
+                word.setTextColor(ContextCompat.getColor(context, R.color.black));
+                translate_word.setTextColor(ContextCompat.getColor(context, R.color.secondTextcolor));
+            }
             rb.setChecked(wordPack.getWordsOriginal(position - 1).isCheck());
             word.setText(wordPack.getWordsOriginal(position - 1).getWord());
             translate_word.setText(wordPack.getWordsTranslate(position - 1));

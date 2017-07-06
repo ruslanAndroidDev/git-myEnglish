@@ -1,6 +1,7 @@
 package ua.rDev.myEng;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,12 +9,23 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.TypedValue;
 
+import java.util.Locale;
+
 /**
  * Created by pk on 08.06.2017.
  */
 
 public class Utill {
     static Bitmap bitmap;
+
+    public static void changelang(String languageToLoad, Context context) {
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config,
+                context.getResources().getDisplayMetrics());
+    }
 
     private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {

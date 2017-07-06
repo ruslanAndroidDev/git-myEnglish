@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,14 @@ public class StartChallengeFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         challengeBinding = DataBindingUtil.inflate(inflater, R.layout.start_challenge, container, false);
         challengeBinding.seekBar.setOnSeekBarChangeListener(this);
+        if (Utill.getThemeAccentColor(getContext()) == ContextCompat.getColor(getContext(), R.color.colorAccent2)) {
+            challengeBinding.textView.setTextColor(ContextCompat.getColor(getContext(), R.color.countryTextcolor));
+            challengeBinding.textView2.setTextColor(ContextCompat.getColor(getContext(), R.color.secondTextcolor));
+            challengeBinding.textView4.setTextColor(ContextCompat.getColor(getContext(), R.color.secondTextcolor));
+            challengeBinding.textView5.setTextColor(ContextCompat.getColor(getContext(), R.color.secondTextcolor));
+            challengeBinding.textView6.setTextColor(ContextCompat.getColor(getContext(), R.color.secondTextcolor));
+            challengeBinding.tvNumItem.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.card_blue1));
+        }
         challengeBinding.setClicker(this);
         challengeBinding.challangeIv.setImageBitmap(
                 Utill.loadBitmapFromResource(getResources(), R.drawable.book_5, 200, 200));

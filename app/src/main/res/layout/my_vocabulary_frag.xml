@@ -60,6 +60,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add_black_24dp"
+        app:srcCompat="@drawable/ic_add_black_24dp"
         app:fabSize="auto"></android.support.design.widget.FloatingActionButton>
 </RelativeLayout>

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            tools:src="@drawable/ic_build_black_24dp" />
+            app:srcCompat="@drawable/ic_build_black_24dp" />
 
         <TextView
             android:id="@+id/main_title"

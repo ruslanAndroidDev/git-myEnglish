@@ -3,17 +3,20 @@ package ua.rDev.myEng.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.database.ChildEventListener;
@@ -31,6 +34,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ua.rDev.myEng.R;
+import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.data.MyDataBase;
 import ua.rDev.myEng.data.MyDataBaseHelper;
 import ua.rDev.myEng.data.SkyEngService;
@@ -59,10 +63,18 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public class BannerHolder extends RecyclerView.ViewHolder {
         AdView adView;
 
+
         public BannerHolder(View itemView) {
             super(itemView);
             this.adView = (AdView) itemView.findViewById(R.id.word_baner);
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    return false;
+                }
+            });
         }
+
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -81,7 +93,6 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             this.original_tv = (TextView) itemView.findViewById(R.id.tv_vord_original);
             this.relativeLayout = (RelativeLayout) itemView.findViewById(R.id.word_item_relative);
             itemView.setOnClickListener(this);
-            //itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -110,7 +121,7 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 @Override
                 public void onFailure(Call<ArrayList<SkyEngWord>> call, Throwable t) {
-
+                    Toast.makeText(context, context.getString(R.string.no_connect), Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -180,12 +191,12 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             final TextView translate_tv = ((MyViewHolder) holder).translate_tv;
             final CardView card_status = ((MyViewHolder) holder).card_status;
             final RelativeLayout relativeLayout = ((MyViewHolder) holder).relativeLayout;
-
-            if (data.get(position - 2).getStatus() == MyDataBase.STATUS_STUDING) {
-                relativeLayout.setBackgroundColor(Color.parseColor("#aed581"));
-            } else {
-                card_status.setCardBackgroundColor(getColorStatus(data.get(position - 2).getStatus()));
+            if (Utill.getThemeAccentColor(holder.itemView.getContext()) == ContextCompat.getColor(holder.itemView.getContext(), R.color.colorPrimary2)) {
+                relativeLayout.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.card_blue1));
+                translate_tv.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.secondTextcolor));
             }
+            Log.d("tag", Utill.getThemeAccentColor(holder.itemView.getContext()) + "utill" + ContextCompat.getColor(holder.itemView.getContext(), R.color.secondTextcolor));
+            card_status.setCardBackgroundColor(getColorStatus(data.get(position - 2).getStatus()));
             original_tv.setText(data.get(position - 2).getOriginalWord());
             translate_tv.setText(data.get(position - 2).getTranslateWord());
         } else if (holder instanceof HeaderHolder) {
@@ -201,7 +212,6 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     WordPack model = dataSnapshot.getValue(WordPack.class);
-                    Log.d("tag", "MyListAddapter " + model.getName() + model.getPhotoUrl());
                     arrayList.add(model);
                     wordPackAdapter.notifyItemInserted(0);
                 }
@@ -227,9 +237,16 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             });
         } else {
-            AdView adView = ((BannerHolder) holder).adView;
-            AdRequest adRequest = new AdRequest.Builder().build();
+            final AdView adView = ((BannerHolder) holder).adView;
+            final AdRequest adRequest = new AdRequest.Builder().build();
             adView.loadAd(adRequest);
+            adView.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                    adView.setVisibility(View.VISIBLE);
+                }
+            });
         }
     }
 

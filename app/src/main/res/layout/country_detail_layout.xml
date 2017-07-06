@@ -34,6 +34,7 @@
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/intro_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -55,6 +56,7 @@
                     android:onClick="@{clicker}" />
 
                 <TextView
+                    android:id="@+id/history_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -75,6 +77,7 @@
                     android:onClick="@{clicker}" />
 
                 <TextView
+                    android:id="@+id/geo_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -95,6 +98,7 @@
                     android:onClick="@{clicker}" />
 
                 <TextView
+                    android:id="@+id/sights_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -145,7 +149,7 @@
 
                 <ImageView
                     android:id="@+id/pop_iv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="96px"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
@@ -157,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/pop_iv"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     tools:text="Bomba" />
 
                 <TextView
@@ -170,7 +174,7 @@
                     android:layout_toLeftOf="@+id/pop_btn_music"
                     android:layout_toRightOf="@+id/pop_iv"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     tools:text="Бомба" />
 
                 <ImageView
@@ -181,7 +185,15 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="5dp"
                     android:onClick="@{clicker}"
-                    android:src="@drawable/ic_book_black_24dp" />
+                    app:srcCompat="@drawable/ic_book_black_24dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@+id/pop_btn"
+                    android:id="@+id/view"
+                    android:background="@color/card_blue4"
+                    android:visibility="gone"></View>
 
                 <ImageView
                     android:id="@+id/pop_btn_music"
@@ -191,7 +203,7 @@
                     android:layout_margin="5dp"
                     android:layout_toLeftOf="@+id/pop_btn"
                     android:onClick="@{clicker}"
-                    android:src="@drawable/ic_volume_off_black_48dp" />
+                    app:srcCompat="@drawable/ic_volume_off_black_48dp" />
             </RelativeLayout>
         </ua.rDev.myEng.view.MyCardView>
     </RelativeLayout>

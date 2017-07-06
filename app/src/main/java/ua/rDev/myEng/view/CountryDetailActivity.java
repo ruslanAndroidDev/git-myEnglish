@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
@@ -45,11 +46,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ua.rDev.myEng.R;
+import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.data.MyDataBaseHelper;
 import ua.rDev.myEng.data.SkyEngService;
 import ua.rDev.myEng.data.SkyEngWord;
 import ua.rDev.myEng.databinding.CountryDetailLayoutBinding;
 import ua.rDev.myEng.model.Country;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
  * Created by pk on 17.06.2017.
@@ -70,12 +74,21 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
     SharedPreferences sPref;
     boolean firstLaunch;
     AdView adView;
+    int colorAccent;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         country = intent.getParcelableExtra("country");
+        SharedPreferences preferences = getDefaultSharedPreferences(this);
+        String color = preferences.getString("color", "1");
+        if (color.equals("1")) {
+            setTheme(R.style.CountryStyleBrown);
+        } else {
+            setTheme(R.style.CountryStyleBlue);
+        }
         countryLayoutBinding = DataBindingUtil.setContentView(this, R.layout.country_detail_layout);
         popIv = (ImageView) findViewById(R.id.pop_iv);
         popCard = (MyCardView) findViewById(R.id.pop_card);
@@ -83,6 +96,11 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
         firstLaunch = sPref.getBoolean(FIRST_LAUNCH_KEY, true);
         if (firstLaunch) {
             showMyDialog();
+        }
+        if (Utill.getThemeAccentColor(this) == ContextCompat.getColor(this, R.color.colorAccent2)) {
+            colorAccent = R.color.colorAccent2;
+        } else {
+            colorAccent = R.color.colorAccent;
         }
     }
 
@@ -94,6 +112,17 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onResume() {
         super.onResume();
+        if (colorAccent == R.color.colorAccent2) {
+            countryLayoutBinding.countryName.setTextColor(ContextCompat.getColor(this, R.color.countryTextcolor));
+            countryLayoutBinding.introTv.setTextColor(ContextCompat.getColor(this, R.color.secondTextcolor));
+            countryLayoutBinding.geoTv.setTextColor(ContextCompat.getColor(this, R.color.secondTextcolor));
+            countryLayoutBinding.historyTv.setTextColor(ContextCompat.getColor(this, R.color.secondTextcolor));
+            countryLayoutBinding.sightsTv.setTextColor(ContextCompat.getColor(this, R.color.secondTextcolor));
+            countryLayoutBinding.geoName.setTextColor(ContextCompat.getColor(this, R.color.countryTextcolor));
+            countryLayoutBinding.historyName.setTextColor(ContextCompat.getColor(this, R.color.countryTextcolor));
+            countryLayoutBinding.introName.setTextColor(ContextCompat.getColor(this, R.color.countryTextcolor));
+            countryLayoutBinding.sightsName.setTextColor(ContextCompat.getColor(this, R.color.countryTextcolor));
+        }
         countryLayoutBinding.countryName.setText(country.getName());
 
         countryLayoutBinding.setClicker(this);
@@ -183,14 +212,14 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onResponse(Call<ArrayList<SkyEngWord>> call, Response<ArrayList<SkyEngWord>> response) {
                 try {
+                    mp = new MediaPlayer();
+                    mp.setDataSource("https:" + response.body().get(0).getMeanings().get(0).getSoundUrl());
+                    try {
+                        mp.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (PLAY_MUSIC) {
-                        MediaPlayer mp = new MediaPlayer();
-                        mp.setDataSource("https:" + response.body().get(0).getMeanings().get(0).getSoundUrl());
-                        try {
-                            mp.prepare();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                         mp.start();
                     }
                     Picasso.with(getBaseContext())
@@ -258,7 +287,9 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
                 } else {
                     PLAY_MUSIC = true;
                     countryLayoutBinding.popBtnMusic.setImageResource(R.drawable.ic_volume_up_black_24dp);
+                    mp.start();
                 }
+                break;
         }
     }
 
@@ -313,7 +344,6 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onAnimationStart(Animation animation) {
-
     }
 
     @Override

@@ -26,7 +26,7 @@
     <string name="future_perfect_continuous_url">http://easy-english.com.ua/future-perfect-continuous/</string>
     <string name="future_perfect_continuous_in_the_past_url">http://easy-english.com.ua/future-perfect-continuous-in-the-past/</string>
     <string name="welcome">Ласкаво просимо!</string>
-    <string name="welcome_subtitle">Вітаємо в додатку My English</string>
+    <string name="welcome_subtitle">Вітаємо в додатку English Helper</string>
     <string name="study_words_together">Вивчай англійські слова разом з нами</string>
     <string name="study_words_together_subtitle">Кожного дня ми публікуємо нову підбірку слів для вивчення</string>
     <string name="hint">Необхідна підказка?</string>
@@ -44,9 +44,22 @@
     <string name="connection_error">Немає доступу до інтернету.</string>
     <string name="country_msg">Для завантаження перекладу натисніть на слово.(Працює у тестовому режимі,тому поки що переклад доступний лише російською мовою)</string>
     <string name="cancel">Відміна</string>
-    <string name="add">Додати</string>
+    <string name="add">Зберегти</string>
     <string name="theme_color">Колір теми</string>
-    <string name="blue">Синій</string>
-    <string name="color">Колір</string>
     <string name="language">Мова</string>
+    <string name="action_settings">Налаштування</string>
+    <string name="brown">Коричневий</string>
+    <string name="blue">Синій</string>
+    <string name="no_connect">Немає підключення до інтернету. Перевірте ваше з\'єднання і спробуйте ще раз</string>
+    <string name="about">Про програму</string>
+    <string name="add_word">Введіть слово</string>
+    <string name="add_translate">Введіть переклад</string>
+    <string name="about_license">This work is licensed under a Creative Commons Attribution 4.0 International License.</string>
+    <string name="about_article">Матеріал статей взятий з сайту</string>
+    <string name="about_skyeng">Переклад слів здійснюється за допомогою Skyeng API</string>
+
+    <string-array name="color">
+        <item>Коричневий</item>
+        <item>Синій</item>
+    </string-array>
 </resources>
