@@ -64,10 +64,6 @@ import ua.rDev.myEng.model.CountryDetail;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
-/**
- * Created by pk on 17.06.2017.
- */
-
 public class CountryDetailActivity extends AppCompatActivity implements View.OnClickListener, Animation.AnimationListener, ChildEventListener {
     private static final String FIRST_LAUNCH_KEY = "country_first";
     CountryDetailLayoutBinding countryLayoutBinding;
@@ -175,8 +171,13 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
                     for (int i = 0; i < spans.length; i++) {
                         spannableString.removeSpan(spans[i]);
                     }
-                    spannableString.setSpan(new BackgroundColorSpan(Color.parseColor("#aed581")), myPosition, myPosition + ss.length() + 1,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    try {
+                        spannableString.setSpan(new BackgroundColorSpan(Color.parseColor("#aed581")), myPosition, myPosition + ss.length() + 1,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    } catch (IndexOutOfBoundsException e) {
+                        spannableString.setSpan(new BackgroundColorSpan(Color.parseColor("#aed581")), myPosition, myPosition + ss.length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
                     tv.setText(spannableString);
                 }
 
@@ -188,6 +189,8 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
                 spannableString.setSpan(span1, currentPosition, currentPosition + ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 currentPosition = currentPosition + ss.length() + 1;
             } catch (RuntimeException r) {
+                spannableString.setSpan(span1, currentPosition, currentPosition + ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                currentPosition = currentPosition + ss.length();
             }
         }
 

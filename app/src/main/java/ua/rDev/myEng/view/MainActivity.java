@@ -46,11 +46,7 @@ public class MainActivity extends AppCompatActivity {
             setTheme(R.style.AppTheme2);
         }
         String lang = preferences.getString("language", Locale.getDefault().getLanguage());
-        if (lang.equals("uk")) {
-            Utill.changelang("uk", this);
-        } else {
-            Utill.changelang("ru", this);
-        }
+        Utill.changelang(lang, this);
 
         setContentView(R.layout.activity_main);
         mainRecyclerView = (RecyclerView) findViewById(R.id.main_recycler);
@@ -59,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(int position) {
-                Intent intent = null;
+                Intent intent;
                 if (position == 0) {
                     intent = new Intent(getApplicationContext(), CountryActivity.class);
                 } else if (position == 1) {
@@ -88,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         sPref = getPreferences(MODE_PRIVATE);
 
         boolean firstLaunch = sPref.getBoolean(FIRST_LAUNCH_KEY, true);
-        if (firstLaunch == true) {
+        if (firstLaunch) {
             loadTutorial();
         }
         MobileAds.initialize(this, getResources().
@@ -107,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         SharedPreferences.Editor ed = sPref.edit();
         ed.putBoolean(FIRST_LAUNCH_KEY, false);
-        ed.commit();
+        ed.apply();
 
     }
 

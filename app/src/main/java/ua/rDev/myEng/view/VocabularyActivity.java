@@ -36,10 +36,6 @@ import ua.rDev.myEng.model.WordPack;
 import ua.rDev.myEng.presenter.VocabularyPresenter;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-
-/**
- * Created by pk on 09.09.2016.
- */
 public class VocabularyActivity extends MvpAppCompatActivity implements View.OnClickListener, IVocabulary {
     @InjectPresenter
     VocabularyPresenter presenter;
@@ -93,6 +89,13 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
         vocab_tv = (TextView) findViewById(R.id.vocab_tv);
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
+            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                if (viewHolder instanceof MyListRecyclerAdapter.HeaderHolder || viewHolder instanceof MyListRecyclerAdapter.BannerHolder)
+                    return 0;
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            }
+
+            @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
             }
@@ -100,13 +103,9 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 int position = viewHolder.getAdapterPosition();
-                if (position == 0 || position == 1) {
-
-                } else {
-                    adapter.data.remove(position - 2);
-                    MyDataBaseHelper.deleteItem(position - 2, getApplicationContext());
-                    adapter.notifyItemRemoved(position);
-                }
+                adapter.data.remove(position - 2);
+                MyDataBaseHelper.deleteItem(position - 2, getApplicationContext());
+                adapter.notifyItemRemoved(position);
                 if (MyListRecyclerAdapter.data.size() == 0) {
                     vocab_iv.setVisibility(View.VISIBLE);
                     vocab_iv.setImageBitmap(Utill.loadBitmapFromResource(getResources(), R.drawable.clear_book, 250, 250));
@@ -256,6 +255,7 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
         fab.show();
         panel_rv.removeAllViews();
     }
+
     public boolean isPanelShow() {
         return slideUp.isVisible();
     }

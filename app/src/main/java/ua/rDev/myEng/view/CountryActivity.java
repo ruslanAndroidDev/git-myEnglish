@@ -4,8 +4,6 @@ import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import ua.rDev.myEng.R;
+import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.adapter.CountryAdapter;
 import ua.rDev.myEng.model.Country;
 
@@ -66,7 +65,7 @@ public class CountryActivity extends MvpAppCompatActivity implements ChildEventL
         adapter = new CountryAdapter(data, this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        if (!isNetworkAvailable()) {
+        if (!Utill.isNetworkAvailable(this)) {
             pd.hide();
             Toast.makeText(this, getResources().getString(R.string.no_connect), Toast.LENGTH_SHORT).show();
         } else {
@@ -85,19 +84,12 @@ public class CountryActivity extends MvpAppCompatActivity implements ChildEventL
         Runtime.getRuntime().gc();
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo activeNttworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNttworkInfo != null && activeNttworkInfo.isConnected();
-    }
-
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         pd.hide();
         Country country = dataSnapshot.getValue(Country.class);
         country.setKey(dataSnapshot.getKey());
-        adapter.arrayList.add(country);
-        adapter.notifyItemInserted(0);
+        adapter.addCountry(country);
     }
 
     private void close() {

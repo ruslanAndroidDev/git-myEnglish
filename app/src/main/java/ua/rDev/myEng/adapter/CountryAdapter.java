@@ -39,6 +39,11 @@ public class CountryAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public void addCountry(Country country) {
+        arrayList.add(country);
+        notifyItemInserted(0);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView img;
         TextView title;

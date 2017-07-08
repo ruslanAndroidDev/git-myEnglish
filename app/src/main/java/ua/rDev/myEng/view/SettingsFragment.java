@@ -58,7 +58,7 @@ public class SettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
-        dialogPreference = (Preference) getPreferenceScreen().findPreference("dialog_preference");
+        dialogPreference =getPreferenceScreen().findPreference("dialog_preference");
         dialogPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

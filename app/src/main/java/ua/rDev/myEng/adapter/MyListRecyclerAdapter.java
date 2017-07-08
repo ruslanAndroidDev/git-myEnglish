@@ -144,6 +144,18 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public HeaderHolder(View itemView) {
             super(itemView);
             this.packRv = (RecyclerView) itemView.findViewById(R.id.word_pack_recycler);
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    int action = motionEvent.getAction();
+                    switch (action) {
+                        case MotionEvent.ACTION_MOVE:
+                            view.getParent().requestDisallowInterceptTouchEvent(true);
+                            break;
+                    }
+                    return false;
+                }
+            });
         }
 
     }

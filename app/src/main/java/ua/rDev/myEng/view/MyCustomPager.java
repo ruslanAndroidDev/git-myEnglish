@@ -24,7 +24,6 @@ public class MyCustomPager extends ViewPager {
         if (this.enabled) {
             return super.onTouchEvent(event);
         }
-
         return false;
     }
 
