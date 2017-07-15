@@ -15,7 +15,6 @@ public class CountryDetail {
     String geo;
     String history;
     String photoUrl;
-    String article;
     String intro;
 
     public String getIntro() {
@@ -39,9 +38,5 @@ public class CountryDetail {
 
     public String getPhotoUrl() {
         return photoUrl;
-    }
-
-    public String getArticle() {
-        return article;
     }
 }

@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -22,7 +23,6 @@ import android.text.method.MovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -94,8 +94,8 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
             setTheme(R.style.CountryStyleBlue);
         }
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        Log.d("tag", intent.getStringExtra("name"));
-        DatabaseReference reference = mDatabase.getReference("article/");
+        //TODO
+        DatabaseReference reference = mDatabase.getReference(intent.getStringExtra("link"));
         Query mQuery = reference.orderByKey().equalTo(intent.getStringExtra("name"));
         mQuery.addChildEventListener(this);
         countryLayoutBinding = DataBindingUtil.setContentView(this, R.layout.country_detail_layout);
@@ -155,9 +155,9 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
     }
 
     void splitString(final String s, final TextView tv) {
-        String[] arr = s.split(" ");
+        String[] arr = Html.fromHtml(s).toString().split(" ");
         int currentPosition = 0;
-        final SpannableString spannableString = new SpannableString(s);
+        final SpannableString spannableString = new SpannableString(Html.fromHtml(s));
         for (final String ss : arr) {
             final int finalCurrentPosition = currentPosition;
             ClickableSpan span1 = new ClickableSpan() {
@@ -194,7 +194,7 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
             }
         }
 
-        tv.setText(spannableString);
+        tv.setText(spannableString, TextView.BufferType.SPANNABLE);
         tv.setMovementMethod(createMovementMethod(this));
     }
 
@@ -377,7 +377,7 @@ public class CountryDetailActivity extends AppCompatActivity implements View.OnC
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         country = dataSnapshot.getValue(CountryDetail.class);
         Picasso.with(this).load(country.getPhotoUrl()).into(countryLayoutBinding.countryImageView);
-        countryLayoutBinding.countryName.setText(country.getName());
+        countryLayoutBinding.countryName.setText(dataSnapshot.getKey());
         splitString(country.getIntro(), countryLayoutBinding.introTv);
         splitString(country.getGeo(), countryLayoutBinding.geoTv);
         splitString(country.getHistory(), countryLayoutBinding.historyTv);

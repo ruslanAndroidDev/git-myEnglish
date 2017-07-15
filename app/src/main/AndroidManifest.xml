@@ -35,6 +35,10 @@
             android:name=".view.CountryActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.RegionActivity"
+            android:screenOrientation="portrait" />
+        <service android:name=".LearningWordService"></service>
+        <activity
             android:name=".view.CountryDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CountryStyleBrown" />

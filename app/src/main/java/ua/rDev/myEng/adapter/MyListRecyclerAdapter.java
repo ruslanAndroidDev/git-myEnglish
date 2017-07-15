@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,9 +48,11 @@ import ua.rDev.myEng.presenter.VocabularyPresenter;
  **/
 public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_BANNER = 10;
-    public static ArrayList<Word> data;
+    public  ArrayList<Word> data;
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+    boolean FLAG_IS_LOAD = false;
+    boolean FLAG_HEADER = false;
     MediaPlayer mediaPlayer;
 
     ArrayList<WordPack> arrayList;
@@ -58,6 +61,15 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     Retrofit retrofit;
     SkyEngService service;
     FirebaseDatabase mDatabase;
+
+    public void setStatusStudied(int position) {
+        Word word = data.get(position - 2);
+        word.setStatus(MyDataBase.STATUS_STUDING);
+        data.remove(position - 2);
+        notifyItemRemoved(position);
+        data.add(0, word);
+        notifyItemInserted(2);
+    }
 
     public class BannerHolder extends RecyclerView.ViewHolder {
         AdView adView;
@@ -134,6 +146,7 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             data.add(0, word);
             notifyItemMoved(getAdapterPosition(), 2);
             notifyItemChanged(2);
+            notifyDataSetChanged();
             return true;
         }
     }
@@ -196,78 +209,92 @@ public class MyListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MyViewHolder) {
+            Word currentWord = data.get(position - 2);
+            Context context = holder.itemView.getContext();
             TextView original_tv = ((MyViewHolder) holder).original_tv;
             final TextView translate_tv = ((MyViewHolder) holder).translate_tv;
             final CardView card_status = ((MyViewHolder) holder).card_status;
-            final RelativeLayout relativeLayout = ((MyViewHolder) holder).relativeLayout;
-            if (Utill.getThemeAccentColor(holder.itemView.getContext()) == ContextCompat.getColor(holder.itemView.getContext(), R.color.colorPrimary2)) {
-                relativeLayout.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.card_blue1));
-                translate_tv.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.secondTextcolor));
+            if (Utill.getThemeAccentColor(context) == ContextCompat.getColor(context, R.color.colorPrimary2)) {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.card_blue1));
+                translate_tv.setTextColor(ContextCompat.getColor(context, R.color.secondTextcolor));
             }
-            card_status.setCardBackgroundColor(getColorStatus(data.get(position - 2).getStatus()));
-            original_tv.setText(data.get(position - 2).getOriginalWord());
-            translate_tv.setText(data.get(position - 2).getTranslateWord());
+            if (currentWord.getStatus() == MyDataBase.STATUS_STUDING) {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
+            } else {
+
+            }
+            card_status.setCardBackgroundColor(getColorStatus(currentWord.getStatus()));
+            original_tv.setText(currentWord.getOriginalWord());
+            translate_tv.setText(currentWord.getTranslateWord());
         } else if (holder instanceof HeaderHolder) {
-            RecyclerView packRv = ((HeaderHolder) holder).packRv;
-            LinearLayoutManager layoutManager
-                    = new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-            packRv.setLayoutManager(layoutManager);
-            arrayList = new ArrayList<>();
-            final WordPackAdapter wordPackAdapter = new WordPackAdapter(arrayList, presenter);
-            DatabaseReference reference = mDatabase.getReference("pack/");
-            packRv.setAdapter(wordPackAdapter);
-            reference.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    WordPack model = dataSnapshot.getValue(WordPack.class);
-                    arrayList.add(model);
-                    wordPackAdapter.notifyItemInserted(0);
-                }
+            if (!FLAG_HEADER) {
+                RecyclerView packRv = ((HeaderHolder) holder).packRv;
+                LinearLayoutManager layoutManager
+                        = new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+                packRv.setLayoutManager(layoutManager);
+                arrayList = new ArrayList<>();
+                final WordPackAdapter wordPackAdapter = new WordPackAdapter(arrayList, presenter);
+                DatabaseReference reference = mDatabase.getReference("pack/");
+                packRv.setAdapter(wordPackAdapter);
+                reference.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        WordPack model = dataSnapshot.getValue(WordPack.class);
+                        arrayList.add(model);
+                        wordPackAdapter.notifyItemInserted(0);
+                        FLAG_HEADER = true;
+                    }
 
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                }
+                    }
 
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                }
+                    }
 
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                }
+                    }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
+
+                    }
+                });
+            }
         } else {
             final AdView adView = ((BannerHolder) holder).adView;
-            final AdRequest adRequest = new AdRequest.Builder().build();
-            adView.loadAd(adRequest);
-            adView.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                    adView.setVisibility(View.VISIBLE);
-                }
-            });
+            if (!FLAG_IS_LOAD) {
+                final AdRequest adRequest = new AdRequest.Builder().build();
+                adView.loadAd(adRequest);
+                adView.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        super.onAdLoaded();
+                        FLAG_IS_LOAD = true;
+                        adView.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
         }
     }
 
     int getColorStatus(int status) {
-        if (status == 0) {
+        if (status == MyDataBase.STATUS_UNKNOWN) {
             return Color.GRAY;
-        } else if (status == 1) {
+        } else if (status == MyDataBase.STATUS_STUDIED) {
             return Color.GREEN;
-        } else {
+        } else if (status == MyDataBase.STATUS_NEED_TO_REPEAT) {
             return Color.RED;
         }
+        return Color.GRAY;
 
     }
 

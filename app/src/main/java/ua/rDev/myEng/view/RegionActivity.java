@@ -1,6 +1,8 @@
 package ua.rDev.myEng.view;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
+import android.view.MenuItem;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import ua.rDev.myEng.R;
-import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.adapter.RegionRecyclerViewAdapter;
 import ua.rDev.myEng.model.Region;
 
@@ -57,25 +58,21 @@ public class RegionActivity extends AppCompatActivity implements ChildEventListe
 
         getSupportActionBar().setTitle("Region");
         regionRv = (RecyclerView) findViewById(R.id.region_recycler);
+        data = new ArrayList<>();
         adapter = new RegionRecyclerViewAdapter(data, this);
         regionRv.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
-        data = new ArrayList<>();
         regionRv.setAdapter(adapter);
-        if (!Utill.isNetworkAvailable(this)) {
-            pd.hide();
-            Toast.makeText(this, getResources().getString(R.string.no_connect), Toast.LENGTH_SHORT).show();
-        } else {
-            FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-            DatabaseReference reference = mDatabase.getReference("regions/");
-            reference.addChildEventListener(this);
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference reference = mDatabase.getReference("regions/");
+        reference.addChildEventListener(this);
 
-        }
     }
 
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         pd.hide();
         Region region = dataSnapshot.getValue(Region.class);
+        region.setName(dataSnapshot.getKey());
         adapter.addItem(region);
     }
 
@@ -97,5 +94,26 @@ public class RegionActivity extends AppCompatActivity implements ChildEventListe
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
+    }
+
+    private void close() {
+        Intent intent = new Intent(this, MainActivity.class);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anim_enter_to_main, R.anim.anim_leave_to_main);
+        startActivity(intent, options.toBundle());
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        close();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            close();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

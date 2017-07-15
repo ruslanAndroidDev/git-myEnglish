@@ -90,8 +90,8 @@ public class PanelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             if (view.getId() == R.id.btn_cancel) {
                 presenter.hidePanel();
             } else {
-                presenter.addWordToBd(wordPack);
                 presenter.hidePanel();
+                presenter.addWordToBd(wordPack);
             }
         }
     }

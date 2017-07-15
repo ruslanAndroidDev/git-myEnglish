@@ -1,6 +1,8 @@
 package ua.rDev.myEng.adapter;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 
 import ua.rDev.myEng.R;
 import ua.rDev.myEng.model.Region;
+import ua.rDev.myEng.view.CountryActivity;
 
 /**
  * Created by pk on 08.07.2017.
@@ -41,7 +44,11 @@ public class RegionRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View view) {
-
+            Intent intent = new Intent(context, CountryActivity.class);
+            intent.putExtra("name", data.get(getAdapterPosition()).getName());
+            ActivityOptions options =
+                    ActivityOptions.makeCustomAnimation(context, R.anim.anim_enter, R.anim.anim_leave);
+            context.startActivity(intent, options.toBundle());
         }
     }
 
@@ -58,8 +65,10 @@ public class RegionRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Picasso.with(context).load(data.get(position).getPhotoUrl()).fit().into(((RegionHolder) holder).region_iv);
-        ((RegionHolder) holder).region_tv.setText(data.get(position).getName());
+        ImageView img = ((RegionHolder) holder).region_iv;
+        Picasso.with(context).load(data.get(position).getPhotoUrl()).into(img);
+        TextView text = ((RegionHolder) holder).region_tv;
+        text.setText(data.get(position).getName());
     }
 
     @Override

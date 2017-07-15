@@ -12,6 +12,10 @@
         android:key="color"
         android:summary="@string/blue"
         android:title="@string/theme_color"></ListPreference>
-        <Preference android:key="dialog_preference"
-            android:title="@string/about"/>
+    <Preference
+        android:key="dialog_preference"
+        android:title="@string/about" />
+    <Preference
+        android:key="dialog_studing"
+        android:title="@string/studing" />
 </PreferenceScreen>

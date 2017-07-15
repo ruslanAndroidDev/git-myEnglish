@@ -28,8 +28,9 @@ public class CountryAdapter extends RecyclerView.Adapter {
     public ArrayList<Country> arrayList;
     Context context;
     int colorAccent;
+    String region;
 
-    public CountryAdapter(ArrayList<Country> arrayList, Context context) {
+    public CountryAdapter(ArrayList<Country> arrayList, Context context, String region) {
         this.arrayList = arrayList;
         this.context = context;
         if (Utill.getThemeAccentColor(context) == ContextCompat.getColor(context, R.color.colorAccent2)) {
@@ -37,6 +38,7 @@ public class CountryAdapter extends RecyclerView.Adapter {
         } else {
             colorAccent = R.color.colorAccent;
         }
+        this.region = region;
     }
 
     public void addCountry(Country country) {
@@ -60,6 +62,7 @@ public class CountryAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, CountryDetailActivity.class);
+            intent.putExtra("link", "regions/" + region + "/countries/");
             intent.putExtra("name", arrayList.get(getAdapterPosition()).getKey());
             context.startActivity(intent);
         }
@@ -85,9 +88,9 @@ public class CountryAdapter extends RecyclerView.Adapter {
             title.setTextColor(ContextCompat.getColor(context, R.color.countryTextcolor));
             article.setTextColor(ContextCompat.getColor(context, R.color.secondTextcolor));
         }
-        title.setText(arrayList.get(position).getName());
+        title.setText(arrayList.get(position).getKey());
         try {
-            article.setText(Html.fromHtml(arrayList.get(position).getIntroHtml()));
+            article.setText(Html.fromHtml(arrayList.get(position).getIntro()));
         } catch (NullPointerException e) {
 
         }

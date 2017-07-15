@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(int position) {
                 Intent intent;
                 if (position == 0) {
-                    intent = new Intent(getApplicationContext(), CountryActivity.class);
+                    intent = new Intent(getApplicationContext(), RegionActivity.class);
                 } else if (position == 1) {
                     intent = new Intent(getApplicationContext(), VocabularyActivity.class);
                 } else if (position == 2) {

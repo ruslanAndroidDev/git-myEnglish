@@ -7,17 +7,21 @@ package ua.rDev.myEng.model;
 public class Region {
     String name;
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
 
     public String getPhotoUrl() {
-        return photoUrl;
+        return photo;
     }
 
     public Region() {
 
     }
 
-    String photoUrl;
+    String photo;
 }

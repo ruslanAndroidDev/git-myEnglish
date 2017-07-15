@@ -1,10 +1,22 @@
 package ua.rDev.myEng.view;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,13 +41,13 @@ import ua.rDev.myEng.R;
 import ua.rDev.myEng.Utill;
 import ua.rDev.myEng.adapter.MyListRecyclerAdapter;
 import ua.rDev.myEng.adapter.PanelAdapter;
-import ua.rDev.myEng.adapter.WrapContentLinearLayoutManager;
 import ua.rDev.myEng.data.MyDataBaseHelper;
 import ua.rDev.myEng.model.Word;
 import ua.rDev.myEng.model.WordPack;
 import ua.rDev.myEng.presenter.VocabularyPresenter;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 public class VocabularyActivity extends MvpAppCompatActivity implements View.OnClickListener, IVocabulary {
     @InjectPresenter
     VocabularyPresenter presenter;
@@ -87,35 +99,23 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
 
         vocab_iv = (ImageView) findViewById(R.id.vocab_iv);
         vocab_tv = (TextView) findViewById(R.id.vocab_tv);
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                if (viewHolder instanceof MyListRecyclerAdapter.HeaderHolder || viewHolder instanceof MyListRecyclerAdapter.BannerHolder)
-                    return 0;
-                return super.getSwipeDirs(recyclerView, viewHolder);
-            }
+    }
 
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
+    public static Bitmap getBitmapFromDrawable(Context context, @DrawableRes int drawableId) {
+        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
 
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                int position = viewHolder.getAdapterPosition();
-                adapter.data.remove(position - 2);
-                MyDataBaseHelper.deleteItem(position - 2, getApplicationContext());
-                adapter.notifyItemRemoved(position);
-                if (MyListRecyclerAdapter.data.size() == 0) {
-                    vocab_iv.setVisibility(View.VISIBLE);
-                    vocab_iv.setImageBitmap(Utill.loadBitmapFromResource(getResources(), R.drawable.clear_book, 250, 250));
-                    vocab_tv.setVisibility(View.VISIBLE);
-                }
-            }
-        };
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        } else if (drawable instanceof VectorDrawableCompat || drawable instanceof VectorDrawable) {
+            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+            return bitmap;
+        } else {
+            throw new IllegalArgumentException("unsupported drawable type");
+        }
     }
 
     @Override
@@ -223,20 +223,83 @@ public class VocabularyActivity extends MvpAppCompatActivity implements View.OnC
     @Override
     public void showData(ArrayList<Word> data) {
         adapter = new MyListRecyclerAdapter(data, presenter);
-        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        if (data.size() == 0) {
+        final Paint p = new Paint();
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                if (viewHolder instanceof MyListRecyclerAdapter.HeaderHolder || viewHolder instanceof MyListRecyclerAdapter.BannerHolder)
+                    return 0;
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                Bitmap icon;
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+
+                    View itemView = viewHolder.itemView;
+                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                    float width = height / 3;
+
+                    if (dX > 0) {
+                        p.setColor(Color.parseColor("#D32F2F"));
+                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom());
+                        c.drawRect(background, p);
+                        icon = getBitmapFromDrawable(VocabularyActivity.this, R.drawable.ic_delete_white);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width, (float) itemView.getTop() + width, (float) itemView.getLeft() + 2 * width, (float) itemView.getBottom() - width);
+                        c.drawBitmap(icon, null, icon_dest, p);
+                    } else {
+                        p.setColor(Color.parseColor("#388E3C"));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background, p);
+                        icon = getBitmapFromDrawable(VocabularyActivity.this, R.drawable.study);
+                        RectF icon_dest = new RectF((float) itemView.getRight() - 2 * width, (float) itemView.getTop() + width, (float) itemView.getRight() - width, (float) itemView.getBottom() - width);
+                        c.drawBitmap(icon, null, icon_dest, p);
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                int position = viewHolder.getAdapterPosition();
+                if (swipeDir == ItemTouchHelper.LEFT) {
+                    adapter.setStatusStudied(position);
+                } else {
+                    adapter.data.remove(position - 2);
+                    MyDataBaseHelper.deleteItem(position - 2, getApplicationContext());
+                    adapter.notifyItemRemoved(position);
+                    checkIsEmpty();
+                }
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+        checkIsEmpty();
+
+    }
+
+    void checkIsEmpty() {
+        if (adapter.data.size() == 0) {
             vocab_iv.setImageBitmap(Utill.loadBitmapFromResource(getResources(), R.drawable.clear_book, 250, 250));
             vocab_iv.setVisibility(View.VISIBLE);
             vocab_tv.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
     public void insertWord(String translate, String original, int status) {
-        MyListRecyclerAdapter.data.add(0, new Word(translate, original, status));
-        adapter.notifyItemInserted(0);
+        adapter.data.add(0, new Word(translate, original, status));
+        adapter.notifyItemInserted(2);
         vocab_iv.setImageBitmap(Utill.loadBitmapFromResource(getResources(), R.drawable.clear_book, 250, 250));
         vocab_iv.setVisibility(View.GONE);
         vocab_tv.setVisibility(View.GONE);

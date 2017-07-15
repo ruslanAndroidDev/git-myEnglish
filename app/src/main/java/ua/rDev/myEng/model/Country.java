@@ -5,10 +5,9 @@ package ua.rDev.myEng.model;
  */
 
 public class Country {
-    String introHtml;
-    String name;
+    String intro;
     String photoUrl;
-    String key;
+    private String key;
 
     public void setKey(String key) {
         this.key = key;
@@ -21,13 +20,14 @@ public class Country {
     public Country() {
     }
 
-    public String getIntroHtml() {
-
-        return introHtml;
+    public Country(String intro, String photoUrl) {
+        this.intro = intro;
+        this.photoUrl = photoUrl;
     }
 
-    public String getName() {
-        return name;
+    public String getIntro() {
+
+        return intro;
     }
 
     public String getPhotoUrl() {

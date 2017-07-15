@@ -92,4 +92,5 @@
     <string name="about_license">This work is licensed under a Creative Commons Attribution 4.0 International License.</string>
     <string name="about_article">Материал статей взят с сайта</string>
     <string name="about_skyeng">Перевод слов осуществляется с помощью Skyeng API</string>
+    <string name="studing">Вивчення слів</string>
 </resources>
